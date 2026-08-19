@@ -5,8 +5,8 @@ Divider separates adjacent content or sections and can carry a title with config
 ## Basic Usage
 
 ```tsx
-import { Divider } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Divider } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Divider/basic.tsx :::

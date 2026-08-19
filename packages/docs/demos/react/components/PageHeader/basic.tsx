@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, PageHeader } from '@aurora/horizon-web-react';
+import { Button, PageHeader } from '@aurora/horizon-react';
 
 export default function PageHeaderBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

@@ -11,7 +11,7 @@ The default namespace of `Horizon Web` is `h`. In the following cases, you may n
 
 ## Entry File Configuration
 ```ts
-import { setNamespace } from '@aurora/horizon-web-vue';
+import { setNamespace } from '@aurora/horizon-vue';
 
 setNamespace('x');
 
@@ -34,7 +34,7 @@ In some cases, you may not be able to configure your own entry file, so you can 
 ## Full Usage
 Create a new `scss` file and import it:
 ```scss
-@forward '@aurora/horizon-web-vue/es/styles/index.scss' with (
+@forward '@aurora/horizon-vue/es/styles/index.scss' with (
   $namespace: 'x',
 );
 ```
@@ -42,7 +42,7 @@ Create a new `scss` file and import it:
 ## On-Demand Usage
 1. Create a new `scss` file (assuming the path is `./src/assets/horizon-web.scss`):
     ```scss
-    @forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
+    @forward '@aurora/horizon-vue/es/styles/mixins/config.scss' with (
       $namespace: 'x',
     );
     ```

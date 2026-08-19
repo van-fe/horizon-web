@@ -3,8 +3,8 @@
 Slider selects a single value or a range from a continuous or stepped interval. Give every interactive slider an accessible name.
 
 ```tsx
-import { Slider } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Slider } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Slider/basic.tsx :::

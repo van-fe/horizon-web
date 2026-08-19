@@ -5,8 +5,8 @@ Progress communicates task completion with line, circle, and dashboard presentat
 ## Basic Usage
 
 ```tsx
-import { Progress } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Progress } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Progress/basic.tsx :::

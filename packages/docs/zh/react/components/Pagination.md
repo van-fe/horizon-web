@@ -3,8 +3,8 @@
 分页用于将大量结果拆分成可导航的页面，也可以控制每页展示的数据数量。
 
 ```tsx
-import { Pagination } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Pagination } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 受控分页

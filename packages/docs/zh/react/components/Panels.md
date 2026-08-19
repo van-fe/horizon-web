@@ -3,8 +3,8 @@
 Panels 根据键值一次展示一个内容面板，当前选择始终由应用状态控制。
 
 ```tsx
-import { Panel, Panels } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Panel, Panels } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 受控选择

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web-vue';
+import { dayjs } from '@aurora/horizon-vue';
 
 const format = ref('YYYY-MM-DD');
 const value = ref(dayjs('2026-08-12'));

@@ -1,4 +1,4 @@
-import { Panel, Panels } from '@aurora/horizon-web-react';
+import { Panel, Panels } from '@aurora/horizon-react';
 
 export default function PanelsDisabledDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

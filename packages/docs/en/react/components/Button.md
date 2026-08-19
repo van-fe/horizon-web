@@ -5,8 +5,8 @@ Button triggers immediate actions and supports native buttons, native links, app
 ## Basic Usage
 
 ```tsx
-import { Button } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Button } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Button/basic.tsx :::

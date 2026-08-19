@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { TreeOption, TreeProps } from '@aurora/horizon-web-react';
-import { Tree } from '@aurora/horizon-web-react';
+import type { TreeOption, TreeProps } from '@aurora/horizon-react';
+import { Tree } from '@aurora/horizon-react';
 
 const wait = (duration: number) => new Promise(resolve => window.setTimeout(resolve, duration));
 

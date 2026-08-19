@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Anchor, AnchorLink } from '@aurora/horizon-web-react';
+import { Anchor, AnchorLink } from '@aurora/horizon-react';
 
 export default function AnchorCollapseDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [collapsed, setCollapsed] = useState(false);

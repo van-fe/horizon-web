@@ -3,8 +3,8 @@
 Breadcrumb communicates the current page's place in a hierarchy. Use it for paths with at least two levels when people may need to return to an ancestor.
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Breadcrumb, BreadcrumbItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Data and composition

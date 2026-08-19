@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@aurora/horizon-web-vue';
+import { $message } from '@aurora/horizon-vue';
 const open = () => {
   const inst = $message.loading('After 2 seconds, the asynchronous operation will be completed');
   setTimeout(() => {

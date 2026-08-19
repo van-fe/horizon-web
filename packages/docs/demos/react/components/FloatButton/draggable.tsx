@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FloatButton } from '@aurora/horizon-web-react';
+import { FloatButton } from '@aurora/horizon-react';
 
 export default function FloatButtonDraggableDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [status, setStatus] = useState<'idle' | 'dragging' | 'done'>('idle');

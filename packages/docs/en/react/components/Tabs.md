@@ -3,8 +3,8 @@
 Tabs let people switch between related views without leaving the current context.
 
 ```tsx
-import { Tab, Tabs } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Tab, Tabs } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Controlled selection

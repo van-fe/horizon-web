@@ -3,8 +3,8 @@
 Dialog 在模态层中承载需要用户集中关注的信息或操作，并负责焦点约束、背景滚动锁定、堆叠关闭、Portal 渲染与关闭守卫。
 
 ```tsx
-import { Dialog, type DialogHandle } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Dialog, type DialogHandle } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础用法

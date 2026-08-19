@@ -3,8 +3,8 @@
 Popover displays interactive contextual content next to a single trigger element. It supports delayed pointer interaction, focus, click, controlled state, automatic placement, Portal rendering, masks, and imperative control.
 
 ```tsx
-import { PopContent, Popover } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { PopContent, Popover } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Basic usage

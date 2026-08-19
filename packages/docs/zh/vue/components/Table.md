@@ -276,4 +276,4 @@ Worker 默认 30 秒无响应会终止并同步回退，可通过 `workerTimeout
 
 ## 类型定义
 
-:::code ../../../../horizon-web-vue/src/components/Table/src/utils/types.ts :::
+:::code ../../../../horizon-vue/src/components/Table/src/utils/types.ts :::

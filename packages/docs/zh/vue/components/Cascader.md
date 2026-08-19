@@ -282,7 +282,7 @@ Cascader 用于在层级选项树中选择一个或多个值。使用 `v-model` 
 如需扩展 TypeScript 类型，可在项目中补充 `HCascaderOption` 声明：
 
 ```ts
-declare module '@aurora/horizon-web-vue' {
+declare module '@aurora/horizon-vue' {
   interface HCascaderOption {
     id?: HCascaderOption['value'];
     tag?: HCascaderOption['label'];

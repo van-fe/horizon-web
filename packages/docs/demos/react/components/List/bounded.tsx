@@ -1,4 +1,4 @@
-import { List, ListItem } from '@aurora/horizon-web-react';
+import { List, ListItem } from '@aurora/horizon-react';
 
 export default function ListBoundedDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

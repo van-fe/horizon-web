@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pagination, Switch } from '@aurora/horizon-web-react';
+import { Pagination, Switch } from '@aurora/horizon-react';
 
 export default function PaginationCustomDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

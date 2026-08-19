@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ${nameWithPrefix} } from '@aurora/horizon-web-vue';
+import { ${nameWithPrefix} } from '@aurora/horizon-vue';
 
 function onClick() {
   ${nameWithPrefix}({});

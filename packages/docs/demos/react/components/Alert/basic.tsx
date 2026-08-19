@@ -1,4 +1,4 @@
-import { Alert, Space } from '@aurora/horizon-web-react';
+import { Alert, Space } from '@aurora/horizon-react';
 
 export default function AlertDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TimelineSort } from '@aurora/horizon-web-react';
-import { Segmented, SegmentedItem, Timeline, TimelineItem } from '@aurora/horizon-web-react';
+import type { TimelineSort } from '@aurora/horizon-react';
+import { Segmented, SegmentedItem, Timeline, TimelineItem } from '@aurora/horizon-react';
 
 export default function TimelineOrderingDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

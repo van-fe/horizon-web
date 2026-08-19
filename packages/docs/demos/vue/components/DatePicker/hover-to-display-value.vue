@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web-vue';
+import { dayjs } from '@aurora/horizon-vue';
 
 const start = dayjs().add(2, 'day');
 const value = ref([start, start.add(4, 'day')]);

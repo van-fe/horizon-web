@@ -39,7 +39,7 @@ let transformerPromise: Promise<typeof import('sucrase')> | undefined;
 
 const bareDependencyLoaders: Record<string, () => Promise<object>> = {
   vue: () => import('vue'),
-  '@aurora/horizon-web-vue': () => import('@aurora/horizon-web-vue'),
+  '@aurora/horizon-vue': () => import('@aurora/horizon-vue'),
   '@aurora/icon': () => import('@aurora/icon'),
   '@aurora/utils': () => import('@aurora/utils'),
   '@aurora/colors': () => import('@aurora/colors'),
@@ -224,7 +224,7 @@ async function loadBareDependency(specifier: string) {
   const loader = bareDependencyLoaders[specifier];
   if (!loader) {
     // Type-only imports are removed by Sucrase before execution.
-    if (specifier.startsWith('@aurora/horizon-web-vue/es/')) return undefined;
+    if (specifier.startsWith('@aurora/horizon-vue/es/')) return undefined;
     throw new Error(`Static demo compiler does not support import "${specifier}"`);
   }
 

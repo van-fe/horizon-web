@@ -4,7 +4,7 @@ This will list frequently encountered problems and their solutions
   
 ## 1. After building the project, when using directives, an error `TypeError: Cannot read properties of undefined (reading 'deep')` appears: {#version-same}
 
-The version numbers of `@aurora/horizon-web-vue` and `@aurora/horizon-web-unplugin-resolver` must be consistent
+The version numbers of `@aurora/horizon-vue` and `@aurora/horizon-web-unplugin-resolver` must be consistent
 
 ## 2. `vue-cli` build project error, prompting `?.` is not recognized {#babel}
 When using `vue-cli` to build a project, it generally does not support ES7 syntax such as `optional-chaning`, so you need to configure as follows:

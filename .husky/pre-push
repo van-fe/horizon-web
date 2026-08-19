@@ -1,1 +1,1 @@
-bun run vitest:all && bun --filter @aurora/horizon-web-vue ts:check
+bun run vitest:all && bun --filter @aurora/horizon-vue ts:check

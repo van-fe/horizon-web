@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { HGuide } from '@aurora/horizon-web-vue';
+import { HGuide } from '@aurora/horizon-vue';
 
 const guideRef = shallowRef<typeof HGuide | null>(null);
 const nameInputRef = shallowRef<HTMLElement | null>(null);

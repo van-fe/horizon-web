@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Breadcrumb, HorizonWebProvider } from '@aurora/horizon-web-react';
+import { Breadcrumb, HorizonWebProvider } from '@aurora/horizon-react';
 
 export default function BreadcrumbNavigationDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

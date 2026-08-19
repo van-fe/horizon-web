@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { Button, Hover } from '@aurora/horizon-web-react';
-import type { HoverHandle } from '@aurora/horizon-web-react';
+import { Button, Hover } from '@aurora/horizon-react';
+import type { HoverHandle } from '@aurora/horizon-react';
 
 export default function HoverCommandsDemo({ locale }: { locale: 'en' | 'zh' }) {
   const hoverRef = useRef<HoverHandle>(null);

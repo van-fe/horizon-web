@@ -5,8 +5,8 @@ Avatar 用于展示人物、团队或对象的身份图像，也支持文字缩�
 ## 基础用法
 
 ```tsx
-import { Avatar } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Avatar } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Avatar/basic.tsx :::

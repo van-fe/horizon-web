@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, Space } from '@aurora/horizon-web-react';
+import { Input, Space } from '@aurora/horizon-react';
 
 export default function InputDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

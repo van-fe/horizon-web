@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Decimal } from 'decimal.js';
-import type { HTableSummaryMethodType } from '@aurora/horizon-web-vue';
+import type { HTableSummaryMethodType } from '@aurora/horizon-vue';
 
 interface SpendRow {
   id: string;

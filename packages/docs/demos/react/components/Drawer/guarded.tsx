@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Drawer, Segmented, SegmentedItem } from '@aurora/horizon-web-react';
+import { Button, Drawer, Segmented, SegmentedItem } from '@aurora/horizon-react';
 
 type GuardOutcome = 'allow' | 'veto';
 type GuardStatus = 'idle' | 'checking' | 'allowed' | 'vetoed';

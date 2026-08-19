@@ -1,4 +1,4 @@
-import { Container, Footer, Header, Main } from '@aurora/horizon-web-react';
+import { Container, Footer, Header, Main } from '@aurora/horizon-react';
 
 export default function ContainerBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

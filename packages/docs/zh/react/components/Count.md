@@ -3,8 +3,8 @@
 Count 展示静态或递增计数，并支持小数和自定义分组。
 
 ```tsx
-import { Count } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Count } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Count/basic.tsx :::

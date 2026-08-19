@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HorizonWebProvider, Link, Space } from '@aurora/horizon-web-react';
+import { HorizonWebProvider, Link, Space } from '@aurora/horizon-react';
 
 export default function LinkDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

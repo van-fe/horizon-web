@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { Button, Form, FormItem, Input, type FormHandle } from '@aurora/horizon-web-react';
+import { Button, Form, FormItem, Input, type FormHandle } from '@aurora/horizon-react';
 
 export default function FormBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const model = useMemo(() => ({ account: '' }), []);

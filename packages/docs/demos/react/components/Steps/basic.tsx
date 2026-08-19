@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Step, Steps } from '@aurora/horizon-web-react';
+import { Button, Step, Steps } from '@aurora/horizon-react';
 
 export default function StepsBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

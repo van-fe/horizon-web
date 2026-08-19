@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { StepsDirection, StepsSize } from '@aurora/horizon-web-react';
-import { Segmented, SegmentedItem, Step, Steps, Switch } from '@aurora/horizon-web-react';
+import type { StepsDirection, StepsSize } from '@aurora/horizon-react';
+import { Segmented, SegmentedItem, Step, Steps, Switch } from '@aurora/horizon-react';
 
 export default function StepsAppearanceDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

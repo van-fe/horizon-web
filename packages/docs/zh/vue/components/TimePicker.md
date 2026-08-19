@@ -108,4 +108,4 @@
 
 ## 类型定义
 
-:::code ../../../../horizon-web-vue/src/components/TimePicker/src/utils/types.ts :::
+:::code ../../../../horizon-vue/src/components/TimePicker/src/utils/types.ts :::

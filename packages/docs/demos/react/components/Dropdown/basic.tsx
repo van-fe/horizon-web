@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Dropdown, DropdownItem, DropdownMenu } from '@aurora/horizon-web-react';
+import { Button, Dropdown, DropdownItem, DropdownMenu } from '@aurora/horizon-react';
 
 export default function BasicDropdownDemo() {
   const [command, setCommand] = useState('none');

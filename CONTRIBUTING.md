@@ -12,7 +12,7 @@ Before filing an issue, please search the [existing issues](https://github.com/v
 
 Please include as much of the following as possible to help us locate the problem quickly:
 
-- Environment info: browser and version, Node / bun version, `@aurora/horizon-web-vue` version
+- Environment info: browser and version, Node / bun version, `@aurora/horizon-vue` version
 - Reproduction steps: a minimal reproduction repository or an online demo is preferred
 - Expected behavior and actual behavior
 - Error messages, console logs, and screenshots

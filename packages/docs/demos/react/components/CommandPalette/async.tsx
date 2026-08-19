@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, CommandPalette } from '@aurora/horizon-web-react';
+import { Button, CommandPalette } from '@aurora/horizon-react';
 
 export default function CommandPaletteAsyncDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

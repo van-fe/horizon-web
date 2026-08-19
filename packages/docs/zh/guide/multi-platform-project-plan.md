@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B40 TimeSelect 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B41 Calendar 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -34,14 +34,14 @@
 
 首个 Web React MVP 必须包含：
 
-- `@aurora/core`、`@aurora/theme`、`@aurora/horizon-web-core` 基础包；
-- `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react` renderer 基础设施；
+- `@aurora/core`、`@aurora/theme`、`@aurora/horizon-core` 基础包；
+- `@aurora/horizon-vue` 与 `@aurora/horizon-react` renderer 基础设施；
 - Button、Switch、Tooltip、Select 单选模式的 Vue/React 双实现；
 - 公共 Token、locale key、状态协议和行为测试向量；
 - React ESM、类型声明、样式和 SSR 安全入口；
 - Vue/React 双框架文档示例；
 - 能够识别新包名的构建、resolver、版本和发布流程；
-- `@aurora/horizon-web-vue` 与 `@aurora/horizon-web-react` 的无歧义公开入口。
+- `@aurora/horizon-vue` 与 `@aurora/horizon-react` 的无歧义公开入口。
 
 ### 3.2 成功指标
 
@@ -147,10 +147,10 @@ flowchart LR
 | ID | 任务 | 交付物 | 验收 |
 | --- | --- | --- | --- |
 | PKG-001 | 创建 `core` | package、tsconfig、Vite/Vitest、exports | build/typecheck/test 通过，无产品、平台和 renderer 依赖 |
-| PKG-002 | 创建 `horizon-web-core` | DOM 能力包骨架 | SSR import 不访问浏览器全局 |
+| PKG-002 | 创建 `horizon-core` | DOM 能力包骨架 | SSR import 不访问浏览器全局 |
 | PKG-003 | 创建 `theme` | 统一 Token 源及 Web/Native 输出骨架 | Web Vue/React 消费同一 CSS，Skyline 可消费同源 TS/JSON Token |
-| PKG-004 | 创建 `horizon-web-react` | React 19、类型、测试、SSR 骨架 | ESM、类型、renderToString smoke test 通过 |
-| PKG-005 | 规划 `horizon-web-vue` 迁移 | 目录迁移清单和 breaking change 清单 | 明确所有写死路径，不立即大规模移动源码 |
+| PKG-004 | 创建 `horizon-react` | React 19、类型、测试、SSR 骨架 | ESM、类型、renderToString smoke test 通过 |
+| PKG-005 | 规划 `horizon-vue` 迁移 | 目录迁移清单和 breaking change 清单 | 明确所有写死路径，不立即大规模移动源码 |
 | QA-002 | 添加依赖边界检查 | CI 脚本和失败示例测试 | Core 导入 Vue/React 时 CI 必须失败 |
 
 退出门槛：所有新包独立 build/typecheck/test 通过，根工作区脚本可以发现它们，现有 Vue 测试不受影响。
@@ -160,10 +160,10 @@ flowchart LR
 | 任务 | 状态 | 实施结果 |
 | --- | --- | --- |
 | PKG-001 | Done | 新建 `@aurora/core`，承载纯类型、数组/对象/数值工具、通用守卫和 EventEmitter |
-| PKG-002 | Done | 新建 `@aurora/horizon-web-core`，首批抽出 SSR 安全的 browser detection 与 body scroll lock |
+| PKG-002 | Done | 新建 `@aurora/horizon-core`，首批抽出 SSR 安全的 browser detection 与 body scroll lock |
 | PKG-003 | Done | 新建统一的 `@aurora/theme`，提供 namespace、class contract、Token 展平与 CSS variable 输出骨架 |
-| PKG-004 | Done | 新建 `@aurora/horizon-web-react`，完成 Provider、context/hook、React 18/19 peer range 与 SSR smoke test |
-| PKG-005 | Done | Vue 实现已迁移到 `packages/horizon-web-vue` 并更名为 `@aurora/horizon-web-vue`；旧组件包名作为 breaking change 删除 |
+| PKG-004 | Done | 新建 `@aurora/horizon-react`，完成 Provider、context/hook、React 18/19 peer range 与 SSR smoke test |
+| PKG-005 | Done | Vue 实现已迁移到 `packages/horizon-vue` 并更名为 `@aurora/horizon-vue`；旧组件包名作为 breaking change 删除 |
 | UTIL-002 | Done | `@aurora/utils` 通过兼容转发消费 `core/theme/web-core`，现有 Vue 导入路径保持有效 |
 | QA-002 | Done | 新增 foundation package boundary scan，并接入根测试命令和 Pages 构建依赖顺序 |
 
@@ -248,7 +248,7 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 
 | 任务 | 状态 | 实施结果 |
 | --- | --- | --- |
-| WEB-OV-001 | Done | 在 `@aurora/horizon-web-core/src/components/Tooltip` 提供 SSR 安全的 Positioner，支持 12 个位置、distance、skidding、flip、fallback、shift、箭头和 reference hidden 检测 |
+| WEB-OV-001 | Done | 在 `@aurora/horizon-core/src/components/Tooltip` 提供 SSR 安全的 Positioner，支持 12 个位置、distance、skidding、flip、fallback、shift、箭头和 reference hidden 检测 |
 | WEB-OV-002 | Done | 建立只响应顶层浮层的 Dismissable Layer，覆盖 Escape、outside pointer、嵌套层和 trigger branch |
 | WEB-OV-003 | Done | 建立 Focus Scope、焦点恢复、Tab 循环和 roving tabindex primitives，并在真实 Chromium 中验证 |
 | WEB-OV-004 | Done | 复用计数式 body scroll lock，新增 SSR 安全的 Portal container 解析和浮层 cleanup 协议 |
@@ -258,7 +258,7 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | DS-TT-001 | Done | Tooltip Sass 和变量迁入 `@aurora/theme`，Vue 使用兼容代理，React 构建输出同源 CSS |
 | DOC-TT-001 | Done | React Tooltip 中英文页面、独立 TSX 示例和侧边栏入口完成，renderer 隔离检查通过 |
 
-从 M3 起，`core`、`horizon-web-core`、`horizon-web-vue` 和 `horizon-web-react` 的组件能力统一放入大小写一致的 `src/components/<Component>` 目录；通用工具进入 `src/utils`，不再将组件文件平铺在公共包的 `src` 根目录。
+从 M3 起，`core`、`horizon-core`、`horizon-vue` 和 `horizon-react` 的组件能力统一放入大小写一致的 `src/components/<Component>` 目录；通用工具进入 `src/utils`，不再将组件文件平铺在公共包的 `src` 根目录。
 
 ### 迭代 5：Select Core 与 Vue 回接
 
@@ -299,7 +299,7 @@ M2 的公共抽取只包含与渲染框架无关的状态和行为协议。组�
 | 能力 | 状态 | 实施结果 |
 | --- | --- | --- |
 | CORE-SEL-001–004 | Done | `@aurora/core/src/components/Select` 提供公共类型、值归一化、格式化值协议、深比较、Option collection、过滤、键盘导航和受控同步 controller |
-| WEB-SEL-001 | Done | `@aurora/horizon-web-core/src/components/Select` 提供 combobox/listbox/option ARIA、DOM 键盘 adapter 与 active option 滚动 |
+| WEB-SEL-001 | Done | `@aurora/horizon-core/src/components/Select` 提供 combobox/listbox/option ARIA、DOM 键盘 adapter 与 active option 滚动 |
 | VUE-SEL-001 | Done | Vue Select 的模型归一化和 value-format 协议回接 Core，保持既有组件 API 与测试基线 |
 | REACT-SEL-001–004 | Done | React Select 支持受控/非受控值与面板、data/children Option、OptionGroup、过滤、Portal、浮层定位、Provider 字典、表单字段和 render API |
 | DS-SEL-001 | Done | Select 样式与变量迁入 `@aurora/theme`；Vue 使用兼容代理，React 复用相同视觉变量与 Option 样式 |
@@ -897,6 +897,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B40-001 | Done | React 中英文页面、三组独立 TSX 示例与独立侧边栏入口完成；Vue 继续使用独立既有页面，无跨 renderer 映射文案 |
 | PKG-B40-001 | Done | 未新增旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
 | QA-B40-001 | Done | Core 277 项、Theme 8 项、Web Core Node 23/Chromium 70、React Chromium 332、Vue Chromium 2384 项（2383 通过、1 项既有预期失败）全部通过；TimeSelect 定向真实 Chromium 为 Vue 12 项、React 6 项，两个 renderer 的组件源码四项覆盖率均为 100%；五包构建、74 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界和旧组件包名移除约束通过 |
+
+#### M6-B41 Calendar 实施记录（2026-08-19，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B41-001 | Done | Calendar 本地日期网格、受控/非受控日期与视图模型、时间区间、重叠 lane、跨日分组、禁用区间裁剪与 schedule 进入 `@aurora/core`，不依赖 Vue、React、Day.js 或 DOM |
+| HORIZON-B41-001 | Done | Calendar pointer/mouse 选择生命周期与 timeline scroller 进入 `@aurora/horizon-core`，统一 ownerDocument 监听、pointer capture、取消和销毁清理 |
+| VUE-B41-001 | Done | Vue Calendar 保留既有 props、emits、slots、Day.js 与 VNode 投影，日期模型、日程分组、禁用区间裁剪、pointer 生命周期和时间轴滚动均消费共享能力 |
+| REACT-B41-001 | Done | React Calendar 支持受控/非受控日期和视图、年/月/周/日四种模式、日程创建、禁用时段、重叠 lane、默认时间滚动、Provider 文案、原生 ARIA 与 ref 命令 |
+| DS-B41-001 | Done | Calendar canonical Sass 与变量进入 `@aurora/theme`，Vue 原样式改为薄代理，React 复用同一视觉源并补原生 button/select/focus/disabled 状态 |
+| DOC-B41-001 | Done | React 中英文页面和 8 个独立 TSX 示例完成，与 Vue 的 8 个用户场景数量及能力范围一致；两套页面保持 renderer 原生术语且无映射文案 |
+| PKG-B41-001 | Done | Calendar 仅依赖 `@aurora/core`、`@aurora/horizon-core`、`@aurora/horizon-vue`、`@aurora/horizon-react` 新分层，不提供旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
+| QA-B41-001 | Done | Core 288 项、Theme 8 项、Horizon Core Node 23/Chromium 73、React Chromium 350、Vue Chromium 2385 项（2384 通过、1 项既有预期失败）全部通过；Calendar 定向真实 Chromium 为 Vue 55 项、React 18 项，Vue 覆盖率 Statements 98.07%、Branches 95.30%、Functions 98.90%、Lines 98.31%，React 为 Statements 99.52%、Branches 95.54%、Functions 100%、Lines 100%；五包构建、74 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练与包边界检查通过 |
 
 ### 批次 C：浮层与容器
 

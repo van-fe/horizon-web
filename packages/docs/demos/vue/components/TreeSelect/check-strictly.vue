@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web-vue';
+import type { HTreeNodeData } from '@aurora/horizon-vue';
 
 const checkStrictly = ref(true);
 const selectedValues = ref<Array<string | number>>(['critical']);

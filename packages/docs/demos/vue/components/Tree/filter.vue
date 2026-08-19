@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-web-vue';
+import type { HTreeFilterMethodType, HTreeNodeData } from '@aurora/horizon-vue';
 
 const filterValue = ref('');
 const selectedValues = ref<Array<string | number>>([]);

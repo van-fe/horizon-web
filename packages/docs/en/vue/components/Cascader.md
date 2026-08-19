@@ -282,7 +282,7 @@ An empty `options` array shows an empty state. Supply workflow copy or a complet
 Projects can augment `HCascaderOption` for custom TypeScript fields:
 
 ```ts
-declare module '@aurora/horizon-web-vue' {
+declare module '@aurora/horizon-vue' {
   interface HCascaderOption {
     id?: HCascaderOption['value'];
     tag?: HCascaderOption['label'];

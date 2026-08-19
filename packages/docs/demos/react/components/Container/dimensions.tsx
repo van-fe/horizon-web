@@ -1,4 +1,4 @@
-import { Aside, Container, Footer, Main } from '@aurora/horizon-web-react';
+import { Aside, Container, Footer, Main } from '@aurora/horizon-react';
 
 export default function ContainerDimensionsDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

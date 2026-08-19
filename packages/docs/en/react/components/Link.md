@@ -3,8 +3,8 @@
 Link provides native navigation, route-adapter navigation, action behavior, anchor scrolling, and loading or disabled states. Use descriptive content that explains the destination or action.
 
 ```tsx
-import { Link } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Link } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Link/basic.tsx :::

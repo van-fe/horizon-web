@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $confirm } from '@aurora/horizon-web-vue';
+import { $confirm } from '@aurora/horizon-vue';
 
 const collapse = ref(false);
 const selectedValue = ref('staging');

@@ -17,7 +17,7 @@
     "build": "bun run build:js && bun run build:ts",
     "build:js": "bunx --bun vite build",
     "build:ts": "tsc -d --pretty --emitDeclarationOnly",
-    "test": "bun run --bun vitest run --dir ./src --config ../horizon-web-vue/vitest.config.ts"
+    "test": "bun run --bun vitest run --dir ./src --config ../horizon-vue/vitest.config.ts"
   },
   "publishConfig": {
     "access": "public"

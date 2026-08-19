@@ -5,8 +5,8 @@ Tooltip 用于为界面元素提供简短的上下文说明，支持悬停、聚
 ## 基础用法
 
 ```tsx
-import { Tooltip } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Tooltip } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Tooltip/basic.tsx :::

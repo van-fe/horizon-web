@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, Dialog, type DialogHandle } from '@aurora/horizon-web-react';
+import { Button, Dialog, type DialogHandle } from '@aurora/horizon-react';
 
 type Result = 'idle' | 'saved' | 'cancelled';
 

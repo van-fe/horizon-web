@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Segmented, SegmentedItem, Space } from '@aurora/horizon-web-react';
+import { Segmented, SegmentedItem, Space } from '@aurora/horizon-react';
 
 export default function SegmentedDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

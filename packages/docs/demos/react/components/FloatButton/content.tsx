@@ -1,4 +1,4 @@
-import { FloatButton } from '@aurora/horizon-web-react';
+import { FloatButton } from '@aurora/horizon-react';
 
 export default function FloatButtonContentDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

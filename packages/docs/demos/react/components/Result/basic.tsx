@@ -1,4 +1,4 @@
-import { Result, Space } from '@aurora/horizon-web-react';
+import { Result, Space } from '@aurora/horizon-react';
 
 export default function ResultDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

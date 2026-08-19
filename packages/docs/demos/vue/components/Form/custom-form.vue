@@ -41,7 +41,7 @@ import {
   HFormItemTriggerInjectedKey,
   type HFormInstance,
   type HFormRule,
-} from '@aurora/horizon-web-vue';
+} from '@aurora/horizon-vue';
 import { defineComponent, h, inject, reactive, ref, watch } from 'vue';
 
 const CustomInput = defineComponent({

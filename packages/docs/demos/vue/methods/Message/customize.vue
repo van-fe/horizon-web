@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message, HButton, HSpace } from '@aurora/horizon-web-vue';
+import { $message, HButton, HSpace } from '@aurora/horizon-vue';
 import { defineComponent, h } from 'vue';
 
 const ButtonGroup = defineComponent({

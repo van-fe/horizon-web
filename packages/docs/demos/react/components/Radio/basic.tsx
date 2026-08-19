@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Radio, RadioButton, RadioGroup, Space } from '@aurora/horizon-web-react';
-import type { ChoiceValue } from '@aurora/horizon-web-react';
+import { Radio, RadioButton, RadioGroup, Space } from '@aurora/horizon-react';
+import type { ChoiceValue } from '@aurora/horizon-react';
 
 export default function RadioDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

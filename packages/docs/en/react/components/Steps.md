@@ -3,8 +3,8 @@
 Steps presents the current position and state of a multi-stage process.
 
 ```tsx
-import { Step, Steps } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Step, Steps } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Controlled progress

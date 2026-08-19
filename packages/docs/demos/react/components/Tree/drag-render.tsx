@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { TreeOption } from '@aurora/horizon-web-react';
-import { Tree } from '@aurora/horizon-web-react';
+import type { TreeOption } from '@aurora/horizon-react';
+import { Tree } from '@aurora/horizon-react';
 
 type WorkspaceNode = TreeOption & {
   owner?: string;

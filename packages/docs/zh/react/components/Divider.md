@@ -5,8 +5,8 @@ Divider 用于分隔相邻内容或区块，可显示标题并调整视觉强度
 ## 基础用法
 
 ```tsx
-import { Divider } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Divider } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Divider/basic.tsx :::

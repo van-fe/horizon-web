@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Picker, Radio, RadioGroup, Space } from '@aurora/horizon-web-react';
+import { Picker, Radio, RadioGroup, Space } from '@aurora/horizon-react';
 
 const teams = ['Design Systems', 'Frontend Platform', 'Quality Engineering'];
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { TableProps } from '@aurora/horizon-web-vue';
+import type { TableProps } from '@aurora/horizon-vue';
 
 const tableLayout = ref<TableProps['tableLayout']>('fixed');
 const changes = [

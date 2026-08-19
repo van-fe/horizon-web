@@ -5,8 +5,8 @@ Badge 为目标内容补充状态、数量或图标标记。徽标不应替代�
 ## 基础用法
 
 ```tsx
-import { Badge } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Badge } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Badge/basic.tsx :::

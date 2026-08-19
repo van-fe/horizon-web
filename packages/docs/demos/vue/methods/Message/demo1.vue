@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, h } from 'vue';
-import { $message } from '@aurora/horizon-web-vue';
+import { $message } from '@aurora/horizon-vue';
 
 const instance = getCurrentInstance();
 

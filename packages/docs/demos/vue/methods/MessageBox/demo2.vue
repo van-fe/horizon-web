@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { $confirm } from '@aurora/horizon-web-vue';
+import { $confirm } from '@aurora/horizon-vue';
 export default defineComponent({
   setup() {
     const showConfirm = (type?: 'info' | 'success' | 'warning' | 'error') => {

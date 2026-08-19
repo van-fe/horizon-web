@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs, type HTableColumnData, HTableSortOrderEnum } from '@aurora/horizon-web-vue';
+import { dayjs, type HTableColumnData, HTableSortOrderEnum } from '@aurora/horizon-vue';
 
 interface MilestoneRow {
   id: number;

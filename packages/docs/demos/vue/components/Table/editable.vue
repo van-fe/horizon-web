@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTableCellEditContext } from '@aurora/horizon-web-vue';
+import type { HTableCellEditContext } from '@aurora/horizon-vue';
 
 const roles = [
   { label: 'Designer', value: 'Designer' },

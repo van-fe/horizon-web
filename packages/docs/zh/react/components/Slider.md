@@ -3,8 +3,8 @@
 Slider 用于从连续或离散区间中选择单值或范围。每个可交互滑块都应提供无障碍名称。
 
 ```tsx
-import { Slider } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Slider } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Slider/basic.tsx :::

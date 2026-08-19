@@ -3,8 +3,8 @@
 Rate lets people select or review a score with pointer and keyboard input. Give interactive ratings an accessible name and use `readOnly` for display-only scores.
 
 ```tsx
-import { Rate } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Rate } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Rate/basic.tsx :::

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { MaskVariant } from '@aurora/horizon-web-react';
-import { Button, Mask, Segmented, SegmentedItem } from '@aurora/horizon-web-react';
+import type { MaskVariant } from '@aurora/horizon-react';
+import { Button, Mask, Segmented, SegmentedItem } from '@aurora/horizon-react';
 
 const variants: MaskVariant[] = ['default', 'weak', 'strong', 'inverse', 'transparent'];
 

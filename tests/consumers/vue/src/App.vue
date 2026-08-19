@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { HButton } from '@aurora/horizon-web-vue/es/components/Button';
-import { HMask } from '@aurora/horizon-web-vue/es/components/Mask';
-import { HSelect } from '@aurora/horizon-web-vue/es/components/Select';
-import { HSpin } from '@aurora/horizon-web-vue/es/components/Spin';
-import { HTime } from '@aurora/horizon-web-vue/es/components/Time';
+import { HButton } from '@aurora/horizon-vue/es/components/Button';
+import { HMask } from '@aurora/horizon-vue/es/components/Mask';
+import { HSelect } from '@aurora/horizon-vue/es/components/Select';
+import { HSpin } from '@aurora/horizon-vue/es/components/Spin';
+import { HTime } from '@aurora/horizon-vue/es/components/Time';
 import {
   HDescriptionItem,
   HDescriptions,
-} from '@aurora/horizon-web-vue/es/components/Descriptions';
-import { HList, HListItem } from '@aurora/horizon-web-vue/es/components/List';
-import { HPageHeader } from '@aurora/horizon-web-vue/es/components/PageHeader';
-import { HPanel, HPanels } from '@aurora/horizon-web-vue/es/components/Panels';
-import { HTree } from '@aurora/horizon-web-vue/es/components/Tree';
+} from '@aurora/horizon-vue/es/components/Descriptions';
+import { HList, HListItem } from '@aurora/horizon-vue/es/components/List';
+import { HPageHeader } from '@aurora/horizon-vue/es/components/PageHeader';
+import { HPanel, HPanels } from '@aurora/horizon-vue/es/components/Panels';
+import { HTree } from '@aurora/horizon-vue/es/components/Tree';
 
 const value = ref<string>();
 const options = [

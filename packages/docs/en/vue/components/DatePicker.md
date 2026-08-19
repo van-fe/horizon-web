@@ -197,14 +197,14 @@ Set `show-popover-content-only="true"` to render the panel without its trigger.
 
 DatePicker uses Dayjs internally. The following configuration is global:
 
-:::code ../../../../horizon-web-vue/src/utils/useDayJs.ts:::
+:::code ../../../../horizon-vue/src/utils/useDayJs.ts:::
 
 ## Type Definitions
 
-:::code ../../../../horizon-web-vue/src/components/DatePicker/src/utils/types.ts :::
+:::code ../../../../horizon-vue/src/components/DatePicker/src/utils/types.ts :::
 
 ## Supported Formats
 
 The available date formats depend on the current locale:
 
-:::code ../../../../horizon-web-vue/src/locales/dateFormat.json :::
+:::code ../../../../horizon-vue/src/locales/dateFormat.json :::

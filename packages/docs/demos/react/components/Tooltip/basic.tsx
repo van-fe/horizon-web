@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Tooltip } from '@aurora/horizon-web-react';
+import { Button, Tooltip } from '@aurora/horizon-react';
 
 export default function TooltipDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [lastReason, setLastReason] = useState('');

@@ -7,11 +7,11 @@ describe('TimeSelect resolver', () => {
 
     expect(component.resolve('HTimeSelect')).toEqual({
       name: 'HTimeSelect',
-      from: '@aurora/horizon-web-vue/es/components/TimeSelect',
+      from: '@aurora/horizon-vue/es/components/TimeSelect',
       sideEffects: [
-        '@aurora/horizon-web-vue/es/styles/base.css',
-        '@aurora/horizon-web-vue/es/styles/global-variables.css',
-        '@aurora/horizon-web-vue/es/components/TimeSelect/src/style/index.css',
+        '@aurora/horizon-vue/es/styles/base.css',
+        '@aurora/horizon-vue/es/styles/global-variables.css',
+        '@aurora/horizon-vue/es/components/TimeSelect/src/style/index.css',
       ],
     });
   });

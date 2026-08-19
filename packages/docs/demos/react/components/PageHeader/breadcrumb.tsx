@@ -1,4 +1,4 @@
-import { Breadcrumb, PageHeader } from '@aurora/horizon-web-react';
+import { Breadcrumb, PageHeader } from '@aurora/horizon-react';
 
 export default function PageHeaderBreadcrumbDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

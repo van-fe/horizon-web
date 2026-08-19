@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import type { HCalendarPinFlag } from '@aurora/horizon-web-vue';
+import type { HCalendarPinFlag } from '@aurora/horizon-vue';
 
 const weekStart = dayjs().startOf('week');
 const currentDate = ref(dayjs().format('YYYY-MM-DD'));

@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { colors } from '@aurora/horizon-web-vue';
+import { colors } from '@aurora/horizon-vue';
 import { tinyColor } from '@aurora/colors';
 
 export default defineComponent({

@@ -4,7 +4,7 @@ export function isReactTsx(id: string): boolean {
   const normalizedId = id.split('?', 1)[0].replace(/\\/g, '/');
   return (
     normalizedId.endsWith('.tsx') &&
-    (normalizedId.includes('/packages/horizon-web-react/src/') ||
+    (normalizedId.includes('/packages/horizon-react/src/') ||
       normalizedId.includes('/packages/docs/demos/react/'))
   );
 }

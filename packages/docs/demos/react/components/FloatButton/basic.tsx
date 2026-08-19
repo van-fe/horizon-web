@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, FloatButton, type FloatButtonHandle } from '@aurora/horizon-web-react';
+import { Button, FloatButton, type FloatButtonHandle } from '@aurora/horizon-react';
 
 function PlusIcon() {
   return <span aria-hidden="true">＋</span>;

@@ -105,7 +105,7 @@ async function ensureVersion() {
   // empty dir
   shell.rm('-rf', '../dist/*');
 
-  cloneBrowserBuildFileToDist(versions['horizon-web-vue']);
+  cloneBrowserBuildFileToDist(versions['horizon-vue']);
   cloneBrowserBuildFileToDist(tag || 'latest');
 
   // publish doc to fx manually

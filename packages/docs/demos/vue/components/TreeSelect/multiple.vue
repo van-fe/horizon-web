@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { HTreeNodeData } from '@aurora/horizon-web-vue';
+import type { HTreeNodeData } from '@aurora/horizon-vue';
 
 type TagMode = 'all' | 'compact' | 'tooltip';
 

@@ -16,7 +16,7 @@
 
 当前仓库具有以下特点：
 
-- `packages/horizon-web-vue` 是 Vue 3 组件包，公开入口、安装器、组件类型和构建流程均直接依赖 Vue；
+- `packages/horizon-vue` 是 Vue 3 组件包，公开入口、安装器、组件类型和构建流程均直接依赖 Vue；
 - 组件源码中大量使用 `ref`、`computed`、`watch`、`provide/inject`、VNode、Teleport 和 Vue Router；
 - `@aurora/utils` 同时包含纯 TypeScript 工具与 Vue 专属组件、类型及 composable，当前不能直接作为 React 的公共依赖；
 - `@aurora/icon` 是 Vue 图标组件包，需要抽离图标数据后才能提供 React renderer；
@@ -34,9 +34,9 @@
 @aurora/core
 @aurora/theme
 
-@aurora/horizon-web-core
-@aurora/horizon-web-vue
-@aurora/horizon-web-react
+@aurora/horizon-core
+@aurora/horizon-vue
+@aurora/horizon-react
 
 @aurora/skyline-mobile-core
 @aurora/skyline-mobile-vue
@@ -57,11 +57,11 @@
 最终目标是：
 
 ```text
-packages/horizon-web-vue     -> @aurora/horizon-web-vue
-packages/horizon-web-react   -> @aurora/horizon-web-react
+packages/horizon-vue     -> @aurora/horizon-vue
+packages/horizon-react   -> @aurora/horizon-react
 ```
 
-本次改名按 breaking change 实施，不保留 `@aurora/horizon-web` 兼容包、alias、转发入口或 resolver 回退。所有 Vue 消费端必须显式迁移至 `@aurora/horizon-web-vue`，React 消费端使用 `@aurora/horizon-web-react`。`@aurora/eslint-plugin-horizon-web` 注册的规则简写 `@aurora/horizon-web/*` 与组件包无关，继续保留。
+本次改名按 breaking change 实施，不保留 `@aurora/horizon-web` 兼容包、alias、转发入口或 resolver 回退。所有 Vue 消费端必须显式迁移至 `@aurora/horizon-vue`，React 消费端使用 `@aurora/horizon-react`。`@aurora/eslint-plugin-horizon-web` 注册的规则简写 `@aurora/horizon-web/*` 与组件包无关，继续保留。
 
 ## 4. 目标架构
 
@@ -70,9 +70,9 @@ flowchart TB
     AC["@aurora/core<br/>跨产品、跨平台状态、算法、协议"]
 
     AT["@aurora/theme<br/>统一视觉 Token 与多平台主题输出"]
-    HWC["@aurora/horizon-web-core<br/>DOM 与 Web 交互能力"]
-    HWV["@aurora/horizon-web-vue<br/>Vue 3 renderer"]
-    HWR["@aurora/horizon-web-react<br/>React renderer"]
+    HWC["@aurora/horizon-core<br/>DOM 与 Web 交互能力"]
+    HWV["@aurora/horizon-vue<br/>Vue 3 renderer"]
+    HWR["@aurora/horizon-react<br/>React renderer"]
 
     SMC["@aurora/skyline-mobile-core<br/>手势与移动端能力"]
     SMV["@aurora/skyline-mobile-vue<br/>Mobile Vue renderer"]
@@ -112,7 +112,7 @@ flowchart TB
 - Vue Router、React Router；
 - Teleport、Portal、框架 Context。
 
-`@aurora/core` 还禁止包含 Horizon 或 Skyline 的组件名、品牌颜色、产品文案和平台专属默认值。若能力只服务 Horizon Web，应放入 `horizon-web-core`；若只服务 Skyline Mobile，应放入 `skyline-mobile-core`。
+`@aurora/core` 还禁止包含 Horizon 或 Skyline 的组件名、品牌颜色、产品文案和平台专属默认值。若能力只服务 Horizon Web，应放入 `horizon-core`；若只服务 Skyline Mobile，应放入 `skyline-mobile-core`。
 
 ### 4.2 `@aurora/theme`
 
@@ -139,7 +139,7 @@ flowchart TB
 
 平台交互差异，例如 hover、Safe Area、触摸手势和软键盘，不属于主题包。若未来确实出现视觉规范分叉，优先增加 `@aurora/theme/horizon`、`@aurora/theme/skyline` 子入口；只有在版本和发布生命周期也明确分离后，才重新评估拆包。
 
-### 4.3 `@aurora/horizon-web-core`
+### 4.3 `@aurora/horizon-core`
 
 负责可以被 Vue 和 React 共同使用、但依赖浏览器环境的能力：
 
@@ -154,9 +154,9 @@ flowchart TB
 
 该包可以依赖 `@floating-ui/dom` 等 DOM 级库，但不能依赖 `@floating-ui/vue` 或 React 专属包。所有浏览器对象都必须在调用阶段访问，禁止在模块初始化阶段直接读取 `window` 或 `document`。
 
-### 4.4 `@aurora/horizon-web-vue`
+### 4.4 `@aurora/horizon-vue`
 
-由原 `packages/horizon-web` 演进而来，目前源码位于 `packages/horizon-web-vue`，负责：
+由原 `packages/horizon-web` 演进而来，目前源码位于 `packages/horizon-vue`，负责：
 
 - `defineComponent`、Vue JSX、props/emits/slots/exposes；
 - `ref`、`computed`、`watch`、生命周期和 effect cleanup；
@@ -167,7 +167,7 @@ flowchart TB
 
 Vue 组件文件应主要负责渲染、布局、公开 API 接线和组合能力，复杂状态及算法逐步下沉到 core。
 
-### 4.5 `@aurora/horizon-web-react`
+### 4.5 `@aurora/horizon-react`
 
 负责：
 
@@ -179,7 +179,7 @@ Vue 组件文件应主要负责渲染、布局、公开 API 接线和组合能�
 - React StrictMode 下幂等的订阅、副作用和清理；
 - React 组件测试、文档示例和按需导入。
 
-React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现功能。
+React 包不能导入 `@aurora/horizon-vue` 或通过挂载 Vue 组件实现功能。
 
 ### 4.6 同名组件目录规则
 
@@ -187,12 +187,12 @@ React 包不能导入 `@aurora/horizon-web-vue` 或通过挂载 Vue 组件实现
 
 ```text
 packages/core/src/components/Tooltip
-packages/horizon-web-core/src/components/Tooltip
-packages/horizon-web-vue/src/components/Tooltip
-packages/horizon-web-react/src/components/Tooltip
+packages/horizon-core/src/components/Tooltip
+packages/horizon-vue/src/components/Tooltip
+packages/horizon-react/src/components/Tooltip
 ```
 
-`core` 的同名目录保存框架和平台无关的类型、状态机、算法及测试向量；`horizon-web-core` 的同名目录保存该组件使用的 DOM、定位、焦点和浏览器生命周期能力；Vue/React 同名目录只保存各自 renderer 的 API 接线与渲染代码。Button、Switch、Select 等后续组件遵循同一规则。
+`core` 的同名目录保存框架和平台无关的类型、状态机、算法及测试向量；`horizon-core` 的同名目录保存该组件使用的 DOM、定位、焦点和浏览器生命周期能力；Vue/React 同名目录只保存各自 renderer 的 API 接线与渲染代码。Button、Switch、Select 等后续组件遵循同一规则。
 
 真正跨组件的能力可以放入 `src/utils` 或显式的 `src/components/_shared`，但组件私有能力不得平铺到包级 `src` 根目录。每个包通过 `src/components/index.ts` 和 `src/index.ts` 统一导出，消费端不引用私有源码路径。
 
@@ -213,9 +213,9 @@ Horizon Web DOM 能力不得反向进入 Skyline Mobile 包。若 `@aurora/skyli
 ```text
 @aurora/core
     ↑
-@aurora/horizon-web-core
+@aurora/horizon-core
     ↑             ↑
-@aurora/horizon-web-vue   @aurora/horizon-web-react
+@aurora/horizon-vue   @aurora/horizon-react
 ```
 
 必须遵循：
@@ -416,10 +416,10 @@ packages/core/src/components/<Component>/
 ├── contract.ts 或 index.ts     # 领域类型、默认值、校验、事件 payload、区域和命令
 └── manifest.ts                 # 描述、公共语义、可访问性和测试向量
 
-packages/horizon-web-vue/src/components/<Component>/
+packages/horizon-vue/src/components/<Component>/
 └── renderer adapter            # props/emits/slots/exposes，允许重命名、删减和 Vue 扩展
 
-packages/horizon-web-react/src/components/<Component>/
+packages/horizon-react/src/components/<Component>/
 └── renderer adapter            # props/callbacks/children 或 renderers/ref，允许 React 扩展
 ```
 
@@ -462,7 +462,7 @@ API Generator 应从 manifest 生成：
 
 交付物：
 
-- 新建 `core`、`theme`、`horizon-web-core`、`horizon-web-react`；
+- 新建 `core`、`theme`、`horizon-core`、`horizon-react`；
 - 将纯 class、namespace、类型判断和无框架工具从 `@aurora/utils` 中分离；
 - 建立 Vue/React 独立构建、类型检查和测试任务；
 - 建立统一 CSS 输出和 package exports；
@@ -539,8 +539,8 @@ Tree、Table、Upload 等组件应优先抽出数据模型、算法和异步调�
 
 交付物：
 
-- 将现有实现迁移到 `packages/horizon-web-vue`；
-- 发布 `@aurora/horizon-web-vue`；
+- 将现有实现迁移到 `packages/horizon-vue`；
+- 发布 `@aurora/horizon-vue`；
 - 删除 `@aurora/horizon-web` 包及其版本、发布和锁文件入口；
 - 更新文档、模板、resolver、API Generator 和内部依赖；
 - 提供业务项目迁移说明和 codemod，并将包名变更标记为 breaking change。
@@ -551,8 +551,8 @@ Tree、Table、Upload 等组件应优先抽出数据模型、算法和异步调�
 
 1. 记录当前 Vue props、emits、slots、exposes、DOM、class、ARIA 和边界状态；
 2. 标记纯逻辑、DOM 逻辑、Vue 生命周期和渲染逻辑；
-3. 将跨产品的纯类型、默认值、算法和状态机移动到 `core`，Horizon Web 专属能力移动到 `horizon-web-core`；
-4. 将通用 DOM 行为移动到 `horizon-web-core`；
+3. 将跨产品的纯类型、默认值、算法和状态机移动到 `core`，Horizon Web 专属能力移动到 `horizon-core`；
+4. 将通用 DOM 行为移动到 `horizon-core`；
 5. 让现有 Vue 组件重新消费拆出的能力，并运行原测试；
 6. 实现 React adapter 和 React 原生 API；
 7. 共享主题样式并补充 DOM/class 契约测试；
@@ -649,7 +649,7 @@ Vue 使用 Vue Test Utils，React 使用 React Testing Library，分别验证：
 
 第一里程碑不以“完成多少 React 组件”为目标，而以验证架构闭环为目标：
 
-1. 建立 `core`、`theme`、`horizon-web-core`、`horizon-web-react` 骨架；
+1. 建立 `core`、`theme`、`horizon-core`、`horizon-react` 骨架；
 2. 分离当前 `@aurora/utils` 中的纯工具与 Vue 工具；
 3. 完成 Button、Switch、Tooltip、Select 单选模式四个垂直试点；
 4. 打通 Vue/React 构建、测试、文档、主题和 API Generator；

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { demoAssetUrl } from '../../../demo-assets';
-import type { HUploadUserFile } from '@aurora/horizon-web-vue';
+import type { HUploadUserFile } from '@aurora/horizon-vue';
 import { onBeforeUnmount, ref } from 'vue';
 import { createMockUploader, resolveLocalUpload } from './mockUpload';
 

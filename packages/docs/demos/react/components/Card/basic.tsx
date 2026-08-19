@@ -1,4 +1,4 @@
-import { Card, Space } from '@aurora/horizon-web-react';
+import { Card, Space } from '@aurora/horizon-react';
 
 export default function CardDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Picker } from '@aurora/horizon-web-react';
+import { Button, Picker } from '@aurora/horizon-react';
 
 export default function PickerControlledDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

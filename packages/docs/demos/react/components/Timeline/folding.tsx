@@ -1,4 +1,4 @@
-import { Timeline, TimelineItem } from '@aurora/horizon-web-react';
+import { Timeline, TimelineItem } from '@aurora/horizon-react';
 
 export default function TimelineFoldingDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

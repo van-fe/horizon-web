@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { demoAssetUrl } from '../../../demo-assets';
 import { ref } from 'vue';
-import type { HViewerSource } from '@aurora/horizon-web-vue';
+import type { HViewerSource } from '@aurora/horizon-vue';
 
 const visible = ref(false);
 const status = ref('Select the second marker in the viewer');

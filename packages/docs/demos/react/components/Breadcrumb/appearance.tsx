@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { BreadcrumbSize } from '@aurora/horizon-web-react';
-import { Breadcrumb, Segmented, SegmentedItem } from '@aurora/horizon-web-react';
+import type { BreadcrumbSize } from '@aurora/horizon-react';
+import { Breadcrumb, Segmented, SegmentedItem } from '@aurora/horizon-react';
 
 export default function BreadcrumbAppearanceDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

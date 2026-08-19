@@ -5,8 +5,8 @@ Badge supplements a target with a compact status, count, or icon. It should not 
 ## Basic Usage
 
 ```tsx
-import { Badge } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Badge } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Badge/basic.tsx :::

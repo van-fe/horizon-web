@@ -5,8 +5,8 @@ Card 用于承载一组相关内容和操作，可配置标题、头尾内容、
 ## 基础用法
 
 ```tsx
-import { Card } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Card } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Card/basic.tsx :::

@@ -1,4 +1,4 @@
-import { DescriptionItem, Descriptions } from '@aurora/horizon-web-react';
+import { DescriptionItem, Descriptions } from '@aurora/horizon-react';
 
 export default function DescriptionsResponsiveDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

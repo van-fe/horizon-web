@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Step, Steps, Switch } from '@aurora/horizon-web-react';
+import { Step, Steps, Switch } from '@aurora/horizon-react';
 
 export default function StepsGuardDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

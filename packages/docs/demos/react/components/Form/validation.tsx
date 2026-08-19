@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
-import { Button, Form, FormItem, Input } from '@aurora/horizon-web-react';
-import type { FormHandle } from '@aurora/horizon-web-react';
+import { Button, Form, FormItem, Input } from '@aurora/horizon-react';
+import type { FormHandle } from '@aurora/horizon-react';
 
 export default function FormValidationDemo({ locale }: { locale: 'en' | 'zh' }) {
   const formRef = useRef<FormHandle>(null);

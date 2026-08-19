@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, CommandPalette } from '@aurora/horizon-web-react';
+import { Button, CommandPalette } from '@aurora/horizon-react';
 
 const commands = [
   { id: 'design', label: 'Design review', group: 'Meetings', shortcut: 'D' },

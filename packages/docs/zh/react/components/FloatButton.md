@@ -8,8 +8,8 @@ import {
   FloatButtonGroup,
   type FloatButtonHandle,
   type FloatButtonGroupHandle,
-} from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+} from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础用法

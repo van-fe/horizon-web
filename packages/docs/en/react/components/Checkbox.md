@@ -3,8 +3,8 @@
 Checkbox selects zero or more independent options. Use `CheckboxGroup` for a shared array value and `CheckboxButton` when the same behavior needs a compact button presentation.
 
 ```tsx
-import { Checkbox, CheckboxButton, CheckboxGroup } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Checkbox, CheckboxButton, CheckboxGroup } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Checkbox/basic.tsx :::

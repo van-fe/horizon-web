@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { CollapseValue } from '@aurora/horizon-web-react';
-import { Collapse, CollapseItem } from '@aurora/horizon-web-react';
+import type { CollapseValue } from '@aurora/horizon-react';
+import { Collapse, CollapseItem } from '@aurora/horizon-react';
 
 export default function CollapseAccordionDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

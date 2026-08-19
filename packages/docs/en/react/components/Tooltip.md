@@ -5,8 +5,8 @@ Tooltip provides concise contextual help for an interface element and supports h
 ## Basic usage
 
 ```tsx
-import { Tooltip } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Tooltip } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Tooltip/basic.tsx :::

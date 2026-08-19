@@ -3,8 +3,8 @@
 Input 用于输入单行文本、密码和多行内容。每个输入框都应通过可见标签或 `aria-label` 提供无障碍名称。
 
 ```tsx
-import { Input } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Input } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Input/basic.tsx :::

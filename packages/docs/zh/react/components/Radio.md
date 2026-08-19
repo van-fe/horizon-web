@@ -3,8 +3,8 @@
 Radio 用于从一组互斥选项中选择一项。使用稳定的 `name` 获得原生键盘分组行为，需要按钮外观时使用 `RadioButton`。
 
 ```tsx
-import { Radio, RadioButton, RadioGroup } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Radio, RadioButton, RadioGroup } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Radio/basic.tsx :::

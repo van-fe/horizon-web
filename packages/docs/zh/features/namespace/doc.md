@@ -21,7 +21,7 @@ horizon-web 提供的默认命名空间为 `n`，在微应用等特殊环境下�
 需要保证 `setNamespace` 在调用 `createApp` 前运行。
 
 ```ts
-import { setNamespace } from '@aurora/horizon-web-vue';
+import { setNamespace } from '@aurora/horizon-vue';
 
 setNamespace('x');
 
@@ -36,7 +36,7 @@ setNamespace('x');
 在你的项目中创建一个 `scss` 文件: `例如：(styles/horizon-web.scss)`:
 
 ```scss
-@forward '@aurora/horizon-web-vue/es/styles/index.scss' with (
+@forward '@aurora/horizon-vue/es/styles/index.scss' with (
   $namespace: 'x',
 );
 
@@ -62,7 +62,7 @@ setNamespace('x');
 
 
 ```scss
-@forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
+@forward '@aurora/horizon-vue/es/styles/mixins/config.scss' with (
   $namespace: 'x',
 );
 ```
@@ -125,12 +125,12 @@ module.exports = {
 
 ## 按需引入 + SCSS变量
 
-按需引入只有 `@aurora/horizon-web-vue` 支持。`@aurora/horizon-web-table` 的样式需要全量引入。
+按需引入只有 `@aurora/horizon-vue` 支持。`@aurora/horizon-web-table` 的样式需要全量引入。
 
 和上面的 **设置 SCSS 变量** 区别在于，`styles/horizon-web.scss` 的内容改为：
 
 ```scss
-@forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
+@forward '@aurora/horizon-vue/es/styles/mixins/config.scss' with (
   $namespace: 'x',
 );
 

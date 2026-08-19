@@ -3,8 +3,8 @@
 Popover 在单个触发元素旁展示可交互的上下文内容，支持延迟悬停、聚焦、点击、受控状态、自动定位、Portal、遮罩与命令式控制。
 
 ```tsx
-import { PopContent, Popover } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { PopContent, Popover } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础用法

@@ -11,7 +11,7 @@
 
 ## 入口文件配置
 ```ts
-import { setNamespace } from '@aurora/horizon-web-vue';
+import { setNamespace } from '@aurora/horizon-vue';
 
 setNamespace('x');
 
@@ -34,7 +34,7 @@ setNamespace('x');
 ## 全量使用
 新建一个 `scss` 文件，然后引入这个文件即可：
 ```scss
-@forward '@aurora/horizon-web-vue/es/styles/index.scss' with (
+@forward '@aurora/horizon-vue/es/styles/index.scss' with (
   $namespace: 'x',
 );
 ```
@@ -42,7 +42,7 @@ setNamespace('x');
 ## 按需使用
 1. 新建一个 `scss` 文件 （假定路径是 `./src/assets/horizon-web.scss`）:
     ```scss
-    @forward '@aurora/horizon-web-vue/es/styles/mixins/config.scss' with (
+    @forward '@aurora/horizon-vue/es/styles/mixins/config.scss' with (
       $namespace: 'x',
     );
     ```

@@ -3,8 +3,8 @@
 Panels displays one keyed content panel at a time. The selection remains controlled by application state.
 
 ```tsx
-import { Panel, Panels } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Panel, Panels } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Controlled selection

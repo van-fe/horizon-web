@@ -1,4 +1,4 @@
-import { Avatar, Space } from '@aurora/horizon-web-react';
+import { Avatar, Space } from '@aurora/horizon-react';
 
 const portrait =
   'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"%3E%3Crect width="80" height="80" fill="%235b62f4"/%3E%3Ccircle cx="40" cy="30" r="16" fill="%23fff"/%3E%3Cpath d="M14 78c2-20 13-30 26-30s24 10 26 30" fill="%23fff"/%3E%3C/svg%3E';

@@ -5,8 +5,8 @@ Card contains a related group of content and actions with optional headers, foot
 ## Basic Usage
 
 ```tsx
-import { Card } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Card } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Card/basic.tsx :::

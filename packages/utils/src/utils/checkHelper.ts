@@ -1,1 +1,1 @@
-export { isBrowser } from '@aurora/horizon-web-core';
+export { isBrowser } from '@aurora/horizon-core';

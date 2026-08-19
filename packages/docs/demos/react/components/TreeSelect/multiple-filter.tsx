@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { TreeSelectOption, TreeSelectProps } from '@aurora/horizon-web-react';
-import { TreeSelect } from '@aurora/horizon-web-react';
+import type { TreeSelectOption, TreeSelectProps } from '@aurora/horizon-react';
+import { TreeSelect } from '@aurora/horizon-react';
 
 function valueCount(value: TreeSelectProps['value']): number {
   if (Array.isArray(value)) return value.length;

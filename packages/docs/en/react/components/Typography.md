@@ -5,8 +5,8 @@ Typography presents headings, body text, and supporting text consistently, with 
 ## Basic Usage
 
 ```tsx
-import { Typography } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Typography } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Typography/basic.tsx :::

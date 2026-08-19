@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TabsKey, TabsSize, TabsVariant } from '@aurora/horizon-web-react';
-import { Segmented, SegmentedItem, Tab, Tabs } from '@aurora/horizon-web-react';
+import type { TabsKey, TabsSize, TabsVariant } from '@aurora/horizon-react';
+import { Segmented, SegmentedItem, Tab, Tabs } from '@aurora/horizon-react';
 
 export default function TabsVariantsDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

@@ -3,8 +3,8 @@
 时间轴用于清晰展示里程碑、状态变化或操作记录的时间流。
 
 ```tsx
-import { Timeline, TimelineItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Timeline, TimelineItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 里程碑

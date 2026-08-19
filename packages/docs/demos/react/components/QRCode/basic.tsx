@@ -1,4 +1,4 @@
-import { QRCode } from '@aurora/horizon-web-react';
+import { QRCode } from '@aurora/horizon-react';
 
 export default function QRCodeBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

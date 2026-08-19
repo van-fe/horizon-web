@@ -1,4 +1,4 @@
-import { Space, Time } from '@aurora/horizon-web-react';
+import { Space, Time } from '@aurora/horizon-react';
 
 export default function TimeModesDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

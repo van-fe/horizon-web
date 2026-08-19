@@ -60,6 +60,7 @@ const reactSidebar = [
       { text: 'AutoComplete', link: 'components/AutoComplete' },
       { text: 'Picker', link: 'components/Picker' },
       { text: 'Cascader', link: 'components/Cascader' },
+      { text: 'Calendar', link: 'components/Calendar' },
       { text: 'TreeSelect', link: 'components/TreeSelect' },
       { text: 'TimeSelect', link: 'components/TimeSelect' },
       { text: 'Slider', link: 'components/Slider' },

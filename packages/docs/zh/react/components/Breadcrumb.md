@@ -3,8 +3,8 @@
 Breadcrumb 用于说明当前页面在信息层级中的位置。适合两级以上、并且用户可能需要返回上级的路径。
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Breadcrumb, BreadcrumbItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 数据与组合

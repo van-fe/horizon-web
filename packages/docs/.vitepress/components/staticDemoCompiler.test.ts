@@ -12,9 +12,9 @@ describe('static demo compiler utilities', () => {
       findImports(`
         import { ref } from 'vue'
         import tokens from './theme.json'
-        export { HButton } from "@aurora/horizon-web-vue"
+        export { HButton } from "@aurora/horizon-vue"
       `),
-    ).toEqual(['vue', './theme.json', '@aurora/horizon-web-vue']);
+    ).toEqual(['vue', './theme.json', '@aurora/horizon-vue']);
   });
 
   it('resolves relative demo paths without Node path APIs', () => {

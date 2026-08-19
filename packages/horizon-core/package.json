@@ -1,0 +1,42 @@
+{
+  "name": "@aurora/horizon-core",
+  "version": "1.0.0",
+  "description": "Framework-agnostic browser primitives for Horizon Web renderers.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bun run build:dist && bun run build:types",
+    "build:dist": "bunx --bun vite build",
+    "build:types": "rm -rf types && tsc -d --pretty --emitDeclarationOnly --declarationDir ./types",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run test:node && bun run test:browser",
+    "test:node": "bun run --bun vitest run --config ./vitest.config.ts",
+    "test:browser": "bun run --bun vitest run --config ./vitest.browser.config.ts"
+  },
+  "dependencies": {
+    "@aurora/core": "workspace:*",
+    "dayjs": "^1.11.13",
+    "qrcode": "1.5.4"
+  },
+  "devDependencies": {
+    "@types/qrcode": "1.5.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC"
+}

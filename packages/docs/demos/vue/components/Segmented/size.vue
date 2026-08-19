@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HSegmentedSize } from '@aurora/horizon-web-vue';
+import type { HSegmentedSize } from '@aurora/horizon-vue';
 
 const size = ref<HSegmentedSize>('medium');
 const active = ref('Tasks');

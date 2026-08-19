@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { Backtop, type BacktopHandle } from '@aurora/horizon-web-react';
+import { Backtop, type BacktopHandle } from '@aurora/horizon-react';
 
 export default function BacktopCustomDemo({ locale }: { locale: 'en' | 'zh' }) {
   const actionRef = useRef<BacktopHandle>(null);

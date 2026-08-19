@@ -1,4 +1,4 @@
-import { Affix } from '@aurora/horizon-web-react';
+import { Affix } from '@aurora/horizon-react';
 
 export default function AffixBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

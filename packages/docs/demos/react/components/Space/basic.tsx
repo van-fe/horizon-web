@@ -1,4 +1,4 @@
-import { Button, Space } from '@aurora/horizon-web-react';
+import { Button, Space } from '@aurora/horizon-react';
 
 export default function SpaceDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

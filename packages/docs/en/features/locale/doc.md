@@ -9,7 +9,7 @@ HorizonWeb provides global configuration for internationalization.
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import horizon-web, { defineOption } from '@aurora/horizon-web-vue';
+import horizon-web, { defineOption } from '@aurora/horizon-vue';
 import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
@@ -29,7 +29,7 @@ If you use on-demand loading, you need to import and use `HorizonWebProvides` se
 ```ts
 import App from './App.vue';
 import { createApp } from 'vue';
-import { HorizonWebProvides, defineOption } from '@aurora/horizon-web-vue';
+import { HorizonWebProvides, defineOption } from '@aurora/horizon-vue';
 import { LocaleSupportLang } from "@aurora/locale-vue";
 
 createApp(App)
@@ -59,7 +59,7 @@ If you need to dynamically modify the language, in addition to using `Applicatio
 If your business needs to use custom language packs, you can configure as follows:
 
 ```ts
-import { HorizonWebProvides, defineOption } from "@aurora/horizon-web-vue";
+import { HorizonWebProvides, defineOption } from "@aurora/horizon-vue";
 import { LocaleSupportLang } from "@aurora/locale-vue";
 import En from "your-En-dictionary-file-path";
 import ZhCN from "your-ZhCn-dictionary-file-path";
@@ -103,7 +103,7 @@ After the new revision, it is more convenient to use, suitable not only for comp
 ```ts
 import { defineComponent } from 'vue';
 import { localeInjectKey, defaultLocale } from '~/provides/localable'; // for horizon-web developer
-// import { localeInjectKey } from '@aurora/horizon-web-vue'; // for third-part developer
+// import { localeInjectKey } from '@aurora/horizon-vue'; // for third-part developer
 import { inject } from '@vue/runtime-core';
 
 export default defineComponent({

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Backtop } from '@aurora/horizon-web-react';
+import { Backtop } from '@aurora/horizon-react';
 
 export default function BacktopBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const targetRef = useRef<HTMLDivElement>(null);

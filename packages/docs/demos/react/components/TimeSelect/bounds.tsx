@@ -1,4 +1,4 @@
-import { TimeSelect } from '@aurora/horizon-web-react';
+import { TimeSelect } from '@aurora/horizon-react';
 
 export default function TimeSelectBoundsDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

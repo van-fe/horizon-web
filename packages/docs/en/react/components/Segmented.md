@@ -3,8 +3,8 @@
 Segmented switches between a compact set of mutually exclusive views. Use explicit, unique item values and keep labels short enough for narrow layouts.
 
 ```tsx
-import { Segmented, SegmentedItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Segmented, SegmentedItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Segmented/basic.tsx :::

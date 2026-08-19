@@ -5,8 +5,8 @@ Progress 展示任务的完成程度，支持线形、圆形和仪表盘形式�
 ## 基础用法
 
 ```tsx
-import { Progress } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Progress } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Progress/basic.tsx :::

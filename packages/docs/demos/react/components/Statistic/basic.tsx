@@ -1,4 +1,4 @@
-import { Space, Statistic } from '@aurora/horizon-web-react';
+import { Space, Statistic } from '@aurora/horizon-react';
 
 export default function StatisticDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

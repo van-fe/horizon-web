@@ -3,8 +3,8 @@
 Link 支持原生导航、路由适配器导航、操作触发、锚点滚动以及加载和禁用状态。链接内容应清晰说明目的地或要执行的操作。
 
 ```tsx
-import { Link } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Link } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Link/basic.tsx :::

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, HorizonWebProvider, Popconfirm } from '@aurora/horizon-web-react';
+import { Button, HorizonWebProvider, Popconfirm } from '@aurora/horizon-react';
 
 function ArchiveIcon() {
   return (

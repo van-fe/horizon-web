@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { demoAssetUrl } from '../../../demo-assets';
 import { ref } from 'vue';
-import type { AvatarProps } from '@aurora/horizon-web-vue';
+import type { AvatarProps } from '@aurora/horizon-vue';
 
 const size = ref<AvatarProps['size']>('medium');
 const fit = ref<NonNullable<AvatarProps['fit']>>('cover');

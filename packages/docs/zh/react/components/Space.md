@@ -5,8 +5,8 @@ Space 使用统一间距排列一组内容，支持水平、垂直、换行和�
 ## 基础用法
 
 ```tsx
-import { Space, SpaceItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Space, SpaceItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Space/basic.tsx :::

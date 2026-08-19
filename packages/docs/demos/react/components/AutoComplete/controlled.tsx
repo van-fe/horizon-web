@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AutoComplete } from '@aurora/horizon-web-react';
+import { AutoComplete } from '@aurora/horizon-react';
 
 const options = [
   { label: 'Alpha', value: 'alpha' },

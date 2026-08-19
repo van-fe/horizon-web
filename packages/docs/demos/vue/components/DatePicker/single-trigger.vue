@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web-vue';
+import { dayjs } from '@aurora/horizon-vue';
 
 type PanelMode = 'linked' | 'independent' | 'single';
 

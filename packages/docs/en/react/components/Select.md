@@ -5,8 +5,8 @@ Select chooses one value from a collection. It supports data options, declarativ
 ## Basic usage
 
 ```tsx
-import { Select } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Select } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Select/basic.tsx :::
@@ -14,7 +14,7 @@ import '@aurora/horizon-web-react/style.css';
 ## Declarative options
 
 ```tsx
-import { Option, OptionGroup, Select } from '@aurora/horizon-web-react';
+import { Option, OptionGroup, Select } from '@aurora/horizon-react';
 
 <Select placeholder="Choose a city">
   <OptionGroup label="Popular cities">

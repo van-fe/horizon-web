@@ -3,8 +3,8 @@
 Empty presents a consistent placeholder when data or content is unavailable and can include a follow-up action.
 
 ```tsx
-import { Empty } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Empty } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Empty/basic.tsx :::

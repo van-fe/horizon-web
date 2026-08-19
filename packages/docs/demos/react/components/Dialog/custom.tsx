@@ -5,7 +5,7 @@ import {
   type DialogProps,
   Segmented,
   SegmentedItem,
-} from '@aurora/horizon-web-react';
+} from '@aurora/horizon-react';
 
 type DialogSize = NonNullable<DialogProps['size']>;
 

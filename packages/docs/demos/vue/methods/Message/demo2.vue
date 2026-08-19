@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { $message } from '@aurora/horizon-web-vue';
+import { $message } from '@aurora/horizon-vue';
 const open1 = () => {
   $message('这是一条消息提示');
 };

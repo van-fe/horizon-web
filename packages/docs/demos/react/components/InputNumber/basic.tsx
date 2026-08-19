@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputNumber } from '@aurora/horizon-web-react';
+import { InputNumber } from '@aurora/horizon-react';
 import type { InputNumberValue } from '@aurora/core';
 
 export default function InputNumberBasicDemo({ locale }: { locale: 'en' | 'zh' }) {

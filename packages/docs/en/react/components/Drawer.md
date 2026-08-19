@@ -3,8 +3,8 @@
 Drawer slides a focused panel from an interface edge while preserving context on the underlying page. It supports four placements, responsive presets, guarded closing, modal interaction management, and pointer resizing.
 
 ```tsx
-import { Drawer, type DrawerHandle } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Drawer, type DrawerHandle } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Basic usage

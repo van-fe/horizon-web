@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref, toRef, useId } from 'vue';
-import { $message } from '@aurora/horizon-web-vue';
+import { $message } from '@aurora/horizon-vue';
 import { useDemoSource } from './useDemoSource';
 import { useLiveDemo } from './useLiveDemo';
 
@@ -151,7 +151,7 @@ function toggleCode() {
 </template>
 
 <style lang="scss" scoped>
-@use '../../../horizon-web-vue/src/styles/mixins';
+@use '../../../horizon-vue/src/styles/mixins';
 
 .component-demo {
   overflow: hidden;

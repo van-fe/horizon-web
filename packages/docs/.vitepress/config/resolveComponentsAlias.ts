@@ -1,10 +1,10 @@
 export default () => ({
   name: 'resolveComponentsAlias',
   transform(code: string, id: string) {
-    if (id.includes('packages/horizon-web-vue/')) {
-      if (/import\s*[^"]*"@aurora\/horizon-web-vue/gm.test(code)) {
+    if (id.includes('packages/horizon-vue/')) {
+      if (/import\s*[^"]*"@aurora\/horizon-vue/gm.test(code)) {
         code = code.replace(
-          /(import\s*[^"]*"@aurora\/horizon-web-vue)"/gm,
+          /(import\s*[^"]*"@aurora\/horizon-vue)"/gm,
           '$1/src/"',
         );
         return code;

@@ -8,7 +8,7 @@ import chalk from 'chalk';
 function writeFiles(replacer: Record<string, string>) {
   const mainDir = resolve(
     __dirname,
-    '../../../packages/horizon-web-vue/src/directives',
+    '../../../packages/horizon-vue/src/directives',
     replacer.nameWithPrefix,
   );
 

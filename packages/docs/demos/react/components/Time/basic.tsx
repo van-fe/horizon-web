@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Space, Time } from '@aurora/horizon-web-react';
+import { Button, Space, Time } from '@aurora/horizon-react';
 
 export default function TimeBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [key, setKey] = useState(0);

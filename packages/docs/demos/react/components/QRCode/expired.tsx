@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QRCode } from '@aurora/horizon-web-react';
+import { QRCode } from '@aurora/horizon-react';
 
 export default function QRCodeExpiredDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

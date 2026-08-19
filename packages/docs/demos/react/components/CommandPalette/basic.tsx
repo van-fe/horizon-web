@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import type { CommandPaletteHandle } from '@aurora/horizon-web-react';
-import { Button, CommandPalette } from '@aurora/horizon-web-react';
+import type { CommandPaletteHandle } from '@aurora/horizon-react';
+import { Button, CommandPalette } from '@aurora/horizon-react';
 
 const commands = [
   {

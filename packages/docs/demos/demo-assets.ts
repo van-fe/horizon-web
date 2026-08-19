@@ -1,4 +1,4 @@
-import type { HViewerSource } from '@aurora/horizon-web-vue';
+import type { HViewerSource } from '@aurora/horizon-vue';
 
 export function publicAssetUrl(pathname: string) {
   return `${import.meta.env.BASE_URL}${pathname.replace(/^\/+/, '')}`;

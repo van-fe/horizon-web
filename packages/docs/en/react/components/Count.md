@@ -3,8 +3,8 @@
 Count displays a static or incrementing number with decimal and custom grouping support.
 
 ```tsx
-import { Count } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Count } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Count/basic.tsx :::

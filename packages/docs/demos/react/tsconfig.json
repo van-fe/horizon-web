@@ -1,17 +1,17 @@
 {
-  "extends": "../../../horizon-web-react/tsconfig.json",
+  "extends": "../../../horizon-react/tsconfig.json",
   "compilerOptions": {
     "declaration": false,
     "noEmit": true,
     "paths": {
       "@aurora/core": ["../../../core/src/index.ts"],
-      "@aurora/horizon-web-react": ["../../../horizon-web-react/src/index.ts"],
+      "@aurora/horizon-react": ["../../../horizon-react/src/index.ts"],
       "@aurora/theme": ["../../../theme/src/index.ts"],
-      "react": ["../../../horizon-web-react/node_modules/@types/react/index.d.ts"],
-      "react/*": ["../../../horizon-web-react/node_modules/@types/react/*"]
+      "react": ["../../../horizon-react/node_modules/@types/react/index.d.ts"],
+      "react/*": ["../../../horizon-react/node_modules/@types/react/*"]
     },
     "rootDir": "../../../",
-    "typeRoots": ["../../../horizon-web-react/node_modules/@types"],
+    "typeRoots": ["../../../horizon-react/node_modules/@types"],
     "types": ["react", "react-dom"]
   },
   "include": ["**/*.ts", "**/*.tsx"]

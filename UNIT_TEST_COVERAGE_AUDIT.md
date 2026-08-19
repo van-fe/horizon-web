@@ -1,7 +1,7 @@
 # Horizon Web 单元测试覆盖审计与补测计划
 
 > 审计日期：2026-08-11
-> 范围：`packages/horizon-web-vue/src/components` 下 87 个一级组件包
+> 范围：`packages/horizon-vue/src/components` 下 87 个一级组件包
 > 原则：测试公开行为和用户可观察结果，不以私有实现或快照数量代替行为覆盖。
 
 ## 当前实施结果
@@ -10,7 +10,7 @@
 - [x] 全量真实浏览器回归：265 个测试文件，2,295 个通过，1 个预期失败，共 2,296 个测试。
 - [x] 纯源码分析、Sass 规则和 Bun runtime 测试已拆到独立 Node 项目：10 个测试文件，23 个测试全部通过。
 - [x] `happy-dom`、`jsdom` 已从直接开发依赖和测试配置中移除；仓库源码与配置无相关环境引用。
-- [x] 根目录及 `horizon-web`、`horizon-web-react`、`colors`、`upload-adapters`、`unplugin-resolver`、`locale-react` 的 DOM 测试入口统一为无头 Chromium。
+- [x] 根目录及 `horizon-web`、`horizon-react`、`colors`、`upload-adapters`、`unplugin-resolver`、`locale-react` 的 DOM 测试入口统一为无头 Chromium。
 - [x] 组件开发 skill 已固化真实浏览器要求，后续不得以 DOM 模拟器作为组件测试回退方案。
 
 本清单下方的“足够 / 部分 / 不足”分类保留为补测前的审计基线，用于说明本轮为何选择这些补测场景；不能再当作迁移后的实时覆盖率结论。重新采集 Browser Mode 覆盖率后再更新百分比。

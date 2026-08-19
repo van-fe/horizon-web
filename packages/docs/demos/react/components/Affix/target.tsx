@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { Affix, type AffixHandle } from '@aurora/horizon-web-react';
+import { Affix, type AffixHandle } from '@aurora/horizon-react';
 
 export default function AffixTargetDemo({ locale }: { locale: 'en' | 'zh' }) {
   const targetRef = useRef<HTMLDivElement>(null);

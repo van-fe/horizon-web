@@ -3,8 +3,8 @@
 Statistic displays a key value, unit, and business trend.
 
 ```tsx
-import { Statistic } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Statistic } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Statistic/basic.tsx :::

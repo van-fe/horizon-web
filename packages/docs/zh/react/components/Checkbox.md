@@ -3,8 +3,8 @@
 Checkbox 用于选择零个或多个相互独立的选项。需要共享数组值时使用 `CheckboxGroup`，需要紧凑按钮外观时使用 `CheckboxButton`。
 
 ```tsx
-import { Checkbox, CheckboxButton, CheckboxGroup } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Checkbox, CheckboxButton, CheckboxGroup } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Checkbox/basic.tsx :::

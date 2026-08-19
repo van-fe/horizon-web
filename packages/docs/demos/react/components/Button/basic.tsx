@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@aurora/horizon-web-react';
+import { Button } from '@aurora/horizon-react';
 
 export default function ButtonDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [status, setStatus] = useState('');

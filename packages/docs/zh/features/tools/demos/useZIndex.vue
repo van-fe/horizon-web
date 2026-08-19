@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useZIndex } from '@aurora/horizon-web-vue';
+import { useZIndex } from '@aurora/horizon-vue';
 
 export default defineComponent({
   name: 'UseZIndex',

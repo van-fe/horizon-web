@@ -1,4 +1,4 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, Space } from '@aurora/horizon-web-react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, Space } from '@aurora/horizon-react';
 
 const menu = (
   <DropdownMenu>

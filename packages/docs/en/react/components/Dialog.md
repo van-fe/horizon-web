@@ -3,8 +3,8 @@
 Dialog presents focused information or actions in a modal layer. It manages focus containment, background scroll locking, stacked dismissal, Portal rendering, and guarded close requests.
 
 ```tsx
-import { Dialog, type DialogHandle } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Dialog, type DialogHandle } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Basic usage

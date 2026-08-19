@@ -7,7 +7,7 @@
 
 [English](./README.md) | **简体中文**
 
-`Horizon Web` 是基于 Vue 3 与 Composition API 构建的企业级组件库，通过 npm 包 `@aurora/horizon-web-vue` 发布。组件库内置 90+ 常用组件，覆盖表单、数据展示、状态反馈、导航等常见业务场景，并提供主题定制、暗黑模式、国际化与按需引入等开箱即用的能力，帮助业务团队快速搭建中后台应用。
+`Horizon Web` 是基于 Vue 3 与 Composition API 构建的企业级组件库，通过 npm 包 `@aurora/horizon-vue` 发布。组件库内置 90+ 常用组件，覆盖表单、数据展示、状态反馈、导航等常见业务场景，并提供主题定制、暗黑模式、国际化与按需引入等开箱即用的能力，帮助业务团队快速搭建中后台应用。
 
 ## 特性
 
@@ -25,13 +25,13 @@
 
 ```bash
 # bun（推荐）
-bun add @aurora/horizon-web-vue
+bun add @aurora/horizon-vue
 
 # yarn
-yarn add @aurora/horizon-web-vue
+yarn add @aurora/horizon-vue
 
 # npm
-npm install @aurora/horizon-web-vue
+npm install @aurora/horizon-vue
 ```
 
 > 环境要求：Node.js >= 20，bun >= 1.0（开发环境）。
@@ -43,8 +43,8 @@ npm install @aurora/horizon-web-vue
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
-import HorizonWeb from '@aurora/horizon-web-vue';
-import '@aurora/horizon-web-vue/es/styles/index.css';
+import HorizonWeb from '@aurora/horizon-vue';
+import '@aurora/horizon-vue/es/styles/index.css';
 
 createApp(App).use(HorizonWeb).mount('#app');
 ```
@@ -84,8 +84,8 @@ bun run dev
 
 ```
 ├── packages
-│   ├── horizon-web-vue    # Vue 组件 renderer（@aurora/horizon-web-vue）
-│   ├── horizon-web-react  # React 组件 renderer（@aurora/horizon-web-react）
+│   ├── horizon-vue    # Vue 组件 renderer（@aurora/horizon-vue）
+│   ├── horizon-react  # React 组件 renderer（@aurora/horizon-react）
 │   ├── docs               # VitePress 文档站（zh / en）
 │   ├── icon               # 图标库
 │   ├── locale             # 多语言库（纯 JS）

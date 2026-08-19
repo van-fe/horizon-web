@@ -1,4 +1,4 @@
-import { Spin } from '@aurora/horizon-web-react';
+import { Spin } from '@aurora/horizon-react';
 
 export default function SpinCustomDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

@@ -3,8 +3,8 @@
 Statistic 展示关键数值、单位和业务趋势。
 
 ```tsx
-import { Statistic } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Statistic } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Statistic/basic.tsx :::

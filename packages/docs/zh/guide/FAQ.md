@@ -4,7 +4,7 @@
   
 ## 1. 构建好项目后，使用指令时出现 `TypeError: Cannot read properties of undefined (reading 'deep')` 的报错： {#version-same}
 
-`@aurora/horizon-web-vue` 和 `@aurora/horizon-web-unplugin-resolver` 的版本号一定要保持一致
+`@aurora/horizon-vue` 和 `@aurora/horizon-web-unplugin-resolver` 的版本号一定要保持一致
 
 ## 2. `vue-cli` 构建项目报错，提示 `?.` 不识别 {#babel}
 使用 `vue-cli` 构建项目，一般情况下会出现不支持 `optional-chaning` 等ES7语法的情况，所以需要按照如下配置：

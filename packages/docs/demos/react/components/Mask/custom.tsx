@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Mask, Switch } from '@aurora/horizon-web-react';
+import { Button, Mask, Switch } from '@aurora/horizon-react';
 
 export default function MaskCustomDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [fuzzified, setFuzzified] = useState(true);

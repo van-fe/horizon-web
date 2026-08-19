@@ -3,8 +3,8 @@
 Drawer 从界面边缘滑出聚焦面板，同时保留底层页面的上下文。组件支持四种方向、响应式预设尺寸、关闭守卫、模态交互管理和指针拖拽调整尺寸。
 
 ```tsx
-import { Drawer, type DrawerHandle } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Drawer, type DrawerHandle } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础用法

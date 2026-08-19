@@ -3,8 +3,8 @@
 Input captures single-line text, passwords, and multi-line content. Use an accessible label or `aria-label` for every field.
 
 ```tsx
-import { Input } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Input } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Input/basic.tsx :::

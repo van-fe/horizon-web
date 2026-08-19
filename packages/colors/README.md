@@ -1,6 +1,6 @@
 <h1 align="center">@aurora/colors</h1>
 
-<h4 align="center">Color palettes calculator of @aurora/horizon-web-vue</h2>
+<h4 align="center">Color palettes calculator of @aurora/horizon-vue</h2>
 
 ## Install
 ```shell

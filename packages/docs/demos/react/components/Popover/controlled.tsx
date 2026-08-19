@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, PopContent, Popover } from '@aurora/horizon-web-react';
+import { Button, PopContent, Popover } from '@aurora/horizon-react';
 
 export default function PopoverControlledDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [open, setOpen] = useState(false);

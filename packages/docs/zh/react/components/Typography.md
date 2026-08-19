@@ -5,8 +5,8 @@ Typography 统一展示标题、正文和辅助文本，并提供省略、复制
 ## 基础用法
 
 ```tsx
-import { Typography } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Typography } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Typography/basic.tsx :::

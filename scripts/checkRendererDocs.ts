@@ -8,7 +8,7 @@ const docsRoot = path.join(repositoryRoot, 'packages/docs');
 type Rule = { message: string; pattern: RegExp };
 
 const vueDocRules: Rule[] = [
-  { message: 'references the React package', pattern: /@aurora\/horizon-web-react/ },
+  { message: 'references the React package', pattern: /@aurora\/horizon-react/ },
   { message: 'uses a React demo container', pattern: /:::react-demo\b/ },
   { message: 'references the React demo tree', pattern: /(?:^|[/'"`])demos\/react\//m },
 ];
@@ -21,7 +21,7 @@ const reactDocRules: Rule[] = [
   { message: 'references the Vue demo tree', pattern: /(?:^|[/'"`])demos\/vue\//m },
 ];
 const vueDemoRules: Rule[] = [
-  { message: 'imports the React package', pattern: /@aurora\/horizon-web-react/ },
+  { message: 'imports the React package', pattern: /@aurora\/horizon-react/ },
   { message: 'imports React', pattern: /from\s+['"]react(?:-dom(?:\/client)?|\/[^'"]*)?['"]/ },
 ];
 const reactDemoRules: Rule[] = [

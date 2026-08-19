@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { TreeOption, TreeValue } from '@aurora/horizon-web-react';
-import { Button, Tree } from '@aurora/horizon-web-react';
+import type { TreeOption, TreeValue } from '@aurora/horizon-react';
+import { Button, Tree } from '@aurora/horizon-react';
 
 export default function TreeControlledDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

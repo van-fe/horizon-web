@@ -4,18 +4,18 @@ export function cloneBrowserBuildFileToDist(tag: string) {
   shell.cd(__dirname);
 
   // horizon-web
-  shell.cp('-R', '../packages/horizon-web-vue/dist/horizon-web-browser.mjs', `../dist/horizon-web@${tag}.js`);
-  shell.cp('-R', '../packages/horizon-web-vue/dist/horizon-web-browser.umd.js', `../dist/horizon-web@${tag}.umd.js`);
-  shell.cp('-R', '../packages/horizon-web-vue/dist/horizon-web-browser.iife.js', `../dist/horizon-web-browser@${tag}.js`);
-  shell.cp('-R', '../packages/horizon-web-vue/dist/horizon-web-browser.mjs.map', `../dist/horizon-web@${tag}.js.map`);
-  shell.cp('-R', '../packages/horizon-web-vue/dist/horizon-web-browser.umd.js.map', `../dist/horizon-web@${tag}.umd.js.map`);
+  shell.cp('-R', '../packages/horizon-vue/dist/horizon-web-browser.mjs', `../dist/horizon-web@${tag}.js`);
+  shell.cp('-R', '../packages/horizon-vue/dist/horizon-web-browser.umd.js', `../dist/horizon-web@${tag}.umd.js`);
+  shell.cp('-R', '../packages/horizon-vue/dist/horizon-web-browser.iife.js', `../dist/horizon-web-browser@${tag}.js`);
+  shell.cp('-R', '../packages/horizon-vue/dist/horizon-web-browser.mjs.map', `../dist/horizon-web@${tag}.js.map`);
+  shell.cp('-R', '../packages/horizon-vue/dist/horizon-web-browser.umd.js.map', `../dist/horizon-web@${tag}.umd.js.map`);
   shell.cp(
     '-R',
-    '../packages/horizon-web-vue/dist/horizon-web-browser.iife.js.map',
+    '../packages/horizon-vue/dist/horizon-web-browser.iife.js.map',
     `../dist/horizon-web-browser@${tag}.js.map`,
   );
-  shell.cp('-R', '../packages/horizon-web-vue/dist/style.css', `../dist/horizon-web-style@${tag}.css`);
-  shell.cp('-R', '../packages/horizon-web-vue/dist/style.css', `../dist/style@${tag}.css`);
+  shell.cp('-R', '../packages/horizon-vue/dist/style.css', `../dist/horizon-web-style@${tag}.css`);
+  shell.cp('-R', '../packages/horizon-vue/dist/style.css', `../dist/style@${tag}.css`);
 
   // utils
   shell.cp('-R', '../packages/utils/dist/utils.js', `../dist/utils@${tag}.js`);

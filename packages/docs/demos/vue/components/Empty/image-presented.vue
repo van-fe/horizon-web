@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { HEmpty } from '@aurora/horizon-web-vue';
+import { HEmpty } from '@aurora/horizon-vue';
 
 type PresentedImageName = keyof typeof HEmpty.PRESENTED_IMAGES;
 

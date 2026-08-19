@@ -3,8 +3,8 @@
 QRCode 生成可配置的 SVG 二维码，并提供加载、中央图标、失效和刷新状态。
 
 ```tsx
-import { QRCode } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { QRCode } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础用法

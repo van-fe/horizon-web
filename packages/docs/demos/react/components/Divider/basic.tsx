@@ -1,4 +1,4 @@
-import { Divider } from '@aurora/horizon-web-react';
+import { Divider } from '@aurora/horizon-react';
 
 export default function DividerDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

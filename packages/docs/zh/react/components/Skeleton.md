@@ -5,8 +5,8 @@ Skeleton 在内容加载期间展示结构占位，并在完成后替换为真�
 ## 基础用法
 
 ```tsx
-import { Skeleton, SkeletonItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Skeleton, SkeletonItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Skeleton/basic.tsx :::

@@ -3,8 +3,8 @@
 Pagination divides a large result set into navigable pages and can also control the number of items shown per page.
 
 ```tsx
-import { Pagination } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Pagination } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Controlled pagination

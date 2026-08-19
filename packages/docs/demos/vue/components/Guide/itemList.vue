@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, shallowRef } from 'vue';
-import type { GuideItemProps } from '@aurora/horizon-web-vue';
+import type { GuideItemProps } from '@aurora/horizon-vue';
 
 const filterRef = shallowRef<HTMLElement | null>(null);
 const shareRef = shallowRef<HTMLElement | null>(null);

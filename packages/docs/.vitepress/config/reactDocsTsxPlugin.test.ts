@@ -3,7 +3,7 @@ import { isReactTsx, reactDocsTsxPlugin } from './reactDocsTsxPlugin';
 
 describe('React documentation TSX compiler', () => {
   it('selects React package and React demo TSX only', () => {
-    expect(isReactTsx('/repo/packages/horizon-web-react/src/components/Button.tsx')).toBe(true);
+    expect(isReactTsx('/repo/packages/horizon-react/src/components/Button.tsx')).toBe(true);
     expect(isReactTsx('/repo/packages/docs/demos/react/components/Button/basic.tsx')).toBe(true);
     expect(
       isReactTsx('/repo/packages/docs/demos/vue/components/VirtualScroller/ChatDemo.tsx'),

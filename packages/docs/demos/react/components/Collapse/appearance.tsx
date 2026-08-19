@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { CollapseIconPosition, CollapseSize, CollapseValue } from '@aurora/horizon-web-react';
-import { Collapse, CollapseItem, Segmented, SegmentedItem } from '@aurora/horizon-web-react';
+import type { CollapseIconPosition, CollapseSize, CollapseValue } from '@aurora/horizon-react';
+import { Collapse, CollapseItem, Segmented, SegmentedItem } from '@aurora/horizon-react';
 
 export default function CollapseAppearanceDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Popconfirm } from '@aurora/horizon-web-react';
+import { Button, Popconfirm } from '@aurora/horizon-react';
 
 type GuardOutcome = 'allow' | 'prevent' | 'error';
 type GuardStatus = 'idle' | 'checking' | 'confirmed' | 'prevented' | 'error';

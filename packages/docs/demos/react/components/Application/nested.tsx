@@ -1,4 +1,4 @@
-import { Application, useHorizonWebConfig } from '@aurora/horizon-web-react';
+import { Application, useHorizonWebConfig } from '@aurora/horizon-react';
 
 function ScopeSummary({ label }: { label: string }) {
   const config = useHorizonWebConfig();

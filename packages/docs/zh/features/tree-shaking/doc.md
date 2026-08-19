@@ -10,8 +10,8 @@
 
 ```ts
 import { createApp } from 'vue';
-import { HorizonWeb } from '@aurora/horizon-web-vue';
-import '@aurora/horizon-web-vue/dist/style.css';
+import { HorizonWeb } from '@aurora/horizon-vue';
+import '@aurora/horizon-vue/dist/style.css';
 
 import App from './App.vue';
 
@@ -28,9 +28,9 @@ app.use(HorizonWeb);
 
 ```javascript
 import { createApp } from 'vue';
-import { HButton, HInput } from 'packages/horizon-web-vue/src/index';
-import 'packages/horizon-web-vue/es/components/Button/src/style/index.css';
-import 'packages/horizon-web-vue/es/components/Input/src/style/index.css';
+import { HButton, HInput } from 'packages/horizon-vue/src/index';
+import 'packages/horizon-vue/es/components/Button/src/style/index.css';
+import 'packages/horizon-vue/es/components/Input/src/style/index.css';
 
 import App from './App.vue';
 
@@ -70,7 +70,7 @@ export default defineConfig({
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { HorizonWebProvides } from '@aurora/horizon-web-vue';
+import { HorizonWebProvides } from '@aurora/horizon-vue';
 import App from './App.vue';
 
 const app = createApp(App).use(HorizonWebProvides);

@@ -5,8 +5,8 @@ Button 用于触发即时操作，支持原生按钮、原生链接、应用导�
 ## 基础用法
 
 ```tsx
-import { Button } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Button } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Button/basic.tsx :::

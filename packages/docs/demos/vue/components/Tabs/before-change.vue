@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTabValue } from '@aurora/horizon-web-vue';
+import type { HTabValue } from '@aurora/horizon-vue';
 
 const activeKey = ref('draft');
 const hasUnsavedChanges = ref(true);

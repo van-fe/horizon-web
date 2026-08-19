@@ -1,4 +1,4 @@
-import { Hover } from '@aurora/horizon-web-react';
+import { Hover } from '@aurora/horizon-react';
 
 export default function HoverDelayDemo({ locale }: { locale: 'en' | 'zh' }) {
   return (

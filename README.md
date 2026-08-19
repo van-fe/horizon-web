@@ -7,7 +7,7 @@
 
 **English** | [简体中文](./README.zh-CN.md)
 
-`Horizon Web` is an enterprise-grade component library built with Vue 3 and the Composition API, published as the npm package `@aurora/horizon-web-vue`. The library ships 90+ commonly used components covering forms, data display, status feedback, navigation, and other everyday business scenarios. It provides out-of-the-box capabilities such as theme customization, dark mode, internationalization, and on-demand imports, helping business teams build admin applications quickly.
+`Horizon Web` is an enterprise-grade component library built with Vue 3 and the Composition API, published as the npm package `@aurora/horizon-vue`. The library ships 90+ commonly used components covering forms, data display, status feedback, navigation, and other everyday business scenarios. It provides out-of-the-box capabilities such as theme customization, dark mode, internationalization, and on-demand imports, helping business teams build admin applications quickly.
 
 ## Features
 
@@ -50,13 +50,13 @@ bun run dev
 
 ```bash
 # bun (recommended)
-bun add @aurora/horizon-web-vue
+bun add @aurora/horizon-vue
 
 # yarn
-yarn add @aurora/horizon-web-vue
+yarn add @aurora/horizon-vue
 
 # npm
-npm install @aurora/horizon-web-vue
+npm install @aurora/horizon-vue
 ```
 
 > Requirements: Node.js >= 20, bun >= 1.0 (for development).
@@ -68,8 +68,8 @@ Full import:
 ```ts
 import { createApp } from 'vue';
 import App from './App.vue';
-import HorizonWeb from '@aurora/horizon-web-vue';
-import '@aurora/horizon-web-vue/es/styles/index.css';
+import HorizonWeb from '@aurora/horizon-vue';
+import '@aurora/horizon-vue/es/styles/index.css';
 
 createApp(App).use(HorizonWeb).mount('#app');
 ```
@@ -84,8 +84,8 @@ The repository is a monorepo managed with bun workspaces:
 
 ```
 ├── packages
-│   ├── horizon-web-vue    # Vue component renderer (@aurora/horizon-web-vue)
-│   ├── horizon-web-react  # React component renderer (@aurora/horizon-web-react)
+│   ├── horizon-vue    # Vue component renderer (@aurora/horizon-vue)
+│   ├── horizon-react  # React component renderer (@aurora/horizon-react)
 │   ├── docs               # VitePress documentation site (zh / en)
 │   ├── icon               # Icon library
 │   ├── locale             # Localization library (pure JS)

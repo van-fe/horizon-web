@@ -5,8 +5,8 @@ Select 用于从一组选项中选择一个值，支持数据选项、声明式�
 ## 基础用法
 
 ```tsx
-import { Select } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Select } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Select/basic.tsx :::
@@ -14,7 +14,7 @@ import '@aurora/horizon-web-react/style.css';
 ## 声明式选项
 
 ```tsx
-import { Option, OptionGroup, Select } from '@aurora/horizon-web-react';
+import { Option, OptionGroup, Select } from '@aurora/horizon-react';
 
 <Select placeholder="请选择">
   <OptionGroup label="常用城市">

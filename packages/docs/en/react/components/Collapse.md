@@ -3,8 +3,8 @@
 Collapse organizes related content into panels that can be revealed when needed.
 
 ```tsx
-import { Collapse, CollapseItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Collapse, CollapseItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Controlled panels

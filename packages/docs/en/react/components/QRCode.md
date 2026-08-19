@@ -3,8 +3,8 @@
 QRCode renders configurable SVG codes with loading, center-icon, expired, and refresh states.
 
 ```tsx
-import { QRCode } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { QRCode } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Basic usage

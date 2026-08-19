@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue';
-import type { HAutoCompleteOption } from '@aurora/horizon-web-vue';
+import type { HAutoCompleteOption } from '@aurora/horizon-vue';
 
 const catalog = ['Customer dashboard', 'Campaign report', 'Design system', 'Mobile release'];
 const options = ref<HAutoCompleteOption[]>([]);

@@ -1,4 +1,4 @@
-import { Form, FormItem, Input } from '@aurora/horizon-web-react';
+import { Form, FormItem, Input } from '@aurora/horizon-react';
 
 export default function FormLayoutDemo({ locale }: { locale: 'en' | 'zh' }) {
   return (

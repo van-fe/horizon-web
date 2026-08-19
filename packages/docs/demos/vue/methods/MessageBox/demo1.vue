@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { $alert } from '@aurora/horizon-web-vue';
+import { $alert } from '@aurora/horizon-vue';
 export default defineComponent({
   setup() {
     const showAlert = (type?: 'info' | 'success' | 'warning' | 'error') => {

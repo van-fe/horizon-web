@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Dialog } from '@aurora/horizon-web-react';
+import { Button, Dialog } from '@aurora/horizon-react';
 
 type GuardStatus = 'idle' | 'checking' | 'allowed';
 

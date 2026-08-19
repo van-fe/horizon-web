@@ -3,8 +3,8 @@
 折叠面板将相关内容组织为可按需展开的区域。
 
 ```tsx
-import { Collapse, CollapseItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Collapse, CollapseItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 受控面板

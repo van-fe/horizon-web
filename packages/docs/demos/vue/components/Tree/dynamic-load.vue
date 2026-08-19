@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeDynamicLoadNode, HTreeNodeData } from '@aurora/horizon-web-vue';
+import type { HTreeDynamicLoadNode, HTreeNodeData } from '@aurora/horizon-vue';
 
 const selectedValues = ref<Array<string | number>>([]);
 const status = ref('Expand an office to load its rooms');

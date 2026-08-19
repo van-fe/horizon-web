@@ -3,8 +3,8 @@
 步骤条用于展示多阶段流程中的当前位置和各阶段状态。
 
 ```tsx
-import { Step, Steps } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Step, Steps } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 受控进度

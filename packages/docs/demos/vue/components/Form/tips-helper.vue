@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HFormInstance, HFormItemHelper, HFormRule } from '@aurora/horizon-web-vue';
+import type { HFormInstance, HFormItemHelper, HFormRule } from '@aurora/horizon-vue';
 import { reactive, ref } from 'vue';
 
 const formRef = ref<HFormInstance | null>(null);

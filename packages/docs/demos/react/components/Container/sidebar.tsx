@@ -1,4 +1,4 @@
-import { Aside, Container, Header, Main } from '@aurora/horizon-web-react';
+import { Aside, Container, Header, Main } from '@aurora/horizon-react';
 
 export default function ContainerSidebarDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

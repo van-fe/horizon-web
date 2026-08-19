@@ -1,4 +1,4 @@
-import { List, ListItem } from '@aurora/horizon-web-react';
+import { List, ListItem } from '@aurora/horizon-react';
 
 const requests = [
   { id: 1, title: 'Accessibility review', owner: 'Mira', detail: 'Keyboard flow is ready.' },

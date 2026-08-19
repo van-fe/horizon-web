@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Spin } from '@aurora/horizon-web-react';
+import { Button, Spin } from '@aurora/horizon-react';
 
 export default function SpinNestedDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [spinning, setSpinning] = useState(true);

@@ -3,8 +3,8 @@
 Alert 在页面内展示重要反馈，并支持状态语义、操作和关闭。
 
 ```tsx
-import { Alert } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Alert } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Alert/basic.tsx :::

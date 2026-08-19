@@ -1,4 +1,4 @@
-import { Application, Button, useHorizonWebConfig } from '@aurora/horizon-web-react';
+import { Application, Button, useHorizonWebConfig } from '@aurora/horizon-react';
 
 function ConfigurationSummary() {
   const config = useHorizonWebConfig();

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pagination } from '@aurora/horizon-web-react';
+import { Pagination } from '@aurora/horizon-react';
 
 export default function PaginationBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

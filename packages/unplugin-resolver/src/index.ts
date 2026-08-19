@@ -12,14 +12,14 @@ export type HorizonWebRenderer = 'vue' | 'react';
 
 export interface HorizonWebResolvedPackageImport {
   renderer: HorizonWebRenderer;
-  packageName: '@aurora/horizon-web-vue' | '@aurora/horizon-web-react';
+  packageName: '@aurora/horizon-vue' | '@aurora/horizon-react';
   from: string;
   name: string;
   sideEffects: string[];
 }
 
 export function getHorizonWebRendererPackage(renderer: HorizonWebRenderer) {
-  return renderer === 'vue' ? '@aurora/horizon-web-vue' : '@aurora/horizon-web-react';
+  return renderer === 'vue' ? '@aurora/horizon-vue' : '@aurora/horizon-react';
 }
 
 export function resolveHorizonWebPackageImport(
@@ -139,14 +139,14 @@ const resolveComponents = (name: string, options: HorizonWebResolverOption) => {
   });
 
   if (matched) {
-    const from = `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}`;
+    const from = `@aurora/horizon-vue/${dirType}/components/${matched[0]}`;
     const sideEffects: string[] = [];
 
     if (options.importStyle) {
       sideEffects.push(
-        `@aurora/horizon-web-vue/${dirType}/styles/base.${styleExt}`,
-        `@aurora/horizon-web-vue/${dirType}/styles/global-variables.${styleExt}`,
-        `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}/src/style/index.${
+        `@aurora/horizon-vue/${dirType}/styles/base.${styleExt}`,
+        `@aurora/horizon-vue/${dirType}/styles/global-variables.${styleExt}`,
+        `@aurora/horizon-vue/${dirType}/components/${matched[0]}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -178,13 +178,13 @@ const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
 
   if (options.importStyle) {
     sideEffects.push(
-      `@aurora/horizon-web-vue/${dirType}/styles/base.${styleExt}`,
-      `@aurora/horizon-web-vue/${dirType}/styles/global-variables.${styleExt}`,
+      `@aurora/horizon-vue/${dirType}/styles/base.${styleExt}`,
+      `@aurora/horizon-vue/${dirType}/styles/global-variables.${styleExt}`,
     );
 
     if (directive.hasStyle) {
       sideEffects.push(
-        `@aurora/horizon-web-vue/${dirType}/directives/${directive.from}/src/style/index.${
+        `@aurora/horizon-vue/${dirType}/directives/${directive.from}/src/style/index.${
           styleExt === 'scss' ? 'unplugin.scss' : 'css'
         }`,
       );
@@ -193,7 +193,7 @@ const resolveDirectives = (name: string, options: HorizonWebResolverOption) => {
 
   return {
     name: directive.importName,
-    from: `@aurora/horizon-web-vue/${dirType}/directives/${directive.from}`,
+    from: `@aurora/horizon-vue/${dirType}/directives/${directive.from}`,
     sideEffects,
   };
 };
@@ -225,7 +225,7 @@ export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBase
   };
 
   return {
-    libraryName: '@aurora/horizon-web-vue',
+    libraryName: '@aurora/horizon-vue',
     resolveStyle: (name: string) => {
       name = pascalize(name);
 
@@ -241,7 +241,7 @@ export function HorizonWebVitePluginStyleImportResolvers(options: HorizonWebBase
       });
 
       if (matched) {
-        return `@aurora/horizon-web-vue/${dirType}/components/${matched[0]}/src/style/index${
+        return `@aurora/horizon-vue/${dirType}/components/${matched[0]}/src/style/index${
           options.importStyle === 'css' ? '.css' : 'unplugin.scss'
         }`;
       }
@@ -257,7 +257,7 @@ export function HorizonWebReactVitePluginStyleImportResolver(
   options: Pick<HorizonWebBaseResolverOption, 'exclude' | 'importStyle'> = {},
 ): Lib {
   return {
-    libraryName: '@aurora/horizon-web-react',
+    libraryName: '@aurora/horizon-react',
     resolveStyle: (name: string) => {
       if (options.importStyle === false) return '';
       if (

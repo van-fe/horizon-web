@@ -3,8 +3,8 @@
 页签用于在相关视图之间快速切换，并保持用户处于当前上下文。
 
 ```tsx
-import { Tab, Tabs } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Tab, Tabs } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 受控选择

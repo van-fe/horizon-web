@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HCascaderDynamicLoadNode, HCascaderOption } from '@aurora/horizon-web-vue';
+import type { HCascaderDynamicLoadNode, HCascaderOption } from '@aurora/horizon-vue';
 import { onBeforeUnmount, ref } from 'vue';
 
 const options = ref<HCascaderOption[]>([

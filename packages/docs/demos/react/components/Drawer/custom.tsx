@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button, Drawer, type DrawerHandle } from '@aurora/horizon-web-react';
+import { Button, Drawer, type DrawerHandle } from '@aurora/horizon-react';
 
 export default function DrawerCustomDemo({ locale }: { locale: 'en' | 'zh' }) {
   const drawerRef = useRef<DrawerHandle>(null);

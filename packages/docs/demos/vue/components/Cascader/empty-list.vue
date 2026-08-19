@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HCascaderOption } from '@aurora/horizon-web-vue';
+import type { HCascaderOption } from '@aurora/horizon-vue';
 import { ref } from 'vue';
 
 const value = ref<string[]>([]);

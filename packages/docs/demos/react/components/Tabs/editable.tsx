@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TabsKey } from '@aurora/horizon-web-react';
-import { Tab, Tabs } from '@aurora/horizon-web-react';
+import type { TabsKey } from '@aurora/horizon-react';
+import { Tab, Tabs } from '@aurora/horizon-react';
 
 interface DocumentTab {
   key: string;

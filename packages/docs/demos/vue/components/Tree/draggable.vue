@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { HTreeNodeData, HTreeNodeDataWithLevel } from '@aurora/horizon-web-vue';
+import type { HTreeNodeData, HTreeNodeDataWithLevel } from '@aurora/horizon-vue';
 
 const status = ref('Drag a workstream by its handle to reprioritize the roadmap.');
 const roadmapTree = ref<HTreeNodeData[]>([

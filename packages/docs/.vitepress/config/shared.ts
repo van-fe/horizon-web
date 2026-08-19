@@ -5,7 +5,7 @@ import watchDemos from './watchDemos';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { liveDemoPlugin } from './liveDemoPlugin';
-import { scssPreprocessorOptions } from '../../../horizon-web-vue/build/sass-options';
+import { scssPreprocessorOptions } from '../../../horizon-vue/build/sass-options';
 import { legacyVueDocsRedirectPlugin } from './legacyVueDocsRedirectPlugin';
 import { reactDocsTsxPlugin } from './reactDocsTsxPlugin';
 
@@ -65,20 +65,20 @@ export default defineConfig({
           replacement: 'vue/dist/vue.esm-bundler.js',
         },
         {
-          find: /^@aurora\/horizon-web-vue$/,
-          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web-vue/src/'),
+          find: /^@aurora\/horizon-vue$/,
+          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-vue/src/'),
         },
         {
-          find: /^@aurora\/horizon-web-react$/,
-          replacement: path.join(__dirname, '../../../horizon-web-react/src/index.ts'),
+          find: /^@aurora\/horizon-react$/,
+          replacement: path.join(__dirname, '../../../horizon-react/src/index.ts'),
         },
         {
           find: /^@aurora\/core$/,
           replacement: path.join(__dirname, '../../../core/src/index.ts'),
         },
         {
-          find: /^@aurora\/horizon-web-core$/,
-          replacement: path.join(__dirname, '../../../horizon-web-core/src/index.ts'),
+          find: /^@aurora\/horizon-core$/,
+          replacement: path.join(__dirname, '../../../horizon-core/src/index.ts'),
         },
         {
           find: /^@aurora\/theme$/,
@@ -86,17 +86,17 @@ export default defineConfig({
         },
         {
           find: /^react$/,
-          replacement: path.join(__dirname, '../../../horizon-web-react/node_modules/react'),
+          replacement: path.join(__dirname, '../../../horizon-react/node_modules/react'),
         },
         {
           find: /^react\/(.*)$/,
-          replacement: path.join(__dirname, '../../../horizon-web-react/node_modules/react/$1'),
+          replacement: path.join(__dirname, '../../../horizon-react/node_modules/react/$1'),
         },
         {
           find: /^react-dom\/(.*)$/,
           replacement: path.join(
             __dirname,
-            '../../../horizon-web-react/node_modules/react-dom/$1',
+            '../../../horizon-react/node_modules/react-dom/$1',
           ),
         },
         {
@@ -117,26 +117,26 @@ export default defineConfig({
         })),
         {
           find: /^horizon-web-package\//,
-          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-web-vue/'),
+          replacement: path.join(__dirname, '../../../../node_modules/@aurora/horizon-vue/'),
         },
         {
           // Demos are compiled from the docs workspace, while these runtime
           // dependencies are declared by the component package.
           find: /^dayjs$/,
-          replacement: path.join(__dirname, '../../../../packages/horizon-web-vue/node_modules/dayjs'),
+          replacement: path.join(__dirname, '../../../../packages/horizon-vue/node_modules/dayjs'),
         },
         {
           find: /^decimal\.js$/,
           replacement: path.join(
             __dirname,
-            '../../../../packages/horizon-web-vue/node_modules/decimal.js',
+            '../../../../packages/horizon-vue/node_modules/decimal.js',
           ),
         },
         {
           find: /^lodash-es$/,
           replacement: path.join(
             __dirname,
-            '../../../../packages/horizon-web-vue/node_modules/lodash-es/lodash.js',
+            '../../../../packages/horizon-vue/node_modules/lodash-es/lodash.js',
           ),
         },
       ],
@@ -146,7 +146,7 @@ export default defineConfig({
       liveDemoPlugin(),
       reactDocsTsxPlugin(),
       vueJsx({
-        exclude: [/horizon-web-react[\\/]/, /docs[\\/]demos[\\/]react[\\/]/],
+        exclude: [/horizon-react[\\/]/, /docs[\\/]demos[\\/]react[\\/]/],
       }),
       DefineOptions(),
       ResolveComponentsAlias(),

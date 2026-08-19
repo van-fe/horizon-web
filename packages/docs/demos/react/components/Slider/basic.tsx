@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Slider, Space } from '@aurora/horizon-web-react';
+import { Slider, Space } from '@aurora/horizon-react';
 
 export default function SliderDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

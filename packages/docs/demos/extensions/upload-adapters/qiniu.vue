@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HUploadFileType, HUploadRawFileType } from '@aurora/horizon-web-vue';
+import type { HUploadFileType, HUploadRawFileType } from '@aurora/horizon-vue';
 import {
   createMemoryCheckpointStore,
   type QiniuHttpRequest,

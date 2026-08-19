@@ -3,8 +3,8 @@
 Result 用于反馈操作结果或 HTTP 异常状态，并提供后续操作。
 
 ```tsx
-import { Result } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Result } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Result/basic.tsx :::

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Switch } from '@aurora/horizon-web-react';
+import { Switch } from '@aurora/horizon-react';
 
 export default function SwitchDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [automaticUpdates, setAutomaticUpdates] = useState(true);

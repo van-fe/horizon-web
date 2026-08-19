@@ -3,8 +3,8 @@
 Radio selects one option from a mutually exclusive group. Use a stable `name` for native keyboard grouping and `RadioButton` for a segmented button presentation.
 
 ```tsx
-import { Radio, RadioButton, RadioGroup } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Radio, RadioButton, RadioGroup } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Radio/basic.tsx :::

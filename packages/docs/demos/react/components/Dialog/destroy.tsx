@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Dialog } from '@aurora/horizon-web-react';
+import { Button, Dialog } from '@aurora/horizon-react';
 
 function TemporaryDraft({ locale }: { locale: 'en' | 'zh' }) {
   const [revision, setRevision] = useState(0);

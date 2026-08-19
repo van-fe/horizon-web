@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select } from '@aurora/horizon-web-react';
+import { Select } from '@aurora/horizon-react';
 
 const cities = [
   { value: 'shanghai', label: '上海', description: '中国' },

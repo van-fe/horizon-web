@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { CascaderOption, CascaderProps } from '@aurora/horizon-web-react';
-import { Button, Cascader } from '@aurora/horizon-web-react';
+import type { CascaderOption, CascaderProps } from '@aurora/horizon-react';
+import { Button, Cascader } from '@aurora/horizon-react';
 
 const wait = (duration: number) => new Promise(resolve => window.setTimeout(resolve, duration));
 

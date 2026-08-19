@@ -5,8 +5,8 @@ Avatar identifies a person, team, or object with an image, initials, or custom c
 ## Basic Usage
 
 ```tsx
-import { Avatar } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Avatar } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Avatar/basic.tsx :::

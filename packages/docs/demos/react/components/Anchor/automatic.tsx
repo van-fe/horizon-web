@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Anchor, type AnchorHandle } from '@aurora/horizon-web-react';
+import { Anchor, type AnchorHandle } from '@aurora/horizon-react';
 
 export default function AnchorAutomaticDemo({ locale }: { locale: 'en' | 'zh' }) {
   const targetRef = useRef<HTMLDivElement>(null);

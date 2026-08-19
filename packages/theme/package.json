@@ -50,6 +50,8 @@
     "./styles/card-variables": "./styles/components/card/variables.scss",
     "./styles/cascader": "./styles/components/cascader/index.scss",
     "./styles/cascader-variables": "./styles/components/cascader/variables.scss",
+    "./styles/calendar": "./styles/components/calendar/index.scss",
+    "./styles/calendar-variables": "./styles/components/calendar/variables.scss",
     "./styles/checkbox": "./styles/components/checkbox/index.scss",
     "./styles/checkbox-variables": "./styles/components/checkbox/variables.scss",
     "./styles/collapse": "./styles/components/collapse/index.scss",

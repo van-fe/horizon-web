@@ -3,8 +3,8 @@
 Popconfirm asks for explicit confirmation next to an action trigger. It is useful when an operation is difficult to reverse but does not require a full modal dialog.
 
 ```tsx
-import { Popconfirm } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Popconfirm } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Basic confirmation

@@ -1,4 +1,4 @@
-import { Grid, GridItem } from '@aurora/horizon-web-react';
+import { Grid, GridItem } from '@aurora/horizon-react';
 
 const cellStyle = {
   minHeight: 72,

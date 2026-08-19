@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import type { BreadcrumbDisplayType } from '@aurora/horizon-web-react';
+import type { BreadcrumbDisplayType } from '@aurora/horizon-react';
 import {
   Breadcrumb,
   HorizonWebProvider,
   Segmented,
   SegmentedItem,
   Slider,
-} from '@aurora/horizon-web-react';
+} from '@aurora/horizon-react';
 
 export default function BreadcrumbCollapseDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

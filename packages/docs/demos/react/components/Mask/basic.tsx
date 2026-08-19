@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Mask } from '@aurora/horizon-web-react';
+import { Button, Mask } from '@aurora/horizon-react';
 
 export default function MaskBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [visible, setVisible] = useState(true);

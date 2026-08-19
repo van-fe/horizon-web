@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TimeSelect } from '@aurora/horizon-web-react';
+import { TimeSelect } from '@aurora/horizon-react';
 
 export default function TimeSelectBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

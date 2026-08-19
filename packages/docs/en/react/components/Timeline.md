@@ -3,8 +3,8 @@
 Timeline presents milestones, state changes, or activity records in a clear chronological flow.
 
 ```tsx
-import { Timeline, TimelineItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Timeline, TimelineItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## Milestones

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { PaginationVariant } from '@aurora/horizon-web-react';
-import { Pagination, Segmented, SegmentedItem } from '@aurora/horizon-web-react';
+import type { PaginationVariant } from '@aurora/horizon-react';
+import { Pagination, Segmented, SegmentedItem } from '@aurora/horizon-react';
 
 export default function PaginationVariantsDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

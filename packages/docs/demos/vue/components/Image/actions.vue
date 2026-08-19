@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { demoAssetUrl } from '../../../demo-assets';
 import { ref } from 'vue';
-import type { HImageAction } from '@aurora/horizon-web-vue';
+import type { HImageAction } from '@aurora/horizon-vue';
 
 const status = ref('Hover the image to show actions');
 const actions: HImageAction[] = [

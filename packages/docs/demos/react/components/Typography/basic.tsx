@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Space, Typography } from '@aurora/horizon-web-react';
+import { Space, Typography } from '@aurora/horizon-react';
 
 export default function TypographyDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';
@@ -10,7 +10,7 @@ export default function TypographyDemo({ locale }: { locale: 'en' | 'zh' }) {
       <Typography variant="secondary">
         {isEnglish ? 'Secondary supporting text' : '次要辅助文本'}
       </Typography>
-      <Typography code>pnpm add @aurora/horizon-web-react</Typography>
+      <Typography code>pnpm add @aurora/horizon-react</Typography>
       <Typography copyable editable onValueChange={setValue} value={value} weight="semibold" />
       <Typography ellipsis style={{ maxWidth: 280 }}>
         {isEnglish

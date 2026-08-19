@@ -17,11 +17,11 @@
     "types": ["node", "vite/client"],
     "paths": {
       "*": ["./*"],
-      "@aurora/horizon-web-vue": ["../horizon-web-vue/src"],
-      "@aurora/horizon-web-vue/*": ["../horizon-web-vue/src/*"],
+      "@aurora/horizon-vue": ["../horizon-vue/src"],
+      "@aurora/horizon-vue/*": ["../horizon-vue/src/*"],
       "@aurora/upload-adapters": ["../upload-adapters/src"],
       "@aurora/upload-adapters/*": ["../upload-adapters/src/*"],
-      "horizon-web-package/*": ["../horizon-web-vue/*"],
+      "horizon-web-package/*": ["../horizon-vue/*"],
       "@root/*": ["../../*"]
     }
   },

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TreeSelectProps } from '@aurora/horizon-web-react';
-import { TreeSelect } from '@aurora/horizon-web-react';
+import type { TreeSelectProps } from '@aurora/horizon-react';
+import { TreeSelect } from '@aurora/horizon-react';
 
 type DirectoryNode = {
   id: string;

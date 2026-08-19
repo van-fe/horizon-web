@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonItem, Space } from '@aurora/horizon-web-react';
+import { Skeleton, SkeletonItem, Space } from '@aurora/horizon-react';
 
 export default function SkeletonDemo({ locale }: { locale: 'en' | 'zh' }) {
   const isEnglish = locale === 'en';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Rate, Space } from '@aurora/horizon-web-react';
+import { Rate, Space } from '@aurora/horizon-react';
 
 export default function RateDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

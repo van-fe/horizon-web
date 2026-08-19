@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { dayjs } from '@aurora/horizon-web-vue';
+import { dayjs } from '@aurora/horizon-vue';
 
 const releaseDate = ref(dayjs().add(7, 'day'));
 </script>

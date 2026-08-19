@@ -5,14 +5,14 @@ import versionsJson from '../versions.json';
 export const publishPackages = [
   'core',
   'theme',
-  'horizon-web-core',
+  'horizon-core',
   'utils',
   'colors',
   'locale',
   'locale-vue',
   'locale-react',
-  'horizon-web-vue',
-  'horizon-web-react',
+  'horizon-vue',
+  'horizon-react',
   'unplugin-resolver',
   'upload-adapters',
 ] as const;

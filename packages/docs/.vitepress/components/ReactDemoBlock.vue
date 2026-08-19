@@ -4,7 +4,7 @@ import { createElement } from 'react';
 import type { Root } from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
 import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue';
-import { $message } from '@aurora/horizon-web-vue';
+import { $message } from '@aurora/horizon-vue';
 
 const props = defineProps({
   source: { type: String, required: true },
@@ -113,7 +113,7 @@ async function copyCode() {
 </template>
 
 <style lang="scss" scoped>
-@use '../../../horizon-web-vue/src/styles/mixins';
+@use '../../../horizon-vue/src/styles/mixins';
 
 .react-component-demo {
   overflow: hidden;

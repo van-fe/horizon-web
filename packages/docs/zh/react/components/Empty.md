@@ -3,8 +3,8 @@
 Empty 在无数据或无内容时展示统一占位，并可提供后续操作。
 
 ```tsx
-import { Empty } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Empty } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Empty/basic.tsx :::

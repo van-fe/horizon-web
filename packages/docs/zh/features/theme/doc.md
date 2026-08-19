@@ -11,7 +11,7 @@ Horizon Web 提供了可以动态修改主题色的方式，效果参考如下 D
 Horizon Web 内部提供了主题切换工具，在 `ESModule` 中你可以通过如下的方式导入该工具：
 
 ```typescript
-import { $themes } from '@aurora/horizon-web-vue';
+import { $themes } from '@aurora/horizon-vue';
 ```
 
 `$themes` 工具对象提供了基于 `typescript` 的类型支持，配合 `typescript` 可以让你更方便的设置当前支持的 `css` 变量
@@ -51,7 +51,7 @@ $themes.remove('#app')
 ## css 变量
 因可配置变量太多，此处不再打印
 
-可配置的css变量可以参照 [这里](https://git.nevint.com/horizon-web/horizon-web/-/tree/master/packages/horizon-web-vue/src/styles/element)
+可配置的css变量可以参照 [这里](https://git.nevint.com/horizon-web/horizon-web/-/tree/master/packages/horizon-vue/src/styles/element)
 
 
 

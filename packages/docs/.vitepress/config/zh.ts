@@ -60,6 +60,7 @@ const reactSidebar = [
       { text: 'AutoComplete 自动补全', link: 'components/AutoComplete' },
       { text: 'Picker 选择器基础组件', link: 'components/Picker' },
       { text: 'Cascader 级联选择器', link: 'components/Cascader' },
+      { text: 'Calendar 日历', link: 'components/Calendar' },
       { text: 'TreeSelect 树形选择器', link: 'components/TreeSelect' },
       { text: 'TimeSelect 时间选择', link: 'components/TimeSelect' },
       { text: 'Slider 滑块', link: 'components/Slider' },

@@ -3,8 +3,8 @@
 Result communicates operation outcomes or HTTP error states and offers follow-up actions.
 
 ```tsx
-import { Result } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Result } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Result/basic.tsx :::

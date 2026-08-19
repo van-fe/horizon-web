@@ -1,4 +1,4 @@
-import { AutoComplete } from '@aurora/horizon-web-react';
+import { AutoComplete } from '@aurora/horizon-react';
 
 const options = [
   { label: 'Design system', value: 'design', description: 'Tokens and components' },

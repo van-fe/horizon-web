@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Checkbox, CheckboxButton, CheckboxGroup, Space } from '@aurora/horizon-web-react';
-import type { ChoiceValue } from '@aurora/horizon-web-react';
+import { Checkbox, CheckboxButton, CheckboxGroup, Space } from '@aurora/horizon-react';
+import type { ChoiceValue } from '@aurora/horizon-react';
 
 export default function CheckboxDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

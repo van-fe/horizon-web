@@ -3,8 +3,8 @@
 Popconfirm 在操作触发元素附近请求用户明确确认，适合难以撤销、但无需使用完整模态对话框的操作。
 
 ```tsx
-import { Popconfirm } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Popconfirm } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 ## 基础确认

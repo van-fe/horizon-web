@@ -1,6 +1,6 @@
 import { demoAssetUrl } from '../../../demo-assets';
-import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '@aurora/horizon-web-vue';
-import { HUploadFileStatusEnum } from '@aurora/horizon-web-vue';
+import type { HUploadFileType, HUploadHttpRequestInstanceMethods } from '@aurora/horizon-vue';
+import { HUploadFileStatusEnum } from '@aurora/horizon-vue';
 
 interface MockRequest {
   abort: () => void;

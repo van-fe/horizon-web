@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { CascaderOption } from '@aurora/horizon-web-react';
-import { Cascader } from '@aurora/horizon-web-react';
+import type { CascaderOption } from '@aurora/horizon-react';
+import { Cascader } from '@aurora/horizon-react';
 
 interface DestinationOption extends CascaderOption {
   children?: DestinationOption[];

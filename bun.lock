@@ -10,8 +10,8 @@
       },
       "devDependencies": {
         "@aurora/eslint-plugin-horizon-web": "workspace:*",
-        "@aurora/horizon-web-react": "workspace:*",
-        "@aurora/horizon-web-vue": "workspace:*",
+        "@aurora/horizon-react": "workspace:*",
+        "@aurora/horizon-vue": "workspace:*",
         "@aurora/icon": "workspace:*",
         "@aurora/locale": "workspace:*",
         "@aurora/locale-vue": "workspace:*",
@@ -163,8 +163,8 @@
       "name": "@aurora/eslint-plugin-horizon-web",
       "version": "1.0.0",
     },
-    "packages/horizon-web-core": {
-      "name": "@aurora/horizon-web-core",
+    "packages/horizon-core": {
+      "name": "@aurora/horizon-core",
       "version": "1.0.0",
       "dependencies": {
         "@aurora/core": "workspace:*",
@@ -175,12 +175,12 @@
         "@types/qrcode": "1.5.5",
       },
     },
-    "packages/horizon-web-react": {
-      "name": "@aurora/horizon-web-react",
+    "packages/horizon-react": {
+      "name": "@aurora/horizon-react",
       "version": "1.0.0",
       "dependencies": {
         "@aurora/core": "workspace:*",
-        "@aurora/horizon-web-core": "workspace:*",
+        "@aurora/horizon-core": "workspace:*",
         "@aurora/theme": "workspace:*",
       },
       "devDependencies": {
@@ -194,13 +194,13 @@
         "react-dom": "^18.0.0 || ^19.0.0",
       },
     },
-    "packages/horizon-web-vue": {
-      "name": "@aurora/horizon-web-vue",
+    "packages/horizon-vue": {
+      "name": "@aurora/horizon-vue",
       "version": "1.0.0",
       "dependencies": {
         "@aurora/colors": "workspace:*",
         "@aurora/core": "workspace:*",
-        "@aurora/horizon-web-core": "workspace:*",
+        "@aurora/horizon-core": "workspace:*",
         "@aurora/icon": "workspace:*",
         "@aurora/locale-vue": "workspace:*",
         "@aurora/theme": "workspace:*",
@@ -297,7 +297,7 @@
       "name": "@aurora/upload-adapters",
       "version": "1.0.0",
       "devDependencies": {
-        "@aurora/horizon-web-vue": "workspace:*",
+        "@aurora/horizon-vue": "workspace:*",
       },
     },
     "packages/utils": {
@@ -305,7 +305,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@aurora/core": "workspace:*",
-        "@aurora/horizon-web-core": "workspace:*",
+        "@aurora/horizon-core": "workspace:*",
         "@aurora/theme": "workspace:*",
         "@vueuse/core": "^11.0.0",
         "lodash-es": "^4.17.21",
@@ -382,13 +382,13 @@
 
     "@aurora/eslint-plugin-horizon-web": ["@aurora/eslint-plugin-horizon-web@workspace:packages/eslint-plugin-horizon-web"],
 
-    "@aurora/horizon-web-core": ["@aurora/horizon-web-core@workspace:packages/horizon-web-core"],
+    "@aurora/horizon-core": ["@aurora/horizon-core@workspace:packages/horizon-core"],
 
-    "@aurora/horizon-web-react": ["@aurora/horizon-web-react@workspace:packages/horizon-web-react"],
+    "@aurora/horizon-react": ["@aurora/horizon-react@workspace:packages/horizon-react"],
 
     "@aurora/horizon-web-unplugin-resolver": ["@aurora/horizon-web-unplugin-resolver@workspace:packages/unplugin-resolver"],
 
-    "@aurora/horizon-web-vue": ["@aurora/horizon-web-vue@workspace:packages/horizon-web-vue"],
+    "@aurora/horizon-vue": ["@aurora/horizon-vue@workspace:packages/horizon-vue"],
 
     "@aurora/icon": ["@aurora/icon@workspace:packages/icon"],
 

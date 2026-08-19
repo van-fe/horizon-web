@@ -5,7 +5,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownSubmenu,
-} from '@aurora/horizon-web-react';
+} from '@aurora/horizon-react';
 
 export default function NestedDropdownDemo() {
   return (

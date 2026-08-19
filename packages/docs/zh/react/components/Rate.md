@@ -3,8 +3,8 @@
 Rate 支持通过指针和键盘选择或查看评分。交互式评分应提供无障碍名称，只展示评分时使用 `readOnly`。
 
 ```tsx
-import { Rate } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Rate } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Rate/basic.tsx :::

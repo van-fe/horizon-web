@@ -3,8 +3,8 @@
 Segmented 用于在少量互斥视图之间切换。每个选项应提供明确且唯一的值，标签在窄屏下也应保持简洁。
 
 ```tsx
-import { Segmented, SegmentedItem } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Segmented, SegmentedItem } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Segmented/basic.tsx :::

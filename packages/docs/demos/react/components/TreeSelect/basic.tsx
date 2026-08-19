@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
-import type { TreeSelectHandle, TreeSelectOption } from '@aurora/horizon-web-react';
-import { Button, TreeSelect } from '@aurora/horizon-web-react';
+import type { TreeSelectHandle, TreeSelectOption } from '@aurora/horizon-react';
+import { Button, TreeSelect } from '@aurora/horizon-react';
 
 export default function TreeSelectBasicDemo({ locale }: { locale: 'en' | 'zh' }) {
   const en = locale === 'en';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FloatButton, FloatButtonGroup } from '@aurora/horizon-web-react';
+import { FloatButton, FloatButtonGroup } from '@aurora/horizon-react';
 
 export default function FloatButtonGroupDemo({ locale }: { locale: 'en' | 'zh' }) {
   const [expanded, setExpanded] = useState(false);

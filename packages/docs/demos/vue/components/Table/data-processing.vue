@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { HTableDataProcessingMode, HTableDataProcessingState } from '@aurora/horizon-web-vue';
+import type { HTableDataProcessingMode, HTableDataProcessingState } from '@aurora/horizon-vue';
 
 const departments = ['Platform', 'Growth', 'Design', 'Operations'];
 const mode = ref<HTableDataProcessingMode>('auto');

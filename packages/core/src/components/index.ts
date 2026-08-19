@@ -11,6 +11,7 @@ export * from './Backtop';
 export * from './Badge';
 export * from './Breadcrumb';
 export * from './Button';
+export * from './Calendar';
 export * from './Card';
 export * from './Cascader';
 export * from './Checkbox';

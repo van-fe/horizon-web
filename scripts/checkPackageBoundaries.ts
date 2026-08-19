@@ -7,8 +7,21 @@ type BoundaryRule = {
 };
 
 const workspaceRoot = resolve(import.meta.dir, '..');
-const legacyWebPackageName = '@aurora/horizon-web';
-const ignoredDirectories = new Set(['.git', 'coverage', 'dist', 'es', 'lib', 'node_modules']);
+const legacyPackageNames = [
+  '@aurora/horizon-web',
+  '@aurora/horizon-web-core',
+  '@aurora/horizon-web-vue',
+  '@aurora/horizon-web-react',
+] as const;
+const ignoredDirectories = new Set([
+  '.git',
+  'coverage',
+  'dist',
+  'es',
+  'lib',
+  'node_modules',
+  'types',
+]);
 const legacyReferenceAllowlist = new Set([
   'packages/eslint-plugin-horizon-web/configs/recommended.js',
   'scripts/checkPackageBoundaries.ts',
@@ -20,7 +33,6 @@ function readJson(path: string): Record<string, unknown> {
 
 function checkLegacyWebPackage(): string[] {
   const violations: string[] = [];
-  const legacyPackageJson = resolve(workspaceRoot, 'packages/horizon-web/package.json');
   const rootPackageJson = readJson(resolve(workspaceRoot, 'package.json'));
   const versions = readJson(resolve(workspaceRoot, 'versions.json'));
   const lockfile = readFileSync(resolve(workspaceRoot, 'bun.lock'), 'utf8');
@@ -30,37 +42,44 @@ function checkLegacyWebPackage(): string[] {
     ...(rootPackageJson.devDependencies as Record<string, string> | undefined),
   };
 
-  if (existsSync(legacyPackageJson)) {
-    violations.push(
-      'packages/horizon-web/package.json recreates the removed legacy component package',
-    );
-  }
-  if (legacyWebPackageName in rootDependencies) {
-    violations.push(`root package.json depends on removed package ${legacyWebPackageName}`);
-  }
-  if ('horizon-web' in versions) {
-    violations.push('versions.json contains the removed horizon-web release key');
-  }
-  if (lockfile.includes(`"${legacyWebPackageName}":`)) {
-    violations.push(`bun.lock contains the removed package ${legacyWebPackageName}`);
-  }
-  if (/(?:^|[\s,])['"]horizon-web['"](?:\s*,|\s*\])/m.test(releasePlan)) {
-    violations.push('releasePlan.ts publishes the removed horizon-web package');
+  for (const packageName of legacyPackageNames) {
+    const directoryName = packageName.replace('@aurora/', '');
+    if (existsSync(resolve(workspaceRoot, 'packages', directoryName, 'package.json'))) {
+      violations.push(`packages/${directoryName}/package.json recreates removed package ${packageName}`);
+    }
+    if (packageName in rootDependencies) {
+      violations.push(`root package.json depends on removed package ${packageName}`);
+    }
+    if (directoryName in versions) {
+      violations.push(`versions.json contains removed release key ${directoryName}`);
+    }
+    if (lockfile.includes(`"${packageName}":`)) {
+      violations.push(`bun.lock contains removed package ${packageName}`);
+    }
+    const escapedDirectoryName = directoryName.replaceAll('-', '\\-');
+    if (new RegExp(`(?:^|[\\s,])['"]${escapedDirectoryName}['"](?:\\s*,|\\s*\\])`, 'm').test(releasePlan)) {
+      violations.push(`releasePlan.ts publishes removed package ${directoryName}`);
+    }
   }
 
   return violations;
 }
 
 function checkLegacyWebReferences(): string[] {
-  const legacyPackageReference = /@aurora\/horizon-web(?![-A-Za-z0-9_])/;
+  const legacyPackageReferences = legacyPackageNames.map(
+    packageName => new RegExp(`${packageName.replaceAll('/', '\\/')}(?![-A-Za-z0-9_])`),
+  );
 
   return sourceFiles(workspaceRoot).flatMap(file => {
     const relativePath = relative(workspaceRoot, file);
     if (legacyReferenceAllowlist.has(relativePath)) return [];
 
-    return legacyPackageReference.test(readFileSync(file, 'utf8'))
-      ? [`${relativePath} references removed package ${legacyWebPackageName}`]
-      : [];
+    const source = readFileSync(file, 'utf8');
+    return legacyPackageReferences.flatMap((pattern, index) =>
+      pattern.test(source)
+        ? [`${relativePath} references removed package ${legacyPackageNames[index]}`]
+        : [],
+    );
   });
 }
 
@@ -86,11 +105,11 @@ const rules: BoundaryRule[] = [
     ],
   },
   {
-    roots: ['packages/horizon-web-core/src'],
+    roots: ['packages/horizon-core/src'],
     forbidden: [/^vue(?:\/|$)/, /^react(?:\/|$)/, /^@vueuse\//, /^@floating-ui\/vue$/],
   },
   {
-    roots: ['packages/horizon-web-react/src'],
+    roots: ['packages/horizon-react/src'],
     forbidden: [/^vue(?:\/|$)/, /^@vueuse\//, /^@floating-ui\/vue$/, /^vue-router$/],
   },
 ];

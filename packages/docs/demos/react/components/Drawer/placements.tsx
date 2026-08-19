@@ -5,7 +5,7 @@ import {
   type DrawerProps,
   Segmented,
   SegmentedItem,
-} from '@aurora/horizon-web-react';
+} from '@aurora/horizon-react';
 
 type Placement = NonNullable<DrawerProps['placement']>;
 type DrawerSize = NonNullable<DrawerProps['size']>;

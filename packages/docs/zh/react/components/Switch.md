@@ -5,8 +5,8 @@ Switch 用于编辑布尔状态，支持受控和非受控用法，并通过原�
 ## 基础用法
 
 ```tsx
-import { Switch } from '@aurora/horizon-web-react';
-import '@aurora/horizon-web-react/style.css';
+import { Switch } from '@aurora/horizon-react';
+import '@aurora/horizon-react/style.css';
 ```
 
 :::react-demo react/components/Switch/basic.tsx :::
