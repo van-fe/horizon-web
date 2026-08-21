@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Horizon + Skyline Components'
+  short_description: 'Develop components with layered Core and native renderers'
+  default_prompt: 'Use $develop-horizon-components and the repository execution guide to implement or review this component.'

@@ -33,8 +33,8 @@
 
 1. 用户对当前任务的明确要求；
 2. 本文；
-3. `.codex/skills/develop-horizon-components/SKILL.md`；
-4. 仅在 `feature/vue-react-support` 分支有效的 `.codex/skills/develop-vue-react-support/SKILL.md`；
+3. `.agents/skills/develop-horizon-components/SKILL.md`；
+4. 仅在 `feature/vue-react-support` 分支有效的 `.agents/skills/develop-vue-react-support/SKILL.md`；
 5. 当前公共 contract、自动化边界检查和测试所锁定的兼容行为；
 6. 历史规划与旧实现。
 

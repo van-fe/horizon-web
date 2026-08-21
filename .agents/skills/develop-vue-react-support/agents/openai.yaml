@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Vue + React Support'
+  short_description: 'Maintain the branch-scoped renderer migration'
+  default_prompt: 'Use $develop-vue-react-support to continue the Vue and React migration on feature/vue-react-support.'

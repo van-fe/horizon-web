@@ -1,4 +1,0 @@
-interface:
-  display_name: 'Vue + React Support'
-  short_description: 'Maintain the branch-scoped Vue and React split'
-  default_prompt: 'Use $develop-vue-react-support to continue the Vue and React renderer split on its dedicated feature branch.'
