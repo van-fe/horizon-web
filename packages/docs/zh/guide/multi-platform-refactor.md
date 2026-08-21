@@ -1,5 +1,7 @@
 # Aurora 多产品组件库整改指南
 
+> **执行规范提示：** 本文保留迁移背景和阶段性设计。实际交给开发者或 AI 执行组件解耦时，以仓库根目录的 `COMPONENT_DECOUPLING_EXECUTION_GUIDE.md` 为规范性入口；二者冲突时，以该执行规范为准。
+
 ## 1. 文档目的
 
 本指南用于指导 Aurora 组件体系从当前以 Vue 3 为中心的 Horizon Web 组件库，渐进演进为 Horizon Web 与 Skyline Mobile 两条产品线，并分别支持适用的 Vue、React renderer。
