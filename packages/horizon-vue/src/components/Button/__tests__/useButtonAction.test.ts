@@ -62,4 +62,17 @@ describe('useButtonAction', () => {
     expect(emit).toHaveBeenCalledWith('click', event);
     warn.mockRestore();
   });
+
+  it('reports rejected actions through the renderer event without leaking rejection', async () => {
+    const emit = vi.fn() as HorizonWebSetupContext<ButtonEmits>['emit'];
+    const error = new Error('failed');
+    const props = createProps({ debounceFn: () => Promise.reject(error) });
+    const { onClick } = useButtonAction(props, undefined, emit);
+
+    onClick(new MouseEvent('click', { cancelable: true }));
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(emit).toHaveBeenCalledWith('debounceError', error);
+  });
 });

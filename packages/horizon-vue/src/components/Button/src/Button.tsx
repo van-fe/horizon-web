@@ -1,6 +1,15 @@
-import { computed, createVNode, defineComponent, getCurrentInstance, inject, toRefs } from 'vue';
+import {
+  computed,
+  createVNode,
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  ref,
+  toRefs,
+} from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import type { StyleValue } from 'vue';
 import { useButtonProps } from './composables/useProps';
 import { useButtonEmits } from './composables/useEmits';
 import { useButtonSlots } from './composables/useSlots';
@@ -15,9 +24,7 @@ import { iconSizeMapping, onlyIconSizeMapping } from './utils/config';
 import { AIcon } from '@aurora/icon';
 import { HButtonGroupPropsInjectKey, HButtonGroupSizeInjectKey } from './utils/injectKeys';
 import type { Router } from 'vue-router';
-import { getCssVariableByStatus } from '~/utils/useColorful';
-import { builtinColorMapping } from '~/styles';
-import { tinyColor } from '@aurora/colors';
+import { createButtonColorStyle } from '@aurora/theme';
 import { useButtonAction } from './composables/useButtonAction';
 
 export default defineComponent({
@@ -30,7 +37,7 @@ export default defineComponent({
   exposes: useButtonExposes,
   setup(
     props: ButtonProps,
-    { emit, slots, attrs }: HorizonWebSetupContext<ButtonEmits, ButtonSlots, ButtonExposes>,
+    { emit, slots, attrs, expose }: HorizonWebSetupContext<ButtonEmits, ButtonSlots, ButtonExposes>,
   ) {
     const { size, color: colorProp, borderStyle: borderStyleProp } = toRefs(props);
     const classHelper = new ComponentClassBlock('button');
@@ -38,6 +45,7 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router as Router | undefined;
     const { onClick, state: actionState } = useButtonAction(props, router, emit);
+    const buttonRef = ref<HTMLElement>();
 
     const parentProps = inject(HButtonGroupPropsInjectKey, undefined);
     const groupSizeRef = inject(HButtonGroupSizeInjectKey, undefined);
@@ -61,31 +69,28 @@ export default defineComponent({
     const isText = computed(() => props.text);
 
     const appendStyle = computed(() => {
-      if (
-        !colorProp?.value ||
-        (!tinyColor(colorProp.value).isValid &&
-          !Object.keys(builtinColorMapping).includes(colorProp.value))
-      )
-        return undefined;
+      if (!colorProp?.value) return undefined;
 
-      let type: 'default' | 'plain' | 'text' | 'link' | 'ghost' = 'default';
+      let appearance: 'default' | 'plain' | 'text' | 'link' | 'ghost' = 'default';
       if (isPlain.value) {
-        type = props.ghost ? 'ghost' : 'plain';
-      } else if (props.link) type = 'link';
-      else if (isText.value) type = 'text';
+        appearance = props.ghost ? 'ghost' : 'plain';
+      } else if (props.link) appearance = 'link';
+      else if (isText.value) appearance = 'text';
 
-      return getCssVariableByStatus(
-        'button',
-        Object.keys(builtinColorMapping).includes(colorProp.value)
-          ? builtinColorMapping[colorProp.value]
-          : colorProp.value,
-        type,
-        effectiveType.value,
-      );
+      return createButtonColorStyle({
+        color: colorProp.value,
+        appearance,
+        variant: effectiveType.value,
+      });
+    });
+
+    expose({
+      focus: () => buttonRef.value?.focus(),
     });
 
     return () => (
       <props.tag
+        ref={buttonRef}
         class={cls(
           classHelper.block,
           classHelper.m(effectiveType.value),
@@ -105,10 +110,12 @@ export default defineComponent({
         )}
         type={props.nativeType}
         disabled={actionState.value.disabled}
-        tabindex={0}
+        aria-busy={actionState.value.loading || undefined}
+        aria-disabled={!actionState.value.interactive || undefined}
+        tabindex={props.tag !== 'button' && !actionState.value.interactive ? -1 : 0}
         autofocus={props.autofocus}
         {...attrs}
-        style={appendStyle.value}
+        style={[appendStyle.value, attrs.style as StyleValue]}
         onClick={onClick}
         onFocus={(e: FocusEvent) => emit('focus', e)}
         onBlur={(e: FocusEvent) => emit('blur', e)}

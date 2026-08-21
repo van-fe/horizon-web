@@ -175,6 +175,9 @@
     "typecheck": "tsc --noEmit --pretty false",
     "test": "bun run --bun vitest run --config ./vitest.config.ts"
   },
+  "dependencies": {
+    "@aurora/colors": "workspace:*"
+  },
   "publishConfig": {
     "access": "public"
   },

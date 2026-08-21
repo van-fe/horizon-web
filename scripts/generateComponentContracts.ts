@@ -10,6 +10,7 @@ import {
   backtopManifest,
   badgeManifest,
   breadcrumbManifest,
+  buttonGroupManifest,
   buttonManifest,
   cardManifest,
   checkboxManifest,
@@ -91,6 +92,7 @@ const manifests = [
   badgeManifest,
   breadcrumbManifest,
   buttonManifest,
+  buttonGroupManifest,
   cardManifest,
   checkboxManifest,
   collapseManifest,
@@ -225,7 +227,59 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { content: 'default' } },
   },
-  Button: { props: { rename: { variant: 'type', asyncState: 'debounceType' } } },
+  Button: {
+    props: {
+      rename: {
+        variant: 'type',
+        asyncAction: 'debounceFn',
+        asyncState: 'debounceType',
+      },
+      extend: [
+        { name: 'autofocus', type: 'boolean', description: { zh: '自动聚焦', en: 'Autofocus' } },
+        {
+          name: 'icon',
+          type: 'Component | string',
+          description: { zh: '前置图标', en: 'Leading icon' },
+        },
+        {
+          name: 'iconSize',
+          type: 'string | number',
+          description: { zh: '图标尺寸', en: 'Icon size' },
+        },
+        {
+          name: 'nativeType',
+          type: "'button' | 'submit' | 'reset'",
+          description: { zh: '原生按钮类型', en: 'Native button type' },
+        },
+        {
+          name: 'tag',
+          type: "'button' | 'div' | 'a'",
+          description: { zh: '渲染标签', en: 'Rendered tag' },
+        },
+        {
+          name: 'to',
+          type: 'RouteLocationRaw',
+          description: { zh: '路由目标', en: 'Router target' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        press: 'click',
+        actionFinished: 'debounceFinished',
+        actionError: 'debounceError',
+      },
+      extend: [
+        { name: 'focus', type: 'FocusEvent', description: { zh: '获得焦点', en: 'Focused' } },
+        { name: 'blur', type: 'FocusEvent', description: { zh: '失去焦点', en: 'Blurred' } },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
+  ButtonGroup: {
+    props: { rename: { variant: 'type' } },
+    regions: { rename: { content: 'default' } },
+  },
   Card: { regions: { rename: { content: 'default' } } },
   Container: { regions: { rename: { content: 'default' } } },
   Header: { regions: { rename: { content: 'default' } } },
@@ -1277,8 +1331,18 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
         actionError: 'onActionError',
       },
     },
-    regions: { rename: { default: 'children' } },
+    props: {
+      extend: [
+        {
+          name: 'to',
+          type: 'unknown',
+          description: { zh: '应用导航目标', en: 'Application navigation target' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'children' } },
   },
+  ButtonGroup: { regions: { rename: { content: 'children' } } },
   Card: { regions: { rename: { content: 'children' } } },
   CommandPalette: {
     events: {

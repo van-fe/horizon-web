@@ -1,7 +1,7 @@
 import { computed, getCurrentScope, onScopeDispose, ref } from 'vue';
 import type { Router } from 'vue-router';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { ButtonAsyncActionGuard, getButtonState, resolveButtonAction } from '@aurora/core';
+import { createButtonAction, getButtonState, resolveButtonAction } from '@aurora/core';
 import type { ButtonEmits } from './useEmits';
 import type { ButtonProps } from './useProps';
 
@@ -10,9 +10,11 @@ export function useButtonAction(
   router: Router | undefined,
   emit: HorizonWebSetupContext<ButtonEmits>['emit'],
 ) {
-  const guard = new ButtonAsyncActionGuard();
-  let active = true;
-  const pending = ref(false);
+  const actionController = createButtonAction();
+  const pending = ref(actionController.getState().pending);
+  const unsubscribe = actionController.subscribe(() => {
+    pending.value = actionController.getState().pending;
+  });
   const state = computed(() =>
     getButtonState({
       disabled: props.disabled,
@@ -23,16 +25,15 @@ export function useButtonAction(
   );
 
   async function runAsyncAction(): Promise<void> {
-    pending.value = true;
-    const result = await guard.run(props.debounceFn!);
-    if (!active) return;
-    pending.value = false;
+    const result = await actionController.run(props.debounceFn!);
     if (result.status === 'completed') emit('debounceFinished');
+    if (result.status === 'rejected') emit('debounceError', result.error);
   }
 
   if (getCurrentScope()) {
     onScopeDispose(() => {
-      active = false;
+      unsubscribe();
+      actionController.destroy();
     });
   }
 

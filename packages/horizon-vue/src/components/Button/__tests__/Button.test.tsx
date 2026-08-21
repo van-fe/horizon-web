@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import type { App } from 'vue';
 import type { ButtonProps } from '../src/composables/useProps';
+import type { ButtonExposes } from '../src/composables/useExposes';
 import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
 import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
@@ -484,16 +485,20 @@ describe('Button.tsx', () => {
       expect(afterUnmount).not.toHaveBeenCalled();
 
       const rejectedFinished = vi.fn();
+      const rejectedError = vi.fn();
       const rejected = mount(HButton, {
         props: {
           debounceFn: () => Promise.reject(new Error('save failed')),
           onDebounceFinished: rejectedFinished,
+          onDebounceError: rejectedError,
         },
         slots: { default: () => 'Retry' },
       });
       await rejected.trigger('click');
       await sleep(0);
       expect(rejectedFinished).not.toHaveBeenCalled();
+      expect(rejectedError).toHaveBeenCalledOnce();
+      expect(rejectedError.mock.calls[0][0]).toBeInstanceOf(Error);
       expect(rejected.classes()).not.toContain('is-loading');
     });
   });
@@ -510,6 +515,17 @@ describe('Button.tsx', () => {
 
     expect(onBlur).toHaveBeenCalledOnce();
     expect(onBlur.mock.calls[0][0]).toBeInstanceOf(FocusEvent);
+    wrapper.unmount();
+  });
+
+  test('exposes focus for the rendered interaction element', () => {
+    const wrapper = mount(HButton, {
+      attachTo: document.body,
+      slots: { default: () => 'Focusable' },
+    });
+
+    (wrapper.vm as unknown as ButtonExposes).focus();
+    expect(document.activeElement).toBe(wrapper.get('button').element);
     wrapper.unmount();
   });
 

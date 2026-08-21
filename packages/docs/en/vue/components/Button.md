@@ -64,6 +64,8 @@ Use `size` for different interface densities and `auto-fit` to keep short labels
 
 `debounce-fn` prevents duplicate execution until its Promise settles. `debounce-type` selects a `disabled`, `loading`, or logic-only state.
 
+Successful actions emit `debounce-finished`; rejected actions emit `debounce-error` with the error. The component template ref provides `focus()` for the rendered button or link.
+
 :::demo vue/components/Button/debounce-fn.vue :::
 
 ## Border Style

@@ -147,7 +147,6 @@
       "name": "@aurora/colors",
       "version": "1.0.0",
       "dependencies": {
-        "@aurora/utils": "workspace:*",
         "@ctrl/tinycolor": "^3.6.0",
       },
     },
@@ -281,6 +280,9 @@
     "packages/theme": {
       "name": "@aurora/theme",
       "version": "1.0.0",
+      "dependencies": {
+        "@aurora/colors": "workspace:*",
+      },
     },
     "packages/unplugin-resolver": {
       "name": "@aurora/horizon-web-unplugin-resolver",
@@ -386,9 +388,9 @@
 
     "@aurora/horizon-react": ["@aurora/horizon-react@workspace:packages/horizon-react"],
 
-    "@aurora/horizon-web-unplugin-resolver": ["@aurora/horizon-web-unplugin-resolver@workspace:packages/unplugin-resolver"],
-
     "@aurora/horizon-vue": ["@aurora/horizon-vue@workspace:packages/horizon-vue"],
+
+    "@aurora/horizon-web-unplugin-resolver": ["@aurora/horizon-web-unplugin-resolver@workspace:packages/unplugin-resolver"],
 
     "@aurora/icon": ["@aurora/icon@workspace:packages/icon"],
 

@@ -1,72 +1,100 @@
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
+  CSSProperties,
   ForwardedRef,
+  HTMLAttributes,
   MouseEvent,
   ReactElement,
   ReactNode,
 } from 'react';
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  BUTTON_DEFAULTS,
-  ButtonAsyncActionGuard,
-  getButtonState,
-  resolveButtonAction,
-} from '@aurora/core';
-import type { ButtonCommonProps } from '@aurora/core';
-import { cls, ComponentClassBlock } from '@aurora/theme';
+import { createContext, forwardRef, useContext, useMemo } from 'react';
+import { BUTTON_DEFAULTS, getButtonState, resolveButtonAction } from '@aurora/core';
+import type { ButtonCommonProps, ButtonGroupCommonProps } from '@aurora/core';
+import { cls, ComponentClassBlock, createButtonColorStyle } from '@aurora/theme';
 import { useHorizonWebConfig } from '../../provider';
 import { LoadingIcon } from '../_shared/LoadingIcon';
+import { useButtonAction } from './useButtonAction';
 
-export type { ButtonSize, ButtonVariant } from '@aurora/core';
+export type { ButtonBorderStyle, ButtonSize, ButtonTarget, ButtonVariant } from '@aurora/core';
+
+interface ButtonGroupContextValue {
+  variant?: ButtonGroupCommonProps['variant'];
+  size?: ButtonGroupCommonProps['size'];
+}
+
+const ButtonGroupContext = createContext<ButtonGroupContextValue | undefined>(undefined);
 
 export interface ButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'color' | 'disabled' | 'onClick'
 > {
-  /** Shared renderer-neutral button configuration. */
+  /** 视觉类型。 @en Visual variant. */
   variant?: ButtonCommonProps['variant'];
+  /** 按钮尺寸。 @en Button size. */
   size?: ButtonCommonProps['size'];
+  /** 使用椭圆外观。 @en Uses a pill shape. */
   round?: ButtonCommonProps['round'];
+  /** 使用简洁外观。 @en Uses the plain treatment. */
   plain?: ButtonCommonProps['plain'];
+  /** 使用幽灵外观。 @en Uses the ghost treatment. */
   ghost?: ButtonCommonProps['ghost'];
+  /** 使用文字按钮外观。 @en Uses the text-button treatment. */
   text?: ButtonCommonProps['text'];
+  /** 使用链接按钮外观。 @en Uses the link treatment. */
   link?: ButtonCommonProps['link'];
+  /** 填满容器宽度。 @en Fills the container width. */
   block?: ButtonCommonProps['block'];
+  /** 显示激活状态。 @en Displays the active state. */
   active?: ButtonCommonProps['active'];
+  /** 显示加载状态。 @en Displays the loading state. */
   loading?: ButtonCommonProps['loading'];
+  /** 禁止交互。 @en Prevents interaction. */
   disabled?: ButtonCommonProps['disabled'];
+  /** 按内容收缩宽度。 @en Shrinks to fit the content. */
   autoFit?: ButtonCommonProps['autoFit'];
+  /** 边框样式。 @en Border style. */
   borderStyle?: ButtonCommonProps['borderStyle'];
-  /** 前置图标。@en Leading icon content. */
+  /** 自定义主题颜色。 @en Custom theme color. */
+  color?: ButtonCommonProps['color'];
+  /** 前置图标。 @en Leading icon content. */
   icon?: ReactNode;
-  /** 后置内容。@en Trailing content. */
+  /** 后置内容。 @en Trailing content. */
   suffix?: ReactNode;
-  /** 原生链接地址，优先级最高。@en Native href with the highest action priority. */
+  /** 原生链接地址，优先级最高。 @en Native href with the highest action priority. */
   href?: ButtonCommonProps['href'];
-  /** 链接打开目标。@en Native link target. */
+  /** 链接打开目标。 @en Native link target. */
   target?: ButtonCommonProps['target'];
-  /** 交给 Provider navigation adapter 的路由目标。@en Route target handled by the Provider navigation adapter. */
+  /** 交给 Provider navigation adapter 的路由目标。 @en Route target handled by the Provider navigation adapter. */
   to?: unknown;
-  /** 是否替换当前路由记录。@en Whether route navigation replaces the current entry. */
+  /** 是否替换当前路由记录。 @en Whether route navigation replaces the current entry. */
   replace?: ButtonCommonProps['replace'];
-  /** 防止重复执行的异步操作。@en Guarded asynchronous action. */
-  asyncAction?: () => unknown | PromiseLike<unknown>;
-  /** 异步执行期间的视觉状态。@en Visual state while the async action is running. */
+  /** 防止重复执行的异步操作。 @en Guarded asynchronous action. */
+  asyncAction?: ButtonCommonProps['asyncAction'];
+  /** 异步执行期间的视觉状态。 @en Visual state while the async action is running. */
   asyncState?: ButtonCommonProps['asyncState'];
-  /** 普通按钮点击事件。@en Click event for a regular button action. */
+  /** 普通按钮点击事件。 @en Click event for a regular button action. */
   onClick?: (event: MouseEvent<HTMLElement>) => void;
-  /** 异步操作完成事件。@en Called after the async action completes successfully. */
+  /** 异步操作完成事件。 @en Called after the async action completes successfully. */
   onActionFinished?: () => void;
-  /** 异步操作失败事件。@en Called when the async action rejects. */
+  /** 异步操作失败事件。 @en Called when the async action rejects. */
   onActionError?: (error: unknown) => void;
+}
+
+export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  /** 组内按钮视觉类型。 @en Visual variant inherited by grouped buttons. */
+  variant?: ButtonGroupCommonProps['variant'];
+  /** 组内按钮尺寸。 @en Size inherited by grouped buttons. */
+  size?: ButtonGroupCommonProps['size'];
+  /** 组内按钮。 @en Buttons contained by the group. */
+  children?: ReactNode;
 }
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   function Button(
     {
-      variant = BUTTON_DEFAULTS.variant,
-      size = BUTTON_DEFAULTS.size,
+      variant,
+      size,
       round = BUTTON_DEFAULTS.round,
       plain = BUTTON_DEFAULTS.plain,
       ghost = BUTTON_DEFAULTS.ghost,
@@ -78,6 +106,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
       disabled = BUTTON_DEFAULTS.disabled,
       autoFit = BUTTON_DEFAULTS.autoFit,
       borderStyle = BUTTON_DEFAULTS.borderStyle,
+      color,
       icon,
       suffix,
       href,
@@ -91,61 +120,73 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
       onActionError,
       children,
       className,
+      style,
       type = 'button',
       ...nativeProps
     },
     ref,
   ): ReactElement {
     const config = useHorizonWebConfig();
+    const group = useContext(ButtonGroupContext);
+    const effectiveVariant = group?.variant ?? variant ?? BUTTON_DEFAULTS.variant;
+    const effectiveSize = size ?? group?.size ?? BUTTON_DEFAULTS.size;
     const classHelper = useMemo(
       () => new ComponentClassBlock('button', config.namespace.toLowerCase()),
       [config.namespace],
     );
-    const guard = useRef(new ButtonAsyncActionGuard());
-    const mounted = useRef(true);
-    const [pending, setPending] = useState(false);
-    const state = getButtonState({ disabled, loading, pending, asyncState });
+    const action = useButtonAction();
+    const state = getButtonState({ disabled, loading, pending: action.pending, asyncState });
     const onlyIcon = Boolean((icon || state.loading) && !children && !suffix);
-
-    useEffect(() => {
-      mounted.current = true;
-      return () => {
-        mounted.current = false;
-      };
-    }, []);
+    const appearance = plain
+      ? ghost
+        ? 'ghost'
+        : 'plain'
+      : link
+        ? 'link'
+        : text
+          ? 'text'
+          : 'default';
+    const colorStyle = useMemo(
+      () =>
+        color
+          ? createButtonColorStyle({
+              color,
+              appearance,
+              variant: effectiveVariant,
+              namespace: config.namespace,
+            })
+          : undefined,
+      [appearance, color, config.namespace, effectiveVariant],
+    );
 
     async function runAsyncAction(): Promise<void> {
-      if (!asyncAction || pending) return;
-      setPending(true);
-      const result = await guard.current.run(asyncAction);
-      if (!mounted.current) return;
-      setPending(false);
+      const result = await action.run(asyncAction!);
       if (result.status === 'completed') onActionFinished?.();
       if (result.status === 'rejected') onActionError?.(result.error);
     }
 
     function handleClick(event: MouseEvent<HTMLElement>): void {
-      const action = resolveButtonAction({
+      const actionKind = resolveButtonAction({
         disabled,
         loading,
-        pending,
+        pending: action.pending,
         href,
         route: to,
         canNavigateRoute: Boolean(config.navigate),
         hasAsyncAction: Boolean(asyncAction),
       });
 
-      if (action === 'blocked') {
+      if (actionKind === 'blocked') {
         event.preventDefault();
         return;
       }
-      if (action === 'href') return;
-      if (action === 'route') {
+      if (actionKind === 'href') return;
+      if (actionKind === 'route') {
         event.preventDefault();
         void config.navigate?.(to, { replace });
         return;
       }
-      if (action === 'async') {
+      if (actionKind === 'async') {
         event.preventDefault();
         void runAsyncAction();
         return;
@@ -155,8 +196,8 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 
     const classes = cls(
       classHelper.block,
-      classHelper.m(variant),
-      classHelper.m(size),
+      classHelper.m(effectiveVariant),
+      classHelper.m(effectiveSize),
       classHelper.m('block', block),
       classHelper.m('round', round),
       classHelper.m('plain', plain),
@@ -171,6 +212,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
       classHelper.is('ghost', ghost),
       className,
     );
+    const mergedStyle = { ...colorStyle, ...style } as CSSProperties;
     const content = (
       <>
         {state.loading ? (
@@ -199,6 +241,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
           href={href}
           onClick={handleClick}
           ref={ref as ForwardedRef<HTMLAnchorElement>}
+          style={mergedStyle}
           tabIndex={state.disabled ? -1 : anchorProps.tabIndex}
           target={target}
         >
@@ -215,6 +258,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
         disabled={state.disabled}
         onClick={handleClick}
         ref={ref as ForwardedRef<HTMLButtonElement>}
+        style={mergedStyle}
         type={type}
       >
         {content}
@@ -223,4 +267,26 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
   },
 );
 
+export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(function ButtonGroup(
+  { variant, size, children, className, role = 'group', ...nativeProps },
+  ref,
+): ReactElement {
+  const config = useHorizonWebConfig();
+  const context = useMemo(() => ({ variant, size }), [size, variant]);
+
+  return (
+    <ButtonGroupContext.Provider value={context}>
+      <div
+        {...nativeProps}
+        className={cls(`${config.namespace.toLowerCase()}-button-group`, className)}
+        ref={ref}
+        role={role}
+      >
+        {children}
+      </div>
+    </ButtonGroupContext.Provider>
+  );
+});
+
 export const HButton = Button;
+export const HButtonGroup = ButtonGroup;

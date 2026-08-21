@@ -64,6 +64,8 @@ Button 触发即时操作。一个操作区域应保持清晰的主次关系，�
 
 `debounce-fn` 在 Promise 完成前阻止重复执行，`debounce-type` 控制期间的 `disabled`、`loading` 或纯逻辑状态。
 
+异步操作成功后触发 `debounce-finished`；失败时触发 `debounce-error` 并携带错误。组件模板 ref 提供 `focus()`，用于聚焦实际渲染的按钮或链接。
+
 :::demo vue/components/Button/debounce-fn.vue :::
 
 ## 边框样式

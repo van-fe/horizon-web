@@ -2,8 +2,36 @@ import type { Component, ExtractPropTypes, PropType } from 'vue';
 import type { Awaitable } from '@aurora/utils';
 import { declarePropType } from '@aurora/utils';
 import type { RouteLocationRaw } from 'vue-router';
-import { BUTTON_DEFAULTS } from '@aurora/core';
-import type { ButtonBorderStyle, ButtonSize, ButtonTarget, ButtonVariant } from '@aurora/core';
+import {
+  BUTTON_DEFAULTS,
+  isButtonAsyncState,
+  isButtonBorderStyle,
+  isButtonSize,
+  isButtonTarget,
+  isButtonVariant,
+} from '@aurora/core';
+import type {
+  AdaptComponentApiShape,
+  ButtonCommonProps,
+  ButtonGroupCommonProps,
+  ComponentRendererPropDefinitions,
+} from '@aurora/core';
+
+type ButtonVueProps = AdaptComponentApiShape<
+  ButtonCommonProps,
+  { variant: 'type'; asyncAction: 'debounceFn'; asyncState: 'debounceType' },
+  never,
+  {
+    autofocus?: boolean;
+    icon?: Component | string;
+    iconSize?: string | number;
+    nativeType?: 'button' | 'submit' | 'reset';
+    tag?: 'button' | 'div' | 'a';
+    to?: RouteLocationRaw;
+  }
+>;
+
+type ButtonGroupVueProps = AdaptComponentApiShape<ButtonGroupCommonProps, { variant: 'type' }>;
 
 export const useButtonProps = declarePropType({
   /**
@@ -11,15 +39,17 @@ export const useButtonProps = declarePropType({
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<ButtonVariant>,
+    type: String as PropType<ButtonVueProps['type']>,
     default: BUTTON_DEFAULTS.variant,
+    validator: isButtonVariant,
   },
   /**
    * 尺寸
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<ButtonSize>,
+    type: String as PropType<ButtonVueProps['size']>,
+    validator: isButtonSize,
   },
   /**
    * 是否是椭圆按钮
@@ -165,15 +195,16 @@ export const useButtonProps = declarePropType({
    * @en Configuration for target.
    */
   target: {
-    type: String as PropType<ButtonTarget>,
+    type: String as PropType<ButtonVueProps['target']>,
     default: BUTTON_DEFAULTS.target,
+    validator: isButtonTarget,
   },
   /**
    * 防抖调用函数
    * @en Configuration for debounce fn.
    */
   debounceFn: {
-    type: Function as PropType<() => Awaitable<any>>,
+    type: Function as PropType<() => Awaitable<unknown>>,
   },
   /**
    * 防抖过程中的按钮状态控制
@@ -183,7 +214,9 @@ export const useButtonProps = declarePropType({
    * @en Configuration for debounce type.
    */
   debounceType: {
-    type: String as PropType<'disabled' | 'loading' | 'none'>,
+    type: String as PropType<ButtonVueProps['debounceType']>,
+    default: BUTTON_DEFAULTS.asyncState,
+    validator: isButtonAsyncState,
   },
   /**
    * 幽灵按钮
@@ -205,10 +238,11 @@ export const useButtonProps = declarePropType({
    * @en Configuration for border style.
    */
   borderStyle: {
-    type: String as PropType<ButtonBorderStyle>,
+    type: String as PropType<ButtonVueProps['borderStyle']>,
     default: BUTTON_DEFAULTS.borderStyle,
+    validator: isButtonBorderStyle,
   },
-});
+} satisfies ComponentRendererPropDefinitions<ButtonVueProps>);
 
 export const useButtonGroupProps = declarePropType({
   /**
@@ -216,16 +250,18 @@ export const useButtonGroupProps = declarePropType({
    * @en Configuration for size.
    */
   size: {
-    type: String as PropType<ButtonSize>,
+    type: String as PropType<ButtonGroupVueProps['size']>,
+    validator: isButtonSize,
   },
   /**
    * 控制按钮组内按钮的类型
    * @en Configuration for type.
    */
   type: {
-    type: String as PropType<ButtonVariant>,
+    type: String as PropType<ButtonGroupVueProps['type']>,
+    validator: isButtonVariant,
   },
-});
+} satisfies ComponentRendererPropDefinitions<ButtonGroupVueProps>);
 
 export type ButtonProps = ExtractPropTypes<typeof useButtonProps>;
 export type ButtonGroupProps = ExtractPropTypes<typeof useButtonGroupProps>;

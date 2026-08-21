@@ -4,6 +4,9 @@ import { parse, type SFCDescriptor } from '@vue/compiler-sfc';
 import { describe, expect, it } from 'vitest';
 
 const buttonDemoDirectory = path.resolve(__dirname, '../../demos/vue/components/Button');
+const reactButtonDemoDirectory = path.resolve(__dirname, '../../demos/react/components/Button');
+const vueButtonPage = path.resolve(__dirname, '../../zh/vue/components/Button.md');
+const reactButtonPage = path.resolve(__dirname, '../../zh/react/components/Button.md');
 const templateNodeType = {
   element: 1,
   attribute: 6,
@@ -34,6 +37,39 @@ describe('Button demos', () => {
       { label: 'loading', value: 'loading' },
       { label: 'none', value: 'none' },
     ]);
+  });
+
+  it('keeps the React runnable scenario inventory at least as deep as Button documentation', () => {
+    const vuePage = readFileSync(vueButtonPage, 'utf8');
+    const reactPage = readFileSync(reactButtonPage, 'utf8');
+    const vueDemos = [...vuePage.matchAll(/:::demo vue\/components\/Button\/([^ ]+) :::/g)].map(
+      match => match[1],
+    );
+    const reactDemos = [
+      ...reactPage.matchAll(/:::react-demo react\/components\/Button\/([^ ]+) :::/g),
+    ].map(match => match[1]);
+
+    expect(reactDemos.length).toBeGreaterThanOrEqual(vueDemos.length);
+    expect(reactDemos).toEqual([
+      'basic.tsx',
+      'size.tsx',
+      'plain.tsx',
+      'text.tsx',
+      'link.tsx',
+      'active.tsx',
+      'disabled.tsx',
+      'icon.tsx',
+      'block.tsx',
+      'button-group.tsx',
+      'async-action.tsx',
+      'border-style.tsx',
+      'custom-color.tsx',
+    ]);
+    reactDemos.forEach(filename =>
+      expect(readFileSync(path.join(reactButtonDemoDirectory, filename), 'utf8')).toContain(
+        'export default',
+      ),
+    );
   });
 });
 
