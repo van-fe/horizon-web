@@ -138,17 +138,18 @@ describe('React Calendar', () => {
   });
 
   it('renders week and day timeline regions with accessible labels', async () => {
+    const today = new Date();
     await render(
       h(Calendar, {
         defaultMode: 'week',
-        defaultValue: date,
+        defaultValue: today,
         modeSwitchableList: ['week'],
         renderWeekDayHeader: context => `week-${context.date.getDate()}`,
         renderTimezone: timezone => `zone-${timezone}`,
       }),
     );
     expect(container.querySelectorAll('[data-calendar-day]')).toHaveLength(7);
-    expect(container.textContent).toContain('week-19');
+    expect(container.textContent).toContain(`week-${today.getDate()}`);
     expect(container.textContent).toContain('zone-');
     expect(container.querySelector('.h-calendar-week__body--current-time')).not.toBeNull();
   });
