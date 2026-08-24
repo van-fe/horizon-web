@@ -8,10 +8,38 @@ import type { ButtonExposes } from '../src/composables/useExposes';
 import { IconEye } from '@aurora/icon';
 import { sleep } from '../../../utils/tools';
 import LoadingIcon from '../../../directives/v-loading/src/components/LoadingIcon';
-import { buttonActionTestVectors, resolveButtonAction } from '@aurora/core';
+import { buttonActionTestVectors, buttonManifest, resolveButtonAction } from '@aurora/core';
 import type { Router } from 'vue-router';
+import { useButtonProps } from '../src/composables/useProps';
+import { useButtonEmits } from '../src/composables/useEmits';
+import { useButtonExposes } from '../src/composables/useExposes';
 
 describe('Button.tsx', () => {
+  test('derives its renderer API from the Core manifest', () => {
+    const rename: Record<string, string> = {
+      variant: 'type',
+      asyncAction: 'debounceFn',
+      asyncState: 'debounceType',
+    };
+    expect(Object.keys(useButtonProps)).toEqual([
+      ...buttonManifest.contract.props.map(field => rename[field.name] ?? field.name),
+      'autofocus',
+      'icon',
+      'iconSize',
+      'nativeType',
+      'tag',
+      'to',
+    ]);
+    expect(Object.keys(useButtonEmits)).toEqual([
+      'click',
+      'debounceFinished',
+      'debounceError',
+      'focus',
+      'blur',
+    ]);
+    expect(Object.keys(useButtonExposes)).toEqual(['focus']);
+  });
+
   test.each(buttonActionTestVectors)(
     'consumes shared action vector: $name',
     ({ input, expected }) => {

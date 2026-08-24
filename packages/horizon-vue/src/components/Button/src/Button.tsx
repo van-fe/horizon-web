@@ -101,7 +101,7 @@ export default defineComponent({
           classHelper.m('text', isText.value),
           classHelper.m('link', props.link),
           classHelper.m('equally', isOnlyIcon.value),
-          classHelper.is(borderStyleProp.value),
+          classHelper.is(borderStyleProp?.value),
           classHelper.is('loading', actionState.value.loading),
           classHelper.is('with-icon', !!(props.icon || slots.icon || props.loading)),
           classHelper.is('auto-fit', props.autoFit),

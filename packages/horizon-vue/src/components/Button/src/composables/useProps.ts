@@ -1,14 +1,11 @@
 import type { Component, ExtractPropTypes, PropType } from 'vue';
-import type { Awaitable } from '@aurora/utils';
-import { declarePropType } from '@aurora/utils';
 import type { RouteLocationRaw } from 'vue-router';
+import { declarePropType } from '@aurora/utils';
 import {
-  BUTTON_DEFAULTS,
-  isButtonAsyncState,
-  isButtonBorderStyle,
-  isButtonSize,
-  isButtonTarget,
-  isButtonVariant,
+  buttonApiContract,
+  buttonGroupApiContract,
+  buttonGroupManifest,
+  buttonManifest,
 } from '@aurora/core';
 import type {
   AdaptComponentApiShape,
@@ -16,252 +13,77 @@ import type {
   ButtonGroupCommonProps,
   ComponentRendererPropDefinitions,
 } from '@aurora/core';
+import { createVuePropsFromManifest, type VuePropDefinitions } from '~/utils/componentManifest';
 
-type ButtonVueProps = AdaptComponentApiShape<
+type ButtonVueCommonProps = AdaptComponentApiShape<
   ButtonCommonProps,
-  { variant: 'type'; asyncAction: 'debounceFn'; asyncState: 'debounceType' },
-  never,
-  {
-    autofocus?: boolean;
-    icon?: Component | string;
-    iconSize?: string | number;
-    nativeType?: 'button' | 'submit' | 'reset';
-    tag?: 'button' | 'div' | 'a';
-    to?: RouteLocationRaw;
-  }
+  { variant: 'type'; asyncAction: 'debounceFn'; asyncState: 'debounceType' }
 >;
+
+type ButtonVueProps = ButtonVueCommonProps & {
+  autofocus?: boolean;
+  icon?: Component | string;
+  iconSize?: string | number;
+  nativeType?: 'button' | 'submit' | 'reset';
+  tag?: 'button' | 'div' | 'a';
+  to?: RouteLocationRaw;
+};
 
 type ButtonGroupVueProps = AdaptComponentApiShape<ButtonGroupCommonProps, { variant: 'type' }>;
 
+const commonButtonProps = createVuePropsFromManifest(
+  buttonManifest.contract.props,
+  buttonApiContract,
+  {
+    rename: {
+      variant: 'type',
+      asyncAction: 'debounceFn',
+      asyncState: 'debounceType',
+    },
+    // ButtonGroup owns the effective size fallback, so the child renderer must preserve undefined.
+    omitDefaults: ['size'],
+  },
+) as VuePropDefinitions<ButtonVueCommonProps>;
+
 export const useButtonProps = declarePropType({
-  /**
-   * 按钮类型
-   * @en Configuration for type.
-   */
-  type: {
-    type: String as PropType<ButtonVueProps['type']>,
-    default: BUTTON_DEFAULTS.variant,
-    validator: isButtonVariant,
-  },
-  /**
-   * 尺寸
-   * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<ButtonVueProps['size']>,
-    validator: isButtonSize,
-  },
-  /**
-   * 是否是椭圆按钮
-   * @en Configuration for round.
-   */
-  round: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.round,
-  },
-  /**
-   * 是否是文字按钮
-   * @en Configuration for text.
-   */
-  text: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.text,
-  },
-  /**
-   * 是否是链接按钮
-   * @en Configuration for link.
-   */
-  link: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.link,
-  },
-  /**
-   * 是否自适应父宽度
-   * @en Configuration for block.
-   */
-  block: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.block,
-  },
-  /**
-   * 是否是简洁按钮
-   * @en Configuration for plain.
-   */
-  plain: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.plain,
-  },
-  /**
-   * 是否激活按钮
-   * @en Configuration for active.
-   */
-  active: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.active,
-  },
-  /**
-   * 是否自动聚焦
-   * @en Configuration for autofocus.
-   */
+  ...commonButtonProps,
+  /** 是否自动聚焦。 @en Whether the native element receives autofocus. */
   autofocus: {
     type: Boolean,
     default: false,
   },
-  /**
-   * 是否处于加载中
-   * @en Configuration for loading.
-   */
-  loading: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.loading,
-  },
-  /**
-   * 是否禁用
-   * @en Configuration for disabled.
-   */
-  disabled: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.disabled,
-  },
-  /**
-   * 是否自适应启用最小宽度
-   * @en Configuration for auto fit.
-   */
-  autoFit: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.autoFit,
-  },
-  /**
-   * 图标，请传入图标对象
-   * @en Configuration for icon.
-   */
+  /** 图标组件或图标名称。 @en Icon component or icon name. */
   icon: {
     type: [Object, String] as PropType<Component | string>,
     validator(value: unknown): boolean {
       return ['object', 'string'].includes(typeof value) && value !== null;
     },
   },
-  /**
-   * 图标尺寸
-   * @en Configuration for icon size.
-   */
+  /** 图标尺寸。 @en Icon size. */
   iconSize: {
     type: [String, Number],
   },
-  /**
-   * 按钮 `type` 的原生属性
-   * @en Configuration for native type.
-   */
+  /** 原生 button type。 @en Native button type. */
   nativeType: {
     type: String as PropType<'button' | 'submit' | 'reset'>,
     default: 'button',
   },
-  /**
-   * 使用哪种原生渲染 `button`
-   * @en Configuration for tag.
-   */
+  /** Vue renderer 使用的原生标签。 @en Native tag rendered by the Vue component. */
   tag: {
     type: String as PropType<'button' | 'div' | 'a'>,
     default: 'button',
   },
-  /**
-   * 点击跳转链接，使用 `location.href`
-   * 优先级高于 `to`
-   * @en Configuration for href.
-   */
-  href: {
-    type: String,
-  },
-  /**
-   * 点击跳转的目标，使用 `router.push`
-   * 优先级高于 `debounce-fn`
-   * @en Configuration for to.
-   */
+  /** Vue Router 路由目标。 @en Vue Router navigation target. */
   to: {
     type: [String, Object] as PropType<RouteLocationRaw>,
   },
-  /**
-   * 需结合 `to` 字段一起使用
-   * 是否用 `router.replace` 而不是 `router.push`
-   * @en Configuration for replace.
-   */
-  replace: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.replace,
-  },
-  /**
-   * 链接打开目标对象
-   * 只针对 `href` 有效
-   * @en Configuration for target.
-   */
-  target: {
-    type: String as PropType<ButtonVueProps['target']>,
-    default: BUTTON_DEFAULTS.target,
-    validator: isButtonTarget,
-  },
-  /**
-   * 防抖调用函数
-   * @en Configuration for debounce fn.
-   */
-  debounceFn: {
-    type: Function as PropType<() => Awaitable<unknown>>,
-  },
-  /**
-   * 防抖过程中的按钮状态控制
-   * `disabled`: 防抖时自动控制按钮的 `disabled` 属性
-   * `loading`: 防抖时自动控制按钮的 `loading` 属性
-   * `none`: 仅做防抖控制
-   * @en Configuration for debounce type.
-   */
-  debounceType: {
-    type: String as PropType<ButtonVueProps['debounceType']>,
-    default: BUTTON_DEFAULTS.asyncState,
-    validator: isButtonAsyncState,
-  },
-  /**
-   * 幽灵按钮
-   * @en Configuration for ghost.
-   */
-  ghost: {
-    type: Boolean,
-    default: BUTTON_DEFAULTS.ghost,
-  },
-  /**
-   * 自定义主题颜色，会自动生成默认、悬浮、按下和禁用状态
-   * @en Custom theme color with derived default, hover, pressed, and disabled states.
-   */
-  color: {
-    type: String,
-  },
-  /**
-   * 按钮边框样式
-   * @en Configuration for border style.
-   */
-  borderStyle: {
-    type: String as PropType<ButtonVueProps['borderStyle']>,
-    default: BUTTON_DEFAULTS.borderStyle,
-    validator: isButtonBorderStyle,
-  },
 } satisfies ComponentRendererPropDefinitions<ButtonVueProps>);
 
-export const useButtonGroupProps = declarePropType({
-  /**
-   * 控制按钮组内按钮的尺寸
-   * @en Configuration for size.
-   */
-  size: {
-    type: String as PropType<ButtonGroupVueProps['size']>,
-    validator: isButtonSize,
-  },
-  /**
-   * 控制按钮组内按钮的类型
-   * @en Configuration for type.
-   */
-  type: {
-    type: String as PropType<ButtonGroupVueProps['type']>,
-    validator: isButtonVariant,
-  },
-} satisfies ComponentRendererPropDefinitions<ButtonGroupVueProps>);
+export const useButtonGroupProps = declarePropType(
+  createVuePropsFromManifest(buttonGroupManifest.contract.props, buttonGroupApiContract, {
+    rename: { variant: 'type' },
+  }) as VuePropDefinitions<ButtonGroupVueProps>,
+);
 
 export type ButtonProps = ExtractPropTypes<typeof useButtonProps>;
 export type ButtonGroupProps = ExtractPropTypes<typeof useButtonGroupProps>;

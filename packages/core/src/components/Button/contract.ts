@@ -1,5 +1,10 @@
 import type { EmptyComponentApi } from '../_shared/api';
-import { defineComponentApiContract } from '../_shared/api';
+import {
+  createComponentPropDefaults,
+  createComponentPropValidators,
+  defineComponentApiContract,
+  defineComponentPropDefinitions,
+} from '../_shared/api';
 
 export const BUTTON_ASYNC_STATES = ['disabled', 'loading', 'none'] as const;
 export const BUTTON_VARIANTS = ['primary', 'normal', 'danger'] as const;
@@ -89,29 +94,6 @@ export interface ButtonCommandMap {
   focus: () => void;
 }
 
-export const BUTTON_DEFAULTS = Object.freeze({
-  variant: 'primary',
-  size: 'medium',
-  round: false,
-  plain: false,
-  ghost: false,
-  text: false,
-  link: false,
-  block: false,
-  active: false,
-  loading: false,
-  disabled: false,
-  autoFit: false,
-  borderStyle: 'solid',
-  target: '_self',
-  replace: false,
-  asyncState: 'none',
-} as const satisfies Partial<ButtonCommonProps>);
-
-export const BUTTON_GROUP_DEFAULTS = Object.freeze(
-  {} as const satisfies Partial<ButtonGroupCommonProps>,
-);
-
 export function isButtonAsyncState(value: unknown): value is ButtonAsyncState {
   return BUTTON_ASYNC_STATES.includes(value as ButtonAsyncState);
 }
@@ -132,6 +114,144 @@ export function isButtonTarget(value: unknown): value is ButtonTarget {
   return BUTTON_TARGETS.includes(value as ButtonTarget);
 }
 
+export const BUTTON_PROP_DEFINITIONS = defineComponentPropDefinitions<ButtonCommonProps>()({
+  variant: {
+    runtimeType: 'string',
+    type: 'ButtonVariant',
+    description: { zh: '视觉类型', en: 'Visual variant' },
+    default: 'primary',
+    validator: isButtonVariant,
+  },
+  size: {
+    runtimeType: 'string',
+    type: 'ButtonSize',
+    description: { zh: '尺寸', en: 'Size' },
+    default: 'medium',
+    validator: isButtonSize,
+  },
+  round: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '椭圆外观', en: 'Pill shape' },
+    default: false,
+  },
+  plain: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '简洁外观', en: 'Plain treatment' },
+    default: false,
+  },
+  ghost: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '幽灵外观', en: 'Ghost treatment' },
+    default: false,
+  },
+  text: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '文字外观', en: 'Text treatment' },
+    default: false,
+  },
+  link: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '链接外观', en: 'Link treatment' },
+    default: false,
+  },
+  block: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '填满容器', en: 'Block width' },
+    default: false,
+  },
+  active: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '激活状态', en: 'Active state' },
+    default: false,
+  },
+  loading: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '加载状态', en: 'Loading state' },
+    default: false,
+  },
+  disabled: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '禁用状态', en: 'Disabled state' },
+    default: false,
+  },
+  autoFit: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '按内容收缩', en: 'Content fitting' },
+    default: false,
+  },
+  borderStyle: {
+    runtimeType: 'string',
+    type: 'ButtonBorderStyle',
+    description: { zh: '边框样式', en: 'Border style' },
+    default: 'solid',
+    validator: isButtonBorderStyle,
+  },
+  color: {
+    runtimeType: 'string',
+    type: 'string',
+    description: { zh: '自定义颜色', en: 'Custom color' },
+  },
+  href: {
+    runtimeType: 'string',
+    type: 'string',
+    description: { zh: '原生链接', en: 'Native link URL' },
+  },
+  target: {
+    runtimeType: 'string',
+    type: 'ButtonTarget',
+    description: { zh: '链接目标', en: 'Link target' },
+    default: '_self',
+    validator: isButtonTarget,
+  },
+  replace: {
+    runtimeType: 'boolean',
+    type: 'boolean',
+    description: { zh: '替换导航记录', en: 'Replace navigation entry' },
+    default: false,
+  },
+  asyncAction: {
+    runtimeType: 'function',
+    type: '() => unknown | PromiseLike<unknown>',
+    description: { zh: '异步操作', en: 'Async action' },
+  },
+  asyncState: {
+    runtimeType: 'string',
+    type: 'ButtonAsyncState',
+    description: { zh: '异步视觉状态', en: 'Async visual state' },
+    default: 'none',
+    validator: isButtonAsyncState,
+  },
+});
+
+export const BUTTON_GROUP_PROP_DEFINITIONS =
+  defineComponentPropDefinitions<ButtonGroupCommonProps>()({
+    variant: {
+      runtimeType: 'string',
+      type: 'ButtonVariant',
+      description: { zh: '组内视觉类型', en: 'Grouped variant' },
+      validator: isButtonVariant,
+    },
+    size: {
+      runtimeType: 'string',
+      type: 'ButtonSize',
+      description: { zh: '组内尺寸', en: 'Grouped size' },
+      validator: isButtonSize,
+    },
+  });
+
+export const BUTTON_DEFAULTS = createComponentPropDefaults(BUTTON_PROP_DEFINITIONS);
+export const BUTTON_GROUP_DEFAULTS = createComponentPropDefaults(BUTTON_GROUP_PROP_DEFINITIONS);
+
 export const buttonApiContract = defineComponentApiContract<
   ButtonCommonProps,
   ButtonEventMap,
@@ -139,13 +259,8 @@ export const buttonApiContract = defineComponentApiContract<
   ButtonCommandMap
 >({
   defaults: BUTTON_DEFAULTS,
-  validators: {
-    variant: isButtonVariant,
-    size: isButtonSize,
-    borderStyle: isButtonBorderStyle,
-    target: isButtonTarget,
-    asyncState: isButtonAsyncState,
-  },
+  validators: createComponentPropValidators<ButtonCommonProps>(BUTTON_PROP_DEFINITIONS),
+  propDefinitions: BUTTON_PROP_DEFINITIONS,
 });
 
 export const buttonGroupApiContract = defineComponentApiContract<
@@ -155,8 +270,6 @@ export const buttonGroupApiContract = defineComponentApiContract<
   EmptyComponentApi
 >({
   defaults: BUTTON_GROUP_DEFAULTS,
-  validators: {
-    variant: isButtonVariant,
-    size: isButtonSize,
-  },
+  validators: createComponentPropValidators<ButtonGroupCommonProps>(BUTTON_GROUP_PROP_DEFINITIONS),
+  propDefinitions: BUTTON_GROUP_PROP_DEFINITIONS,
 });

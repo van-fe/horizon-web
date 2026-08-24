@@ -2232,7 +2232,7 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
   },
 };
 
-const vue = manifests.map(manifest => {
+export const vueComponentManifests = manifests.map(manifest => {
   const adaptation = vueApiAdaptations[manifest.name];
   return createVueComponentManifest(manifest, {
     props: adaptManifestFields(manifest.contract.props, adaptation?.props),
@@ -2242,7 +2242,7 @@ const vue = manifests.map(manifest => {
   });
 });
 
-const react = manifests.map(manifest => {
+export const reactComponentManifests = manifests.map(manifest => {
   const adaptation = reactApiAdaptations[manifest.name];
   return createReactComponentManifest(manifest, {
     props: adaptManifestFields(manifest.contract.props, adaptation?.props),
@@ -2252,8 +2252,20 @@ const react = manifests.map(manifest => {
   });
 });
 
-const output = path.resolve(__dirname, '../packages/docs/.vitepress/generated');
-fs.mkdirSync(output, { recursive: true });
-fs.writeFileSync(path.join(output, 'vue-components.json'), JSON.stringify(vue, null, 2));
-fs.writeFileSync(path.join(output, 'react-components.json'), JSON.stringify(react, null, 2));
-console.info(`Generated ${vue.length} Vue and ${react.length} React component contracts.`);
+export function generateComponentContracts(): void {
+  const output = path.resolve(__dirname, '../packages/docs/.vitepress/generated');
+  fs.mkdirSync(output, { recursive: true });
+  fs.writeFileSync(
+    path.join(output, 'vue-components.json'),
+    JSON.stringify(vueComponentManifests, null, 2),
+  );
+  fs.writeFileSync(
+    path.join(output, 'react-components.json'),
+    JSON.stringify(reactComponentManifests, null, 2),
+  );
+  console.info(
+    `Generated ${vueComponentManifests.length} Vue and ${reactComponentManifests.length} React component contracts.`,
+  );
+}
+
+if (import.meta.main) generateComponentContracts();

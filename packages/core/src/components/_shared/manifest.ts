@@ -1,4 +1,4 @@
-import type { ComponentApiContract } from './api';
+import type { ComponentApiContract, ComponentPropRuntimeType } from './api';
 
 export type ComponentRenderer = 'vue' | 'react';
 export type ComponentCategory = 'basic' | 'form' | 'feedback' | 'navigation' | 'overlay';
@@ -7,6 +7,7 @@ export interface ComponentManifestField {
   name: string;
   type: string;
   description: { zh: string; en: string };
+  runtimeType?: ComponentPropRuntimeType | readonly ComponentPropRuntimeType[];
   required?: boolean;
   defaultValue?: string;
 }
@@ -87,10 +88,26 @@ export function createPropManifestFields<
   Commands extends object,
 >(
   contract: ComponentApiContract<Props, Events, Regions, Commands>,
-  definitions: ComponentManifestFieldDefinitions<Props>,
+  definitions?: ComponentManifestFieldDefinitions<Props>,
 ): ComponentManifestField[] {
+  const sourceDefinitions = definitions ?? contract.propDefinitions;
+  if (!sourceDefinitions) {
+    throw new Error('Prop manifest fields require definitions from the contract or the caller.');
+  }
   const defaults = contract.defaults as Readonly<Record<string, unknown>>;
-  return createManifestFields(definitions).map(field =>
+  const fields = Object.entries(sourceDefinitions).map(([name, source]) => {
+    const definition = source as ComponentManifestFieldDefinition & {
+      runtimeType?: ComponentManifestField['runtimeType'];
+    };
+    return {
+      name,
+      type: definition.type,
+      description: definition.description,
+      ...(definition.required === undefined ? {} : { required: definition.required }),
+      ...(definition.runtimeType === undefined ? {} : { runtimeType: definition.runtimeType }),
+    } satisfies ComponentManifestField;
+  });
+  return fields.map(field =>
     Object.hasOwn(defaults, field.name)
       ? { ...field, defaultValue: formatManifestDefault(defaults[field.name]) }
       : field,

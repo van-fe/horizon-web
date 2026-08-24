@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { buttonActionTestVectors } from '../../../testing';
 import {
   BUTTON_DEFAULTS,
+  BUTTON_PROP_DEFINITIONS,
   buttonApiContract,
   buttonGroupManifest,
   buttonManifest,
@@ -22,6 +23,7 @@ describe('Button contract', () => {
 
   it('publishes defaults, validators and both manifests', () => {
     expect(buttonApiContract.defaults).toBe(BUTTON_DEFAULTS);
+    expect(buttonApiContract.propDefinitions).toBe(BUTTON_PROP_DEFINITIONS);
     expect(isButtonVariant('danger')).toBe(true);
     expect(isButtonVariant('warning')).toBe(false);
     expect(isButtonSize('small')).toBe(true);
@@ -33,6 +35,15 @@ describe('Button contract', () => {
     expect(isButtonAsyncState('loading')).toBe(true);
     expect(isButtonAsyncState('pending')).toBe(false);
     expect(buttonManifest.contract.props.map(field => field.name)).toContain('asyncAction');
+    expect(buttonManifest.contract.props.find(field => field.name === 'variant')).toMatchObject({
+      runtimeType: 'string',
+      defaultValue: 'primary',
+    });
+    expect(buttonManifest.contract.props.find(field => field.name === 'asyncAction')).toMatchObject(
+      {
+        runtimeType: 'function',
+      },
+    );
     expect(buttonGroupManifest.contract.props.map(field => field.name)).toEqual([
       'variant',
       'size',
