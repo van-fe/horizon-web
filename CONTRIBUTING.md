@@ -34,7 +34,7 @@ Also, do not copy-paste code or documentation from Element and other open-source
 ### Requirements
 
 - [Node.js](https://nodejs.org/) >= 20 (managing versions with [nvm](https://github.com/nvm-sh/nvm) is recommended)
-- [bun](https://bun.sh) >= 1.0 (the repository uses bun as its package manager and script runtime)
+- [Bun](https://bun.sh) >= 1.4.0 (the repository uses Bun as its package manager, script runtime, and Vitest coverage runtime)
 - Branch: create your own development branch based on the `feature` branch
 
 ### Development Steps

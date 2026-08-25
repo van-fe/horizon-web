@@ -34,7 +34,7 @@ yarn add @aurora/horizon-vue
 npm install @aurora/horizon-vue
 ```
 
-> 环境要求：Node.js >= 20，bun >= 1.0（开发环境）。
+> 开发环境要求：Node.js >= 20，Bun >= 1.4.0。Vitest 覆盖率在 Bun 中运行。
 
 ## 快速上手
 

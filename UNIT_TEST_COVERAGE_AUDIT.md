@@ -7,8 +7,8 @@
 ## 当前实施结果
 
 - [x] 所有 Horizon Web DOM、组件、指令、交互、布局和可访问性测试已迁移到 Vitest Browser Mode，并由 Playwright headless Chromium 执行。
-- [x] 全量真实浏览器回归：265 个测试文件，2,295 个通过，1 个预期失败，共 2,296 个测试。
-- [x] 纯源码分析、Sass 规则和 Bun runtime 测试已拆到独立 Node 项目：10 个测试文件，23 个测试全部通过。
+- [x] 全量真实浏览器回归：269 个测试文件，2,390 个通过，1 个预期失败，共 2,391 个测试。
+- [x] 纯源码分析、Sass 规则和 Bun runtime 测试已拆到独立非浏览器项目：13 个测试文件，26 个测试全部通过。
 - [x] `happy-dom`、`jsdom` 已从直接开发依赖和测试配置中移除；仓库源码与配置无相关环境引用。
 - [x] 根目录及 `horizon-web`、`horizon-react`、`colors`、`upload-adapters`、`unplugin-resolver`、`locale-react` 的 DOM 测试入口统一为无头 Chromium。
 - [x] 组件开发 skill 已固化真实浏览器要求，后续不得以 DOM 模拟器作为组件测试回退方案。
@@ -38,7 +38,7 @@
 - [x] D–P 范围严格生产源码聚合覆盖率：Statements 98.26%、Branches 95.42%、Functions 98.79%、Lines 98.48%；52 个文件、494 个测试全部通过。
 - [x] P–W 范围已按 Table、小组件、交互组件和媒体/虚拟化四组完成真实浏览器覆盖率验收；各组四项均达到 95%，其中 Table 为 98.15% / 95.50% / 98.15% / 98.63%，媒体/虚拟化为 98.44% / 97.01% / 98.57% / 98.76%。
 - [x] Browser 配置已写入 coverage-v8 四项 95% 阈值；不得通过排除生产 hooks、exposes、元数据模块或添加 coverage-ignore 达标。
-- [x] 87 个一级组件包统一验收：Statements 98.09%（21,337/21,752）、Branches 95.35%（13,900/14,577）、Functions 97.89%（6,146/6,278）、Lines 98.33%（19,897/20,233）；265 个 Browser Mode 测试文件全部通过。
+- [x] 87 个一级组件包统一验收：Statements 98.26%（20,977/21,347）、Branches 95.48%（13,179/13,802）、Functions 98.19%（6,251/6,366）、Lines 98.66%（19,433/19,695）；269 个 Browser Mode 测试文件全部通过。
 
 上述覆盖率均只统计 87 个一级组件包的生产源码，不把 `__tests__` 计入分子或分母。coverage include 由配置枚举 `src/components` 的实际一级目录生成，避免误匹配 `src/methods/*/src/components` 下的内部实现。
 
@@ -48,7 +48,7 @@
 - 真实浏览器单测：12 个测试文件，15 个通过。
 - 组件源码覆盖率：行 70.21%、分支 58.13%、函数 67.84%。
 - 仓库当前未配置强制覆盖率阈值。
-- 覆盖率由 Node 启动 Vitest 采集，并排除只验证 Bun 运行时的 `bun-runtime.test.ts`；常规单测仍使用仓库规定的 Bun 命令验证。
+- 迁移时覆盖率曾由 Node 启动 Vitest 采集，并排除只验证 Bun 运行时的 `bun-runtime.test.ts`。Bun 1.4.0 起已改为由 Bun 启动 Vitest 及 coverage-v8；`environment: 'node'` 仅表示 Vitest 的非浏览器测试环境，不会启动 Node.js。
 
 ## 判定标准
 
@@ -197,5 +197,5 @@ P0、P1 的公开行为、边界条件、异步清理和真实浏览器分支均
 - [x] 对重要复用控件添加集成契约测试。
 - [x] 测试场景有开源同类组件或真实回归场景依据。
 - [x] 聚焦单测通过。
-- [x] 全量 headless Chromium 与独立 Node-only 测试通过。
+- [x] 全量 headless Chromium 与独立非浏览器测试通过。
 - [x] 重新采集覆盖率并更新本清单。

@@ -34,7 +34,7 @@
 ### 环境要求
 
 - [Node.js](https://nodejs.org/) >= 20（建议使用 [nvm](https://github.com/nvm-sh/nvm) 管理版本）
-- [bun](https://bun.sh) >= 1.0（仓库使用 bun 作为包管理器与脚本运行时）
+- [Bun](https://bun.sh) >= 1.4.0（仓库使用 Bun 作为包管理器、脚本运行时和 Vitest 覆盖率运行时）
 - 分支：请基于 `feature` 分支自行创建开发分支
 
 ### 开发步骤

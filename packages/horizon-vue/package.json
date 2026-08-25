@@ -27,9 +27,9 @@
     "build:ts": "tsc -d -p tsconfig.build.json --pretty --emitDeclarationOnly && bun run recorrect:tsc-alias",
     "recorrect:tsc-alias": "tsc -p ./build/tsc-alias/tsconfig.json && tsc-alias -p tsconfig.json",
     "ts:check": "bunx --bun typescript@7.0.2 --noEmit",
-    "test": "vitest --config ./vitest.browser.config.ts",
-    "test:coverage": "vitest run --coverage --config ./vitest.browser.config.ts",
-    "test:node": "vitest --config ./vitest.config.ts",
+    "test": "bun run --bun vitest --config ./vitest.browser.config.ts",
+    "test:coverage": "bun run --bun vitest run --coverage --config ./vitest.browser.config.ts",
+    "test:node": "bun run --bun vitest --config ./vitest.config.ts",
     "lint": "bunx oxlint && eslint --fix --ext .jsx,.js,.ts,.tsx ./src"
   },
   "license": "MIT",

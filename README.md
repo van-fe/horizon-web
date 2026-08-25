@@ -59,7 +59,7 @@ yarn add @aurora/horizon-vue
 npm install @aurora/horizon-vue
 ```
 
-> Requirements: Node.js >= 20, bun >= 1.0 (for development).
+> Development requirements: Node.js >= 20 and Bun >= 1.4.0. Vitest coverage runs on Bun.
 
 ## Quick Start
 
