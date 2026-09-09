@@ -434,6 +434,8 @@ describe('React Calendar', () => {
   });
 
   it('runs native header navigation and every imperative date command', async () => {
+    const today = new Date();
+    const todayMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
     const calendar = createRef<CalendarHandle>();
     await render(h(Calendar, { defaultValue: date, ref: calendar }));
     await click(container.querySelector('[aria-label="Previous"]')!);
@@ -443,7 +445,7 @@ describe('React Calendar', () => {
     await act(async () => calendar.current?.setDate(new Date(2025, 0, 2)));
     expect(container.querySelector('time')?.textContent).toBe('2025-01');
     await click(container.querySelector('.h-calendar__header--today')!);
-    expect(container.querySelector('time')?.textContent).toBe('2026-08');
+    expect(container.querySelector('time')?.textContent).toBe(todayMonth);
   });
 
   it('supports 24-hour day content without a current-time marker', async () => {
