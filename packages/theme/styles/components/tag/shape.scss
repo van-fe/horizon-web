@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('tag') {
   @include mixins.m('equally') {

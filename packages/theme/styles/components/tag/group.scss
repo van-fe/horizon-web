@@ -1,4 +1,4 @@
-@use '../../../../styles/mixins';
+@use '../../mixins';
 
 @include mixins.b('tag-group') {
   display: block;
@@ -11,7 +11,7 @@
   @include mixins.e('container') {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
+    gap: mixins.css-variable('tag', 'spacing', 'siblings');
     min-width: 100%;
     max-width: max-content;
   }
@@ -54,24 +54,24 @@
 
                 @include mixins.is('closable') {
                   min-width: calc(
-                    2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
-                      #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
-                      #{mixins.css-variable('tag', 'size', 'icon')}
+                    2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')}
+                      + #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')}
+                      + #{mixins.css-variable('tag', 'size', 'icon')}
                   );
 
                   &#{mixins.block-modifier-name('small', 'tag')} {
                     min-width: calc(
-                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
-                        #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
-                        #{mixins.css-variable('tag', 'size', 'icon', 'small')}
+                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')}
+                        + #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')}
+                        + #{mixins.css-variable('tag', 'size', 'icon', 'small')}
                     );
                   }
 
                   &#{mixins.block-modifier-name('large', 'tag')} {
                     min-width: calc(
-                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')} +
-                        #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')} +
-                        #{mixins.css-variable('tag', 'size', 'icon', 'large')}
+                      2em + 2 * #{mixins.css-variable('tag', 'spacing', 'padding-x')}
+                        + #{mixins.css-variable('tag', 'spacing', 'inner', 'gap')}
+                        + #{mixins.css-variable('tag', 'size', 'icon', 'large')}
                     );
                   }
                 }
@@ -98,7 +98,7 @@
   @include mixins.e('popper-inner') {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
+    gap: mixins.css-variable('tag', 'spacing', 'siblings');
     max-width: 100%;
 
     @include mixins.nested('tag') {
@@ -109,7 +109,7 @@
   @include mixins.e('tags') {
     display: inline-flex;
     flex-wrap: wrap;
-    grid-gap: mixins.css-variable('tag', 'spacing', 'siblings');
+    gap: mixins.css-variable('tag', 'spacing', 'siblings');
     width: fit-content;
 
     @include mixins.nested('tag') {
@@ -119,13 +119,13 @@
 
   @include mixins.m('small') {
     @include mixins.e('container', false) {
-      grid-gap: mixins.css-variable('tag', 'spacing', 'siblings', 'small');
+      gap: mixins.css-variable('tag', 'spacing', 'siblings', 'small');
     }
   }
 
   @include mixins.m('large') {
     @include mixins.e('container', false) {
-      grid-gap: mixins.css-variable('tag', 'spacing', 'siblings', 'large');
+      gap: mixins.css-variable('tag', 'spacing', 'siblings', 'large');
     }
   }
 

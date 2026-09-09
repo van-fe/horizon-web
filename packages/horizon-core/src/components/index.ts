@@ -33,6 +33,7 @@ export * from './TimeSelect';
 export * from './Slider';
 export * from './Steps';
 export * from './Tabs';
+export * from './Tag';
 export * from './Tooltip';
 export * from './Timeline';
 export * from './Tree';

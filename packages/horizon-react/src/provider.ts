@@ -122,6 +122,12 @@ export interface HorizonWebConfig {
     placeholder: string;
     empty: string;
   };
+  tagLabels: {
+    create: string;
+    close: string;
+    expand: string;
+    collapse: string;
+  };
 }
 
 export type HorizonWebProviderProps = PropsWithChildren<
@@ -148,6 +154,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     | 'stepsLabels'
     | 'switchLabels'
     | 'timelineLabels'
+    | 'tagLabels'
     | 'treeLabels'
     | 'treeSelectLabels'
   > & {
@@ -174,6 +181,7 @@ export type HorizonWebProviderProps = PropsWithChildren<
     pageHeaderLabels?: Partial<HorizonWebConfig['pageHeaderLabels']>;
     qrCodeLabels?: Partial<HorizonWebConfig['qrCodeLabels']>;
     commandPaletteLabels?: Partial<HorizonWebConfig['commandPaletteLabels']>;
+    tagLabels?: Partial<HorizonWebConfig['tagLabels']>;
   }
 >;
 
@@ -242,6 +250,12 @@ const defaultConfig: HorizonWebConfig = Object.freeze({
     placeholder: 'Type a command…',
     empty: 'No commands found',
   },
+  tagLabels: {
+    create: 'Add tag',
+    close: 'Remove tag',
+    expand: 'Show hidden tags',
+    collapse: 'Collapse tags',
+  },
 });
 
 export const HorizonWebContext = createContext<HorizonWebConfig>(defaultConfig);
@@ -277,6 +291,7 @@ export function HorizonWebProvider({
   pageHeaderLabels,
   qrCodeLabels,
   commandPaletteLabels,
+  tagLabels,
   children,
 }: HorizonWebProviderProps): ReactElement {
   const parent = useContext(HorizonWebContext);
@@ -382,6 +397,10 @@ export function HorizonWebProvider({
         ...parent.commandPaletteLabels,
         ...commandPaletteLabels,
       },
+      tagLabels: {
+        ...parent.tagLabels,
+        ...tagLabels,
+      },
     }),
     [
       namespace,
@@ -415,6 +434,7 @@ export function HorizonWebProvider({
       pageHeaderLabels,
       qrCodeLabels,
       commandPaletteLabels,
+      tagLabels,
     ],
   );
 

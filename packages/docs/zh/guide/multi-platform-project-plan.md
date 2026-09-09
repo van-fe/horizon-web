@@ -4,7 +4,7 @@
 
 | 项目 | 内容 |
 | --- | --- |
-| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B41 Calendar 已完成 |
+| 计划状态 | M5 Web 双 renderer MVP 已验收，M6-B42 Tag 已完成 |
 | 计划版本 | 0.1 |
 | 规划基线 | 87 个 Vue 组件，现有 Vue 测试、文档和发布流程继续作为回归基线 |
 | 首个目标 | 形成可发布的 Web React MVP，并保持 Web Vue 兼容 |
@@ -910,6 +910,19 @@ Tabs Collapse Pagination Breadcrumb Steps Timeline Link
 | DOC-B41-001 | Done | React 中英文页面和 8 个独立 TSX 示例完成，与 Vue 的 8 个用户场景数量及能力范围一致；两套页面保持 renderer 原生术语且无映射文案 |
 | PKG-B41-001 | Done | Calendar 仅依赖 `@aurora/core`、`@aurora/horizon-core`、`@aurora/horizon-vue`、`@aurora/horizon-react` 新分层，不提供旧组件包兼容入口、alias、re-export、resolver fallback 或发布项 |
 | QA-B41-001 | Done | Core 288 项、Theme 8 项、Horizon Core Node 23/Chromium 73、React Chromium 350、Vue Chromium 2385 项（2384 通过、1 项既有预期失败）全部通过；Calendar 定向真实 Chromium 为 Vue 55 项、React 18 项，Vue 覆盖率 Statements 98.07%、Branches 95.30%、Functions 98.90%、Lines 98.31%，React 为 Statements 99.52%、Branches 95.54%、Functions 100%、Lines 100%；五包构建、74 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练与包边界检查通过 |
+
+#### M6-B42 Tag 实施记录（2026-09-09，已完成）
+
+| 任务 | 状态 | 交付 |
+| --- | --- | --- |
+| CORE-B42-001 | Done | Tag/TagGroup 公共 props、默认值、校验器、事件、内容区域、命令、激活算法、可见数量归一化与异步创建/编辑/关闭控制器进入 `@aurora/core`，统一重复操作抑制、拒绝、异常、过期结果与销毁语义 |
+| HORIZON-B42-001 | Done | Tag 延迟关闭按钮、按压生命周期、ResizeObserver 清理与 TagGroup 逐帧折叠测量进入 `@aurora/horizon-core`，统一 ownerDocument/window 资源所有权与幂等销毁 |
+| VUE-B42-001 | Done | Vue Tag/TagGroup 保留既有 props、emits、slots、exposes、VNode/Tooltip/Avatar 扩展、表单触发与 Select 标签关闭时序，公共状态、异步守卫、颜色和浏览器资源改为消费共享能力 |
+| REACT-B42-001 | Done | React Tag/TagGroup 支持受控激活、键盘操作、关闭、编辑、创建、异步守卫、折叠、Tooltip、Avatar、Provider 文案、原生 ARIA 与 ref 命令 |
+| DS-B42-001 | Done | Tag canonical Sass、变量与颜色状态生成进入 `@aurora/theme`，Vue 样式改为薄代理并移除重复颜色实现，React 复用同一视觉源与原生 close button reset |
+| DOC-B42-001 | Done | React 中英文页面和 13 个独立 TSX 示例完成，与 Vue 的 13 个用户场景数量及能力范围一致；双 renderer 契约和侧边栏入口同步完成，页面保持 renderer 原生表达 |
+| PKG-B42-001 | Done | Tag 仅依赖新分层包，未新增旧组件包兼容入口、alias、re-export、resolver fallback、workspace dependency 或发布项 |
+| QA-B42-001 | Done | Core 298 项、Theme 13 项、Horizon Core Node 23/Chromium 75、React Chromium 374、Vue Chromium 2392 项（2391 通过、1 项既有预期失败）与 MCP 8 项全部通过；Tag 定向真实 Chromium 为 Vue 46 项、React 15 项，Vue 源码覆盖率 Statements 98.28%、Branches 96.26%、Functions 98.98%、Lines 98.52%，React 为 Statements 98.38%、Branches 96.66%、Functions 100%、Lines 99.54%；六包类型检查与构建、77 组双 renderer 契约、文档站、Vue/React/SSR/tree-shaking 消费工程、发布演练、包边界与旧组件包精确扫描通过 |
 
 ### 批次 C：浮层与容器
 

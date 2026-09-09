@@ -5,7 +5,7 @@ import HTag from '../src/Tag';
 import HTagGroup from '../src/TagGroup';
 import InputTag from '../src/components/InputTag';
 import { useTagGroupProps, useTagProps } from '../src/composables/useProps';
-import { generateColorList } from '../src/utils/colorful';
+import { createTagColorPalette } from '@aurora/theme';
 
 describe('Tag browser coverage', () => {
   test('validates every public constrained prop and its legacy warning branches', () => {
@@ -40,9 +40,9 @@ describe('Tag browser coverage', () => {
   });
 
   test('generates plain and filled palettes for light and dark source colors', () => {
-    const plain = generateColorList('#1677ff', '#ffffff', true);
-    const light = generateColorList('#ffffff', '#ffffff');
-    const dark = generateColorList('#000000', '#ffffff');
+    const plain = createTagColorPalette('#1677ff', '#ffffff', true);
+    const light = createTagColorPalette('#ffffff', '#ffffff');
+    const dark = createTagColorPalette('#000000', '#ffffff');
 
     expect(plain.background.default).toBe('#FFF');
     expect(plain.border.active).toBe(plain.text.active);
@@ -90,27 +90,28 @@ describe('Tag browser coverage', () => {
   test.each([
     ['false result', vi.fn(async () => false)],
     ['rejection', vi.fn(async () => Promise.reject(new Error('blocked')))],
-  ])('restores a tag after a beforeClose %s without an unhandled rejection', async (_, beforeClose) => {
-    const onClosed = vi.fn();
-    const wrapper = mount(
-      () => (
-        <HTagGroup beforeClose={beforeClose} onClosed={onClosed}>
-          <HTag id="protected" closable>
-            Protected
-          </HTag>
-        </HTagGroup>
-      ),
-      { attachTo: document.body },
-    );
-    await nextTick();
-    await wrapper.get('.h-tag__close').trigger('click');
-    await vi.waitFor(() => expect(beforeClose).toHaveBeenCalledWith('protected'));
-    await vi.waitFor(() =>
-      expect(wrapper.get('.h-tag').classes()).not.toContain('is-loading'),
-    );
-    expect(onClosed).not.toHaveBeenCalled();
-    wrapper.unmount();
-  });
+  ])(
+    'restores a tag after a beforeClose %s without an unhandled rejection',
+    async (_, beforeClose) => {
+      const onClosed = vi.fn();
+      const wrapper = mount(
+        () => (
+          <HTagGroup beforeClose={beforeClose} onClosed={onClosed}>
+            <HTag id="protected" closable>
+              Protected
+            </HTag>
+          </HTagGroup>
+        ),
+        { attachTo: document.body },
+      );
+      await nextTick();
+      await wrapper.get('.h-tag__close').trigger('click');
+      await vi.waitFor(() => expect(beforeClose).toHaveBeenCalledWith('protected'));
+      await vi.waitFor(() => expect(wrapper.get('.h-tag').classes()).not.toContain('is-loading'));
+      expect(onClosed).not.toHaveBeenCalled();
+      wrapper.unmount();
+    },
+  );
 
   test.each([
     ['false result', vi.fn(async () => false)],
@@ -133,9 +134,7 @@ describe('Tag browser coverage', () => {
     await vi.waitFor(() =>
       expect(beforeEdit).toHaveBeenCalledWith('Rejected edit', 'Original', 'protected-edit'),
     );
-    await vi.waitFor(() =>
-      expect(wrapper.get('.h-tag').classes()).not.toContain('is-loading'),
-    );
+    await vi.waitFor(() => expect(wrapper.get('.h-tag').classes()).not.toContain('is-loading'));
     expect(onEdited).not.toHaveBeenCalled();
     wrapper.unmount();
   });
@@ -220,9 +219,7 @@ describe('Tag browser coverage', () => {
       /^\+\d+$/,
     );
 
-    await wrapper
-      .get('.h-tag-group__container > .h-popover__reference')
-      .trigger('mouseenter');
+    await wrapper.get('.h-tag-group__container > .h-popover__reference').trigger('mouseenter');
     await vi.waitFor(() =>
       expect(document.body.querySelector('.h-tag-group__popper-inner')?.textContent).toContain(
         'Delta',
@@ -344,6 +341,7 @@ describe('Tag browser coverage', () => {
     expect(disabledTag.attributes('style')).toContain('background');
     await disabledTag.trigger('click');
     await disabledTag.trigger('dblclick');
+    await disabledTag.trigger('mousedown');
     expect(disabled.getComponent(HTag).emitted('click')).toBeUndefined();
     disabled.unmount();
 
@@ -460,5 +458,35 @@ describe('Tag browser coverage', () => {
     );
     expect(stringTooltip.find('.h-tag__icon').exists()).toBe(true);
     stringTooltip.unmount();
+
+    const nonEditable = mount(() => <HTag>Static</HTag>);
+    await nonEditable.get('.h-tag').trigger('dblclick');
+    expect(nonEditable.find('.h-tag__input').exists()).toBe(false);
+    nonEditable.unmount();
+
+    const overflowTooltip = mount(() => <HTag tooltipShowAfter={0}>Overflow label</HTag>, {
+      attachTo: document.body,
+    });
+    const content = overflowTooltip.get<HTMLElement>('.h-tag__content').element;
+    Object.defineProperties(content, {
+      clientWidth: { configurable: true, value: 10 },
+      scrollWidth: { configurable: true, value: 100 },
+    });
+    await overflowTooltip.get('.h-tag').trigger('mouseenter');
+    await overflowTooltip.get('.h-tag__inner').trigger('mouseenter');
+    await vi.waitFor(() =>
+      expect(document.body.querySelector('.h-tooltip__content')?.textContent ?? '').toContain(
+        'Overflow label',
+      ),
+    );
+    overflowTooltip.unmount();
+  });
+
+  test('updates guard functions after mount', async () => {
+    const wrapper = mount(HTagGroup, { props: { beforeCreate: () => false } });
+    const updated = vi.fn(() => true);
+    await wrapper.setProps({ beforeCreate: updated });
+    await nextTick();
+    wrapper.unmount();
   });
 });

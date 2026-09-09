@@ -70,6 +70,8 @@ import {
   statisticManifest,
   stepsManifest,
   switchManifest,
+  tagGroupManifest,
+  tagManifest,
   tabManifest,
   tabsManifest,
   timelineManifest,
@@ -149,6 +151,8 @@ const manifests = [
   statisticManifest,
   stepsManifest,
   switchManifest,
+  tagManifest,
+  tagGroupManifest,
   tabsManifest,
   tabManifest,
   timelineManifest,
@@ -1270,6 +1274,47 @@ const vueApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     },
     regions: { rename: { trigger: 'default' } },
   },
+  Tag: {
+    props: {
+      rename: { active: 'modelValue', variant: 'type', pure: 'isPure' },
+      override: {
+        id: { type: 'TagId' },
+        variant: { type: "TagVariant | 'hollow'" },
+        tooltip: { type: 'string | Partial<TooltipProps> | boolean' },
+      },
+      extend: [
+        {
+          name: 'icon',
+          type: 'Component | string',
+          description: { zh: '图标组件或名称', en: 'Icon component or name' },
+        },
+      ],
+    },
+    events: { rename: { activeChange: 'update:modelValue', press: 'click' } },
+    regions: { rename: { content: 'default' } },
+  },
+  TagGroup: {
+    props: {
+      extend: [
+        {
+          name: 'collapseTagProps',
+          type: 'Partial<TagProps>',
+          description: { zh: '折叠摘要 Tag 参数', en: 'Collapsed-summary Tag props' },
+        },
+        {
+          name: 'createTagProps',
+          type: 'Partial<TagProps>',
+          description: { zh: '创建操作 Tag 参数', en: 'Create-action Tag props' },
+        },
+        {
+          name: 'popperInnerClass',
+          type: 'string',
+          description: { zh: '浮层内部类名', en: 'Floating content class name' },
+        },
+      ],
+    },
+    regions: { rename: { content: 'default' } },
+  },
   Typography: {
     props: {
       rename: { value: 'modelValue', variant: 'type' },
@@ -2223,6 +2268,69 @@ const reactApiAdaptations: Readonly<Record<string, RendererApiAdaptation>> = {
     props: { rename: { showDelay: 'showAfter', hideDelay: 'hideAfter' } },
     events: { rename: { openChange: 'onOpenChange' } },
     regions: { rename: { trigger: 'children' } },
+  },
+  Tag: {
+    props: {
+      extend: [
+        {
+          name: 'tooltipOptions',
+          type: 'TagTooltipOptions',
+          description: { zh: 'Tooltip 原生参数', en: 'Native Tooltip options' },
+        },
+      ],
+    },
+    events: {
+      rename: { activeChange: 'onActiveChange', press: 'onClick', close: 'onClose' },
+    },
+    regions: {
+      rename: {
+        content: 'children',
+        icon: 'icon',
+        avatar: 'avatarContent',
+        tooltipContent: 'tooltipContent',
+      },
+    },
+  },
+  TagGroup: {
+    props: {
+      extend: [
+        {
+          name: 'collapseTagProps',
+          type: 'Partial<TagProps>',
+          description: { zh: '折叠摘要 Tag 参数', en: 'Collapsed-summary Tag props' },
+        },
+        {
+          name: 'createTagProps',
+          type: 'Partial<TagProps>',
+          description: { zh: '创建操作 Tag 参数', en: 'Create-action Tag props' },
+        },
+        {
+          name: 'popperInnerClass',
+          type: 'string',
+          description: { zh: '浮层内部类名', en: 'Floating content class name' },
+        },
+      ],
+    },
+    events: {
+      rename: {
+        created: 'onCreated',
+        edited: 'onEdited',
+        closed: 'onClosed',
+        toggled: 'onToggled',
+        exceeded: 'onExceeded',
+      },
+    },
+    regions: {
+      rename: {
+        content: 'children',
+        createText: 'renderCreateText',
+        create: 'renderCreate',
+        prepend: 'prepend',
+        append: 'append',
+        prefix: 'prefix',
+        suffix: 'suffix',
+      },
+    },
   },
   Typography: {
     events: {

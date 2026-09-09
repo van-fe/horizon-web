@@ -20,6 +20,7 @@ const reactSidebar = [
       { text: 'Button 按钮', link: 'components/Button' },
       { text: 'Avatar 头像', link: 'components/Avatar' },
       { text: 'Badge 徽标', link: 'components/Badge' },
+      { text: 'Tag 标签', link: 'components/Tag' },
       { text: 'Card 卡片', link: 'components/Card' },
       { text: 'Container 布局容器', link: 'components/Container' },
       { text: 'Layout 栅格布局', link: 'components/Layout' },

@@ -19,6 +19,12 @@ import {
   isUndefined,
 } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { createTagMutationController } from '@aurora/core';
+import {
+  createTagCollapseController,
+  observeTagResize,
+  type TagResizeObserverHandle,
+} from '@aurora/horizon-core';
 import { useTagGroupProps } from './composables/useProps';
 import { useTagGroupEmits } from './composables/useEmits';
 import { useTagGroupSlots } from './composables/useSlots';
@@ -41,7 +47,6 @@ import {
 import HTag from './Tag';
 import useLocaleLang from '~/utils/useLocaleLang';
 import { IconAdd, IconTriangleUpFilled } from '@aurora/icon';
-import { useResizeObserver } from '@vueuse/core';
 import { debounce } from 'lodash-es';
 import HPopover from '~/components/Popover/src/Popover';
 import HPopContent from '~/components/Popover/src/PopContent';
@@ -71,6 +76,21 @@ export default defineComponent({
     const createTagId = Symbol('create tag');
     const isLoading = ref(false);
     const tagsList = ref(new Map<string, TagProps>());
+
+    const mutationController = createTagMutationController({
+      beforeCreate: props.beforeCreate,
+      beforeEdit: props.beforeEdit,
+      beforeClose: props.beforeClose,
+    });
+    const unsubscribeMutation = mutationController.subscribe(() => {
+      isLoading.value = mutationController.getState().pending;
+    });
+    watch(
+      () => [props.beforeCreate, props.beforeEdit, props.beforeClose] as const,
+      ([beforeCreate, beforeEdit, beforeClose]) => {
+        mutationController.update({ beforeCreate, beforeEdit, beforeClose });
+      },
+    );
 
     const propsRefs = toRefs(props);
 
@@ -103,65 +123,43 @@ export default defineComponent({
       id: string | number | symbol | undefined,
     ): Promise<void> => {
       return new Promise((resolve, reject) => {
-        isLoading.value = true;
-        if (id === createTagId) {
-          Promise.resolve(props.beforeCreate?.(newVal))
-            .then((pass?: boolean) => {
-              if (pass === false) {
-                reject();
-                return;
-              }
-
-              resolve();
-              emit('created', newVal);
-            })
-            .catch(() => {
-              reject();
-            })
-            .finally(() => {
-              isLoading.value = false;
-              void debouncedDoCollapse();
-            });
-        } else {
-          Promise.resolve(props.beforeEdit?.(newVal, oldVal!, id))
-            .then((pass?: boolean) => {
-              if (pass === false) {
-                reject();
-                return;
-              }
-
-              resolve();
-              emit('edited', newVal, oldVal!, id);
-            })
-            .catch(() => {
-              reject();
-            })
-            .finally(() => {
-              isLoading.value = false;
-              void debouncedDoCollapse();
-            });
-        }
+        const mutation =
+          id === createTagId
+            ? mutationController.create(newVal)
+            : mutationController.edit(newVal, oldVal!, id);
+        void mutation.then(result => {
+          void debouncedDoCollapse();
+          if (result.status !== 'accepted') {
+            reject(result.status);
+            return;
+          }
+          // Preserve Vue's established ordering: release the child wait state before the result event.
+          resolve();
+          void nextTick(() => {
+            if (id === createTagId) emit('created', newVal);
+            else emit('edited', newVal, oldVal!, id);
+          });
+        });
       });
     };
 
     function onClose(id: string | number | symbol | undefined): Promise<void> {
-      return new Promise((resolve, reject) => {
-        Promise.resolve(props.beforeClose?.(id))
-          .then((pass?: boolean) => {
-            if (pass === false) {
-              reject();
-              return;
-            }
+      // Keep unguarded closes on the legacy microtask path. Select relies on the
+      // child Tag close event being observable as soon as its click trigger settles.
+      if (!props.beforeClose) {
+        emit('closed', id);
+        return Promise.resolve();
+      }
 
-            resolve();
-            emit('closed', id);
-          })
-          .catch(() => {
-            reject();
-          })
-          .finally(() => {
-            isLoading.value = false;
-          });
+      return new Promise((resolve, reject) => {
+        void mutationController.close(id).then(result => {
+          if (result.status !== 'accepted') {
+            reject(result.status);
+            return;
+          }
+          resolve();
+          void nextTick(() => emit('closed', id));
+        });
       });
     }
 
@@ -213,6 +211,25 @@ export default defineComponent({
 
     const isDuringRenderCalculating = ref(false);
 
+    let overflowReported = false;
+    const collapseController = createTagCollapseController({
+      getContainer: () => tagGroupContainerRef.value,
+      getItemCount: () => needRenderedItemsLength.value,
+      getVisibleCount: () => visibleItemsAmount.value,
+      setVisibleCount: count => {
+        visibleItemsAmount.value = count;
+      },
+      afterRender: nextTick,
+      getMinDisplayed: () => props.minDisplayed,
+      onLinesChange: lines => {
+        linesOfTags.value = lines;
+      },
+      onOverflowChange: overflowing => {
+        if (overflowing && !overflowReported) emit('exceeded');
+        overflowReported = overflowing;
+      },
+    });
+
     function toggle(expand?: boolean, manual = false) {
       if ((!collapseProp.value || !props.expand) && !manual) return;
       switchCollapsed(isUndefined(expand) ? undefined : !expand);
@@ -241,75 +258,41 @@ export default defineComponent({
       },
     );
 
-    let prevClientWidth = 0;
-    let prevTagsAmount = 0;
     async function doCollapseCalculate() {
-      const target: Element | null = tagGroupContainerRef.value;
-      if (!target) return;
-      if (isDuringRenderCalculating.value) {
-        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
-        return doCollapseCalculate();
-      }
-
-      if (isDefined(props.minDisplayed)) {
-        visibleItemsAmount.value = props.minDisplayed;
-        setLinesOfTags();
-        return;
-      }
-
       isDuringRenderCalculating.value = true;
-
-      if (prevClientWidth > target.clientWidth && prevTagsAmount < needRenderedItemsLength.value) {
-        while (target.scrollWidth > target.clientWidth && visibleItemsAmount.value > 0) {
-          visibleItemsAmount.value--;
-          await nextTick();
-        }
-      } else {
-        while (
-          target.scrollWidth < target.clientWidth ||
-          (target.scrollWidth === target.clientWidth &&
-            visibleItemsAmount.value < needRenderedItemsLength.value)
-        ) {
-          visibleItemsAmount.value++;
-          await nextTick();
-        }
-      }
-
-      while (target.scrollWidth > target.clientWidth && visibleItemsAmount.value > 1) {
-        visibleItemsAmount.value--;
-        await nextTick();
-      }
-
-      setLinesOfTags();
-
-      prevClientWidth = target.clientWidth;
-      prevTagsAmount = needRenderedItemsLength.value;
-      // to prevent just one tag cannot be displayed fully
-      visibleItemsAmount.value = Math.max(1, visibleItemsAmount.value);
-
-      requestAnimationFrame(() => {
+      try {
+        await collapseController.calculate();
+      } finally {
         isDuringRenderCalculating.value = false;
-      });
+      }
     }
 
-    function setLinesOfTags(target: Element | null = tagGroupContainerRef.value) {
-      nextTick(() => {
-        linesOfTags.value = Math.floor((target?.clientHeight ?? 0) / 24);
-      });
-    }
-
-    let stopContainerObserve: null | Function = null;
+    let containerResizeObserver: TagResizeObserverHandle | undefined;
     function setResizeObserver() {
-      if (stopContainerObserve) return;
-      stopContainerObserve = useResizeObserver(tagGroupContainerRef, async () => {
-        await debouncedDoCollapse();
-      }).stop;
+      if (containerResizeObserver || !tagGroupContainerRef.value) return;
+      containerResizeObserver = observeTagResize(tagGroupContainerRef.value, () => {
+        void debouncedDoCollapse();
+      });
     }
 
     function stopResizeObserver() {
-      stopContainerObserve?.();
-      stopContainerObserve = null;
+      containerResizeObserver?.destroy();
+      containerResizeObserver = undefined;
     }
+
+    watch(
+      tagGroupContainerRef,
+      () => {
+        stopResizeObserver();
+        if (
+          editingSet.value.size === 0 &&
+          !(isDefined(props.minDisplayed) && collapseEnable.value)
+        ) {
+          setResizeObserver();
+        }
+      },
+      { flush: 'post' },
+    );
 
     function switchCollapsed(status = !useCollapse.value) {
       useCollapse.value = status;
@@ -367,6 +350,10 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       stopResizeObserver();
+      debouncedDoCollapse.cancel();
+      collapseController.destroy();
+      unsubscribeMutation();
+      mutationController.destroy();
     });
 
     return () => {
@@ -468,24 +455,25 @@ export default defineComponent({
                 />
               )}
             {slots.create?.(Array.from(tagsList.value.values())) ??
-              (props.useCreate && tagsList.value.size < props.maxTags && (
-                <HTag
-                  id={createTagId}
-                  ref={createTagRef}
-                  editable={props.editable}
-                  clickable={true}
-                  plain={true}
-                  icon={IconAdd}
-                  class={cls(classHelper.e('create-tag', !isLoading.value))}
-                  {...(props.createTagProps || {})}
-                  isCreateTag={true}
-                  onClick={onClickCreateTag}
-                >
-                  {slots.createText?.(Array.from(tagsList.value.values())) ??
-                    props.createText ??
-                    useLocaleLang('tag.create').value}
-                </HTag>
-              ))}
+              (props.useCreate &&
+                tagsList.value.size < (props.maxTags ?? Number.POSITIVE_INFINITY) && (
+                  <HTag
+                    id={createTagId}
+                    ref={createTagRef}
+                    editable={props.editable}
+                    clickable={true}
+                    plain={true}
+                    icon={IconAdd}
+                    class={cls(classHelper.e('create-tag', !isLoading.value))}
+                    {...(props.createTagProps || {})}
+                    isCreateTag={true}
+                    onClick={onClickCreateTag}
+                  >
+                    {slots.createText?.(Array.from(tagsList.value.values())) ??
+                      props.createText ??
+                      useLocaleLang('tag.create').value}
+                  </HTag>
+                ))}
             {slots.suffix?.()}
           </div>
           {slots.append?.()}

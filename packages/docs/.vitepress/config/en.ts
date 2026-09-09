@@ -20,6 +20,7 @@ const reactSidebar = [
       { text: 'Button', link: 'components/Button' },
       { text: 'Avatar', link: 'components/Avatar' },
       { text: 'Badge', link: 'components/Badge' },
+      { text: 'Tag', link: 'components/Tag' },
       { text: 'Card', link: 'components/Card' },
       { text: 'Container', link: 'components/Container' },
       { text: 'Layout', link: 'components/Layout' },

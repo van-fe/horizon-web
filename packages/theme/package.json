@@ -142,6 +142,8 @@
     "./styles/switch-variables": "./styles/components/switch/variables.scss",
     "./styles/tabs": "./styles/components/tabs/index.scss",
     "./styles/tabs-variables": "./styles/components/tabs/variables.scss",
+    "./styles/tag": "./styles/components/tag/index.scss",
+    "./styles/tag-variables": "./styles/components/tag/variables.scss",
     "./styles/tooltip": "./styles/components/tooltip/index.scss",
     "./styles/tooltip-variables": "./styles/components/tooltip/variables.scss",
     "./styles/timeline": "./styles/components/timeline/index.scss",

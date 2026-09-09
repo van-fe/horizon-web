@@ -43,6 +43,7 @@ declare module '@aurora/theme/styles/segmented';
 declare module '@aurora/theme/styles/slider';
 declare module '@aurora/theme/styles/switch';
 declare module '@aurora/theme/styles/tabs';
+declare module '@aurora/theme/styles/tag';
 declare module '@aurora/theme/styles/tooltip';
 declare module '@aurora/theme/styles/select';
 declare module '@aurora/theme/styles/skeleton';

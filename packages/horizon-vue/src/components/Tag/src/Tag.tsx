@@ -14,6 +14,15 @@ import {
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
+import { canActivateTag, toggleTagActive } from '@aurora/core';
+import {
+  createTagCloseVisibilityController,
+  createTagPressTracker,
+  observeTagResize,
+  type TagPressTracker,
+  type TagResizeObserverHandle,
+} from '@aurora/horizon-core';
+import { createTagColorStyle } from '@aurora/theme';
 import { useTagProps } from './composables/useProps';
 import { useTagEmits } from './composables/useEmits';
 import { useTagSlots } from './composables/useSlots';
@@ -35,14 +44,11 @@ import {
 } from './utils/injectKeys';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import HAvatar from '~/components/Avatar/src/Avatar';
-import { debounce } from 'lodash-es';
-import { generateColorList } from '~/utils/useColorful';
 import InputTag from './components/InputTag';
 import { nanoid } from 'nanoid';
 import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
-import { avatarSizeMapping, builtinColorMapping, iconSizeMapping } from './utils/config';
+import { avatarSizeMapping, iconSizeMapping } from './utils/config';
 import { useColors } from '~/styles';
-import { useResizeObserver } from '@vueuse/core';
 import useOverflow from '~/utils/useOverflow';
 
 export default defineComponent({
@@ -100,6 +106,12 @@ export default defineComponent({
     const isDisabled = computed(() => parentProps?.disabled ?? props.disabled);
 
     const equallyShowClose = ref(false);
+    const closeVisibility = createTagCloseVisibilityController({
+      getDelay: () => props.showCloseDelay ?? 1000,
+      onVisibleChange: visible => {
+        equallyShowClose.value = visible;
+      },
+    });
     const showClose = computed(
       () =>
         props.closable &&
@@ -112,7 +124,13 @@ export default defineComponent({
     const isPress = ref(false);
     const isEditing = ref(false);
     const isWaitingForConfirm = ref(false);
-    const isClickable = computed(() => props.clickable || canUseToggled.value);
+    const isClickable = computed(() =>
+      canActivateTag({
+        active: modelValue?.value,
+        clickable: props.clickable,
+        disabled: isDisabled.value,
+      }),
+    );
 
     /***** watches ******/
     watch(isEditing, val => {
@@ -122,89 +140,31 @@ export default defineComponent({
     /***** builtin color *****/
     const isColorful = computed(() => !!props.color);
     const isColorBar = (color: string) => color && /\[\d+]$/.test(color);
-    const isBuiltinColor = computed(
-      () =>
-        isColorful.value &&
-        ['brand', 'lime', 'indigo', 'purple', 'magenta', 'orange'].includes(props.color!),
-    );
     const isAutoFitColor = computed(
       () => isColorful.value || (!isColorful.value && props.clickable),
     );
 
-    const colorList = computed(() =>
-      generateColorList(
-        isColorBar(props.color!)
-          ? useColors(props.color!)
-          : isBuiltinColor.value
-            ? builtinColorMapping[props.color!]
-            : props.color!,
-        isColorBar(props.background!) ? useColors(props.background!) : props.background || '#FFF',
-        plain.value,
-      ),
+    const style = computed<CSSProperties>(
+      () =>
+        (createTagColorStyle({
+          color: props.color
+            ? isColorBar(props.color)
+              ? useColors(props.color)
+              : props.color
+            : undefined,
+          background: props.background
+            ? isColorBar(props.background)
+              ? useColors(props.background)
+              : props.background
+            : undefined,
+          plain: plain.value,
+          disabled: isDisabled.value,
+          active: isActivated.value,
+          hovered: isHover.value,
+          pressed: isPress.value,
+          clickable: isClickable.value,
+        }) ?? {}) as CSSProperties,
     );
-
-    const style = computed<CSSProperties>(() => {
-      if (!isColorful.value) {
-        return props.background
-          ? {
-              background:
-                (isColorBar(props.background) ? useColors(props.background) : props.background) +
-                ' !important',
-            }
-          : {};
-      }
-
-      if (isDisabled.value) {
-        return {
-          color: colorList.value.text.disabled + ' !important',
-          background:
-            (isColorBar(props.background!)
-              ? useColors(props.background!)
-              : (props.background ?? colorList.value.background.disabled)) + ' !important',
-          borderColor: colorList.value.border.disabled + ' !important',
-        };
-      }
-
-      if (isClickable.value) {
-        if (isPress.value) {
-          return {
-            color: colorList.value.text.press,
-            background: isColorBar(props.background!)
-              ? useColors(props.background!)
-              : (props.background ?? colorList.value.background.press),
-            borderColor: colorList.value.border.press,
-          };
-        }
-
-        if (isHover.value) {
-          return {
-            color: colorList.value.text.hover,
-            background: isColorBar(props.background!)
-              ? useColors(props.background!)
-              : (props.background ?? colorList.value.background.hover),
-            borderColor: colorList.value.border.hover,
-          };
-        }
-      }
-
-      if (isActivated.value) {
-        return {
-          color: colorList.value.text.active,
-          background: isColorBar(props.background!)
-            ? useColors(props.background!)
-            : (props.background ?? colorList.value.background.active),
-          borderColor: colorList.value.border.active,
-        };
-      }
-
-      return {
-        color: colorList.value.text.default,
-        background: isColorBar(props.background!)
-          ? useColors(props.background!)
-          : (props.background ?? colorList.value.background.default),
-        borderColor: colorList.value.border.default,
-      };
-    });
 
     /***** expose *****/
     const inputValue = ref('');
@@ -220,16 +180,16 @@ export default defineComponent({
     });
 
     /***** events *****/
-    let debouncedCancel: null | (() => void) = null;
     function onClickTag(e: MouseEvent) {
-      debouncedCancel?.();
+      closeVisibility.cancelPending();
 
       if (isDisabled.value || !isClickable.value) return;
 
       emit('click', e);
 
-      if (typeof modelValue?.value === 'boolean') {
-        emit('update:modelValue', !modelValue.value);
+      const nextActive = toggleTagActive(modelValue?.value);
+      if (nextActive !== undefined) {
+        emit('update:modelValue', nextActive);
         void nextTick(() => {
           formItemTrigger?.('change');
         });
@@ -259,41 +219,23 @@ export default defineComponent({
 
     function onMouseEnter() {
       isHover.value = true;
-      const debouncedShowClose = debounce(() => {
-        equallyShowClose.value = true;
-        debouncedCancel = null;
-      }, props.showCloseDelay);
-
-      debouncedCancel = debouncedShowClose.cancel;
-
-      if (props.equally) {
-        if (props.clickable) {
-          debouncedShowClose();
-        } else {
-          equallyShowClose.value = true;
-        }
-      }
+      closeVisibility.enter(props.equally ?? false, props.clickable ?? true);
 
       isOverflow.value = useOverflow(contentRef);
     }
 
     function onMouseLeave() {
       isHover.value = false;
-      equallyShowClose.value = false;
-      debouncedCancel?.();
-      debouncedCancel = null;
+      closeVisibility.leave();
     }
 
+    let pressTracker: TagPressTracker | undefined;
     function onMouseDown() {
-      isPress.value = true;
-
-      function onMouseUp() {
-        isPress.value = false;
-
-        document.body.removeEventListener('mouseup', onMouseUp);
-      }
-
-      document.body.addEventListener('mouseup', onMouseUp);
+      if (!wrapperDomRef.value || isDisabled.value) return;
+      pressTracker?.destroy();
+      pressTracker = createTagPressTracker(wrapperDomRef.value, pressed => {
+        isPress.value = pressed;
+      });
     }
 
     function onDoubleClick() {
@@ -347,11 +289,19 @@ export default defineComponent({
       },
     );
 
-    const { stop: stopResizeObserver } = useResizeObserver(contentRef, () => {
-      if (!props.isEllipsis && !props.isInPopover) {
-        doCollapse?.();
-      }
-    });
+    let contentResizeObserver: TagResizeObserverHandle | undefined;
+    watch(
+      contentRef,
+      element => {
+        contentResizeObserver?.destroy();
+        contentResizeObserver = element
+          ? observeTagResize(element, () => {
+              if (!props.isEllipsis && !props.isInPopover) doCollapse?.();
+            })
+          : undefined;
+      },
+      { flush: 'post' },
+    );
 
     onMounted(() => {
       !props.isCreateTag && onMountedNotice?.(uid, props);
@@ -359,7 +309,9 @@ export default defineComponent({
 
     onUnmounted(() => {
       !props.isCreateTag && onUnmountedNotice?.(uid);
-      stopResizeObserver?.();
+      contentResizeObserver?.destroy();
+      pressTracker?.destroy();
+      closeVisibility.destroy();
     });
 
     return () => {
