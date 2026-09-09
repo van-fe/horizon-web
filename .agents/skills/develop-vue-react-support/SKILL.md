@@ -25,6 +25,7 @@ All architecture, Headless Hook, renderer, Theme, documentation, Demo, test, cov
 - Use `feature/vue-react-support` as the only integration line for this migration.
 - Preserve completed package foundations and already integrated component fixes.
 - Keep dependency direction `renderer -> product Core -> @aurora/core`.
+- Enforce each migrated component's Core contract/schema and derived manifest as the active source for renderer runtime APIs and generated metadata. Type-only reuse followed by hand-written duplicate renderer declarations is not an acceptable split.
 - Treat package renames as breaking migrations. Do not restore compatibility packages, aliases, re-exports, resolver fallbacks, publish entries or docs for `@aurora/horizon-web*` component packages.
 - Introduce Skyline packages/directories only when real mobile capabilities exist.
 - Keep React and Vue docs, demos, sidebars, compilation and API analysis isolated.

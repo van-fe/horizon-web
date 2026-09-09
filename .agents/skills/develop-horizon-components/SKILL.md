@@ -42,14 +42,25 @@ Use this dependency hierarchy:
 - Use pure functions for stateless logic and `createXxx` for framework-free state/resource-owning capabilities.
 - Bind shared capabilities through thin Vue composables or React hooks without introducing a second state authority.
 
+## API single-source invariant
+
+For every migrated component, make its Core contract/schema the active single source of truth for shared API semantics and metadata:
+
+- Define shared prop, event, slot/region and expose/command names, types, runtime kinds, defaults, validators and descriptions once in Core. Derive the public manifest from that same contract/schema; do not maintain a second hand-written field list.
+- Derive or adapt Vue runtime `props`, `emits`, `slots` and `exposes` from the Core contract/manifest. Derive or adapt the corresponding React props, callbacks, children/regions and ref commands from it as well.
+- Keep only explicit framework-specific renames, omissions, default overrides and extensions in a renderer. Those differences must remain native to that framework and must not become a duplicate declaration of the shared API.
+- Importing Core types/defaults/validators, using `satisfies`, or copying contract fields into a renderer-owned object does **not** satisfy this invariant when the renderer still hand-declares the shared API field by field.
+- Feed renderer manifests, API documentation, Web Types/Vetur metadata and other IDE outputs from the same contract-driven source. If an analyzer cannot understand generated runtime declarations, extend the analyzer or provide a contract-driven adapter; do not restore duplicate literal declarations merely for static analysis.
+- Add parity tests that compare the Core schema/manifest with renderer runtime declarations and generated documentation/IDE metadata, including field presence and renderer-specific mapping rules.
+
 ## Required component workflow
 
 1. Audit the current public API, event order, DOM/ARIA/focus, styles, docs, demos, async work and cleanup.
 2. Write the component task card from the normative guide and classify each capability by owner layer.
-3. Implement and test Core before renderer duplication can occur.
+3. Implement and test the Core contract/schema and derive its manifest before renderer duplication can occur.
 4. Add product Core only for genuine platform behavior.
-5. Reconnect Vue to the shared capabilities and preserve its established public behavior.
-6. Implement React with native React APIs and StrictMode-safe lifecycle.
+5. Reconnect Vue to shared capabilities and contract-derived runtime API declarations while preserving its established public behavior.
+6. Implement React with native React APIs, contract-derived shared API declarations and StrictMode-safe lifecycle.
 7. Move common visuals to canonical Theme styles and leave renderer styles as thin proxies.
 8. Keep Vue/React docs separate; make React runnable Demo count and scenario depth meet or exceed Vue.
 9. Run focused and package validation, including real Chromium and four component-source coverage metrics at or above 95%.
