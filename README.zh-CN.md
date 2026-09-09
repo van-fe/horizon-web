@@ -90,6 +90,7 @@ bun run dev
 │   ├── icon               # 图标库
 │   ├── locale             # 多语言库（纯 JS）
 │   ├── locale-vue         # 多语言库（Vue 支持）
+│   ├── mcp                # 面向 AI 客户端的只读组件元数据服务
 │   ├── colors             # 颜色 / Design Token
 │   ├── utils              # 工具库
 │   ├── unplugin-resolver  # 按需引入 resolver

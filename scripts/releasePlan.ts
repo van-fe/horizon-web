@@ -15,6 +15,7 @@ export const publishPackages = [
   'horizon-react',
   'unplugin-resolver',
   'upload-adapters',
+  'mcp',
 ] as const;
 
 export interface ReleasePlanEntry {

@@ -90,6 +90,7 @@ The repository is a monorepo managed with bun workspaces:
 │   ├── icon               # Icon library
 │   ├── locale             # Localization library (pure JS)
 │   ├── locale-vue         # Localization library (Vue support)
+│   ├── mcp                # Read-only component metadata server for AI clients
 │   ├── colors             # Colors / Design Tokens
 │   ├── utils              # Utility library
 │   ├── unplugin-resolver  # Resolver for on-demand imports

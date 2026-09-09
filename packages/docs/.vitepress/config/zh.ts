@@ -172,6 +172,7 @@ export default defineConfig({
               { text: 'Locale Vue', link: '/extensions/locale-vue' },
               { text: 'Locale React', link: '/extensions/locale-react' },
               { text: 'Upload Adapters', link: '/extensions/upload-adapters' },
+              { text: 'MCP 服务', link: '/extensions/mcp' },
             ],
           },
         ],

@@ -53,6 +53,7 @@ packages/horizon-vue/.vitest-attachments/
 packages/horizon-core/.vitest-attachments/
 packages/horizon-react/.vitest-attachments/
 packages/horizon-vue/coverage*/
+packages/mcp/coverage/
 packages/horizon-vue/packages/horizon-vue/coverage*/
 packages/horizon-vue/src/components/**/__screenshots__/
 packages/horizon-vue/src/__tests__/**/__screenshots__/

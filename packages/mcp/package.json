@@ -1,0 +1,50 @@
+{
+  "name": "@aurora/mcp",
+  "version": "1.0.0",
+  "description": "Read-only MCP server that exposes Aurora component metadata to AI clients.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "aurora-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && chmod +x dist/cli.js",
+    "prepack": "bun run build",
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "bun run --bun vitest run --config ./vitest.config.ts",
+    "test:coverage": "node ../../node_modules/vitest/vitest.mjs run --coverage --config ./vitest.config.ts"
+  },
+  "keywords": [
+    "aurora",
+    "components",
+    "mcp",
+    "model-context-protocol"
+  ],
+  "dependencies": {
+    "@aurora/core": "workspace:*",
+    "@modelcontextprotocol/server": "^2.0.0",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC"
+}

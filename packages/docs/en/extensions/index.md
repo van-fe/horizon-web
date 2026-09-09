@@ -8,3 +8,4 @@ vendor SDKs or application-specific dependencies into the component-library core
 - [Locale Vue](./locale-vue): translation, date and number formatting components, plus reading-direction support for Vue 3 applications.
 - [Locale React](./locale-react): a scoped Provider, reactive hooks, formatting components, and reading-direction support for React applications.
 - [Upload Adapters](./upload-adapters): resumable multipart presets for Qiniu Kodo, Aliyun OSS, and Tencent Cloud COS.
+- [MCP Server](./mcp): read-only Aurora component metadata for AI clients.
