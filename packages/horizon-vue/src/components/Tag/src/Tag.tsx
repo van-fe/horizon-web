@@ -1,55 +1,34 @@
-import type { CSSProperties } from 'vue';
 import {
   computed,
   createVNode,
   defineComponent,
   Fragment,
-  inject,
-  nextTick,
   onMounted,
   onUnmounted,
   ref,
   toRefs,
-  watch,
 } from 'vue';
 import { ComponentClassBlock, cls, useNamespace } from '@aurora/utils';
 import type { HorizonWebSetupContext } from '@aurora/utils';
-import { canActivateTag, toggleTagActive } from '@aurora/core';
-import {
-  createTagCloseVisibilityController,
-  createTagPressTracker,
-  observeTagResize,
-  type TagPressTracker,
-  type TagResizeObserverHandle,
-} from '@aurora/horizon-core';
-import { createTagColorStyle } from '@aurora/theme';
 import { useTagProps } from './composables/useProps';
 import { useTagEmits } from './composables/useEmits';
 import { useTagSlots } from './composables/useSlots';
 import { useTagExposes } from './composables/useExposes';
+import { useTagEditing } from './composables/useTagEditing';
+import { useTagGroupContext } from './composables/useTagGroupContext';
+import { useTagInteraction } from './composables/useTagInteraction';
+import { useTagStyle } from './composables/useTagStyle';
+import { useTagTooltip } from './composables/useTagTooltip';
 import type { TagEmits } from './composables/useEmits';
 import type { TagSlots } from './composables/useSlots';
 import type { TagExposes } from './composables/useExposes';
 import useSize from '~/utils/useSize';
 import { IconClose, IconLoadingLine, AIcon } from '@aurora/icon';
-import {
-  HTagGroupCloseCallbackInjectKey,
-  HTagGroupDoCollapseInjectKey,
-  HTagGroupEditCallbackInjectKey,
-  HTagGroupEditingNoticeInjectKey,
-  HTagGroupNoticeTagMountedInjectKey,
-  HTagGroupNoticeTagUnmountedInjectKey,
-  HTagGroupPropsInjectKey,
-  HTagGroupSizeInjectKey,
-} from './utils/injectKeys';
 import HTooltip from '~/components/Tooltip/src/Tooltip';
 import HAvatar from '~/components/Avatar/src/Avatar';
 import InputTag from './components/InputTag';
 import { nanoid } from 'nanoid';
-import { HFormItemTriggerInjectedKey } from '~/components/Form/src/utils/injectedKeys';
 import { avatarSizeMapping, iconSizeMapping } from './utils/config';
-import { useColors } from '~/styles';
-import useOverflow from '~/utils/useOverflow';
 
 export default defineComponent({
   name: `${useNamespace()}Tag`,
@@ -65,253 +44,66 @@ export default defineComponent({
   setup(props, { emit, slots, expose }: HorizonWebSetupContext<TagEmits, TagSlots, TagExposes>) {
     const classHelper = new ComponentClassBlock('tag');
 
-    const { size, tooltip: tooltipRef, modelValue, plain } = toRefs(props);
+    const { size, tooltip: tooltipRef, modelValue } = toRefs(props);
 
     const uid = nanoid();
     const wrapperDomRef = ref<HTMLDivElement | null>(null);
     const contentRef = ref<HTMLDivElement | null>(null);
     const tooltipDomRef = ref<typeof HTooltip | null>(null);
-
-    /***** injects *****/
-    const parentProps = inject(HTagGroupPropsInjectKey, undefined);
-    const parentSize = inject(HTagGroupSizeInjectKey, undefined);
-    const onEditingNotice = inject(HTagGroupEditingNoticeInjectKey, undefined);
-    const onEditNotice = inject(HTagGroupEditCallbackInjectKey, undefined);
-    const onCloseNotice = inject(HTagGroupCloseCallbackInjectKey, undefined);
-    const onMountedNotice = inject(HTagGroupNoticeTagMountedInjectKey, undefined);
-    const onUnmountedNotice = inject(HTagGroupNoticeTagUnmountedInjectKey, undefined);
-    const doCollapse = inject(HTagGroupDoCollapseInjectKey, undefined);
-
-    /***** data *****/
+    const group = useTagGroupContext();
     const sizeRef = useSize(
-      computed(() => size?.value ?? parentSize?.value),
+      computed(() => size?.value ?? group.parentSize?.value),
       'medium',
       {
         mini: 'small',
       },
     );
 
-    const isOverflow = ref(false);
-
-    // form-item validate trigger
-    const formItemTrigger = inject(HFormItemTriggerInjectedKey, undefined);
-
-    const canUseToggled = computed(() => typeof modelValue?.value === 'boolean');
-    const isActivated = computed(() => {
-      if (canUseToggled.value) {
-        return modelValue?.value;
-      } else return false;
-    });
-
-    const isDisabled = computed(() => parentProps?.disabled ?? props.disabled);
-
-    const equallyShowClose = ref(false);
-    const closeVisibility = createTagCloseVisibilityController({
-      getDelay: () => props.showCloseDelay ?? 1000,
-      onVisibleChange: visible => {
-        equallyShowClose.value = visible;
-      },
-    });
-    const showClose = computed(
-      () =>
-        props.closable &&
-        !isDisabled.value &&
-        ((props.equally && equallyShowClose.value) || !props.equally),
-    );
-
-    /***** tag status *****/
-    const isHover = ref(false);
-    const isPress = ref(false);
-    const isEditing = ref(false);
-    const isWaitingForConfirm = ref(false);
-    const isClickable = computed(() =>
-      canActivateTag({
-        active: modelValue?.value,
-        clickable: props.clickable,
-        disabled: isDisabled.value,
-      }),
-    );
-
-    /***** watches ******/
-    watch(isEditing, val => {
-      onEditingNotice?.(uid, val);
-    });
-
-    /***** builtin color *****/
-    const isColorful = computed(() => !!props.color);
-    const isColorBar = (color: string) => color && /\[\d+]$/.test(color);
-    const isAutoFitColor = computed(
-      () => isColorful.value || (!isColorful.value && props.clickable),
-    );
-
-    const style = computed<CSSProperties>(
-      () =>
-        (createTagColorStyle({
-          color: props.color
-            ? isColorBar(props.color)
-              ? useColors(props.color)
-              : props.color
-            : undefined,
-          background: props.background
-            ? isColorBar(props.background)
-              ? useColors(props.background)
-              : props.background
-            : undefined,
-          plain: plain.value,
-          disabled: isDisabled.value,
-          active: isActivated.value,
-          hovered: isHover.value,
-          pressed: isPress.value,
-          clickable: isClickable.value,
-        }) ?? {}) as CSSProperties,
-    );
-
-    /***** expose *****/
-    const inputValue = ref('');
-    const inputPreValue = ref('');
-    function edit(presetContent?: string) {
-      inputValue.value = presetContent ?? contentRef.value?.innerText ?? '';
-      inputPreValue.value = inputValue.value;
-      isEditing.value = true;
-    }
-
-    expose({
-      edit,
-    });
-
-    /***** events *****/
-    function onClickTag(e: MouseEvent) {
-      closeVisibility.cancelPending();
-
-      if (isDisabled.value || !isClickable.value) return;
-
-      emit('click', e);
-
-      const nextActive = toggleTagActive(modelValue?.value);
-      if (nextActive !== undefined) {
-        emit('update:modelValue', nextActive);
-        void nextTick(() => {
-          formItemTrigger?.('change');
-        });
-      }
-    }
-
-    function onClose(e: MouseEvent) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      if (isDisabled.value) return;
-
-      if (onCloseNotice) {
-        isWaitingForConfirm.value = true;
-        onCloseNotice?.(props.id)
-          .then(() => {
-            emit('close', e);
-          })
-          .catch(() => undefined)
-          .finally(() => {
-            isWaitingForConfirm.value = false;
-          });
-      } else {
-        emit('close', e);
-      }
-    }
-
-    function onMouseEnter() {
-      isHover.value = true;
-      closeVisibility.enter(props.equally ?? false, props.clickable ?? true);
-
-      isOverflow.value = useOverflow(contentRef);
-    }
-
-    function onMouseLeave() {
-      isHover.value = false;
-      closeVisibility.leave();
-    }
-
-    let pressTracker: TagPressTracker | undefined;
-    function onMouseDown() {
-      if (!wrapperDomRef.value || isDisabled.value) return;
-      pressTracker?.destroy();
-      pressTracker = createTagPressTracker(wrapperDomRef.value, pressed => {
-        isPress.value = pressed;
-      });
-    }
-
-    function onDoubleClick() {
-      if (isDisabled.value || isEditing.value || isWaitingForConfirm.value) return;
-      if (parentProps?.editable ?? props.editable) {
-        edit();
-      }
-    }
-
-    function onBlur() {
-      if (isWaitingForConfirm.value) return;
-      isEditing.value = false;
-
-      if (inputValue.value.trim() && inputValue.value !== inputPreValue.value) {
-        if (onEditNotice) {
-          isWaitingForConfirm.value = true;
-          onEditNotice(inputValue.value.trim(), inputPreValue.value.trim(), props.id)
-            .catch(() => undefined)
-            .finally(() => {
-              isWaitingForConfirm.value = false;
-            });
-        }
-      }
-    }
-
-    const tooltipProps = computed(() => {
-      if (typeof tooltipRef?.value === 'string' || typeof tooltipRef?.value === 'boolean') {
-        return {};
-      } else {
-        return tooltipRef?.value ?? {};
-      }
-    });
-
-    const tooltipDisabled = computed(() => {
-      if (!!slots.tooltipContent && tooltipRef.value !== false) return false;
-
-      if (tooltipRef.value === false) {
-        return true;
-      } else if (!tooltipRef.value) {
-        return !isOverflow.value;
-      } else {
-        return false;
-      }
-    });
-
-    /******* content change to emit ********/
-    watch(
-      () => [props.closable, sizeRef.value, props.bold, props.equally, props.icon, props.loading],
-      () => {
-        doCollapse?.();
-      },
-    );
-
-    let contentResizeObserver: TagResizeObserverHandle | undefined;
-    watch(
+    const editing = useTagEditing({
+      uid,
+      props,
       contentRef,
-      element => {
-        contentResizeObserver?.destroy();
-        contentResizeObserver = element
-          ? observeTagResize(element, () => {
-              if (!props.isEllipsis && !props.isInPopover) doCollapse?.();
-            })
-          : undefined;
-      },
-      { flush: 'post' },
-    );
+      getParentEditable: () => group.parentProps?.editable,
+      isDisabled: () => group.parentProps?.disabled ?? props.disabled ?? false,
+      onEditingNotice: group.onEditingNotice,
+      onEditNotice: group.onEditNotice,
+    });
+    const tooltip = useTagTooltip({
+      props,
+      size: sizeRef,
+      contentRef,
+      hasTooltipContent: () => !!slots.tooltipContent,
+      doCollapse: group.doCollapse,
+    });
+    const interaction = useTagInteraction({
+      props,
+      modelValue,
+      wrapperRef: wrapperDomRef,
+      isWaitingForConfirm: editing.isWaitingForConfirm,
+      getParentDisabled: () => group.parentProps?.disabled,
+      onCloseNotice: group.onCloseNotice,
+      onEnter: tooltip.measureOverflow,
+      emitClick: event => emit('click', event),
+      emitClose: event => emit('close', event),
+      emitActiveChange: active => emit('update:modelValue', active),
+    });
+    const tagStyle = useTagStyle({
+      props,
+      active: interaction.isActivated,
+      disabled: interaction.isDisabled,
+      hover: interaction.isHover,
+      press: interaction.isPress,
+      clickable: interaction.isClickable,
+    });
+
+    expose({ edit: editing.edit });
 
     onMounted(() => {
-      !props.isCreateTag && onMountedNotice?.(uid, props);
+      !props.isCreateTag && group.onMountedNotice?.(uid, props);
     });
 
     onUnmounted(() => {
-      !props.isCreateTag && onUnmountedNotice?.(uid);
-      contentResizeObserver?.destroy();
-      pressTracker?.destroy();
-      closeVisibility.destroy();
+      !props.isCreateTag && group.onUnmountedNotice?.(uid);
     });
 
     return () => {
@@ -329,40 +121,43 @@ export default defineComponent({
             classHelper.m('bold', props.bold),
             classHelper.m('round', props.round),
             classHelper.m('equally', props.equally),
-            classHelper.is('active', isActivated.value),
-            classHelper.is('loading', props.loading || isWaitingForConfirm.value),
-            classHelper.is('plain', props.type === 'hollow' || props.plain || isEditing.value),
-            classHelper.is('disabled', isDisabled.value),
+            classHelper.is('active', interaction.isActivated.value),
+            classHelper.is('loading', props.loading || editing.isWaitingForConfirm.value),
+            classHelper.is(
+              'plain',
+              props.type === 'hollow' || props.plain || editing.isEditing.value,
+            ),
+            classHelper.is('disabled', interaction.isDisabled.value),
             classHelper.is('closable', props.closable),
-            classHelper.is('clickable', isClickable.value),
+            classHelper.is('clickable', interaction.isClickable.value),
             classHelper.is('disable-transitions', props.disableTransitions),
-            classHelper.is('show-close', showClose.value),
-            classHelper.is('colorful', isColorful.value),
-            classHelper.is('colored', isColorful.value || !!props.type),
-            classHelper.is('auto-fit-color', isAutoFitColor.value),
-            classHelper.is('editing', isEditing.value),
+            classHelper.is('show-close', interaction.showClose.value),
+            classHelper.is('colorful', tagStyle.isColorful.value),
+            classHelper.is('colored', tagStyle.isColorful.value || !!props.type),
+            classHelper.is('auto-fit-color', tagStyle.isAutoFitColor.value),
+            classHelper.is('editing', editing.isEditing.value),
             classHelper.is('ellipsis', props.isEllipsis),
           )}
-          style={style.value}
-          onMouseenter={onMouseEnter}
-          onMouseleave={onMouseLeave}
-          onMousedown={onMouseDown}
-          onClick={onClickTag}
-          onDblclick={onDoubleClick}
+          style={tagStyle.style.value}
+          onMouseenter={interaction.onMouseEnter}
+          onMouseleave={interaction.onMouseLeave}
+          onMousedown={interaction.onMouseDown}
+          onClick={interaction.onClick}
+          onDblclick={editing.onDoubleClick}
         >
           <HTooltip
             ref={tooltipDomRef}
             enterable={true}
             showAfter={props.tooltipShowAfter}
             hideAfter={props.tooltipHideAfter}
-            {...tooltipProps.value}
-            disabled={tooltipDisabled.value}
+            {...tooltip.tooltipProps.value}
+            disabled={tooltip.tooltipDisabled.value}
           >
             {{
               content: () => (
                 <Fragment>
                   {slots.tooltipContent?.() ??
-                    (isOverflow.value
+                    (tooltip.isOverflow.value
                       ? defaultSlotContent
                       : typeof tooltipRef?.value === 'string'
                         ? tooltipRef.value
@@ -371,11 +166,11 @@ export default defineComponent({
               ),
               default: () => (
                 <div class={classHelper.e('inner')}>
-                  {isEditing.value ? (
-                    <InputTag v-model={inputValue.value} onBlur={onBlur} />
-                  ) : isWaitingForConfirm.value ? (
+                  {editing.isEditing.value ? (
+                    <InputTag v-model={editing.inputValue.value} onBlur={editing.onBlur} />
+                  ) : editing.isWaitingForConfirm.value ? (
                     <div class={cls(classHelper.e('content'))}>
-                      {inputValue.value || defaultSlotContent}
+                      {editing.inputValue.value || defaultSlotContent}
                     </div>
                   ) : (
                     <>
@@ -392,15 +187,15 @@ export default defineComponent({
                             <AIcon
                               name={props.icon}
                               size={iconSizeMapping[sizeRef.value]}
-                              color={style.value?.color}
+                              color={tagStyle.style.value?.color}
                             />
                           ) : typeof props.icon === 'object' ? (
                             createVNode(props.icon, {
                               size: iconSizeMapping[sizeRef.value],
-                              color: [style.value?.color],
+                              color: [tagStyle.style.value?.color],
                             })
                           ) : (
-                            slots.icon?.(style.value?.color)
+                            slots.icon?.(tagStyle.style.value?.color)
                           )}
                         </div>
                       )}
@@ -409,20 +204,20 @@ export default defineComponent({
                           {defaultSlotContent}
                         </div>
                       )}
-                      {showClose.value && (
+                      {interaction.showClose.value && (
                         <div
                           class={cls(classHelper.e('icon'), classHelper.e('close'))}
-                          onClick={onClose}
+                          onClick={interaction.onClose}
                         >
                           <IconClose
                             size={iconSizeMapping[sizeRef.value]}
-                            color={style.value?.color || ''}
+                            color={tagStyle.style.value?.color || ''}
                           />
                         </div>
                       )}
                     </>
                   )}
-                  {(props.loading || isWaitingForConfirm.value) && (
+                  {(props.loading || editing.isWaitingForConfirm.value) && (
                     <div class={classHelper.e('loading')}>
                       <IconLoadingLine spin="cw" size={iconSizeMapping[sizeRef.value]} />
                     </div>
