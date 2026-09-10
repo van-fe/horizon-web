@@ -15,13 +15,23 @@
 ## 当前总览
 
 - 已核验组件：**1**
-- 已核验 renderer：**2**（Vue 1，React 1）
-- 待按新门禁复核的历史迁移组件：**8**
+- 部分核验组件：**1**
+- 需整改组件：**7**
+- 已核验 renderer：**3**（Vue 2，React 1）
+- 待按新门禁复核的历史迁移组件：**0**
 - 最后更新：2026-09-10
 
 | 组件 | Core / Product Core | Vue renderer | React renderer | 组件状态 | 最后核验 |
 | --- | --- | --- | --- | --- | --- |
 | Tag | 已核验 | 已核验 | 已核验 | **已核验** | 2026-09-10 |
+| Button | 已有 contract/action；Vue 已消费 manifest | 已核验 | 需整改 | **部分核验** | 2026-09-10 |
+| Calendar | 需整改：Vue 仍保留重复日期/日程权威 | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| TimeSelect | 已有 contract/algorithms | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| CommandPalette | 已有 controller 与 Web hotkey controller | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| QRCode | 已有 generation controller 与 Web generator | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| TreeSelect | 已有 contract/controller/presentation | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| Tree | 已有 contract/controller/algorithms 与 Web drag | 需整改 | 需整改 | **需整改** | 2026-09-10 |
+| Cascader | 已有 contract/controller/algorithms 与 Web navigation | 需整改 | 需整改 | **需整改** | 2026-09-10 |
 
 ## 已核验记录
 
@@ -60,20 +70,52 @@
 - `56dca9dd` — `refactor(Tag): split React renderer internals`
 - `b9cb793b` — `refactor(HorizonVue): decompose Tag renderers`
 
-## 历史迁移待复核
+## 2026-09-10 历史迁移追溯核查
 
-以下组件有分层或跨 renderer 迁移记录，但没有按 2026-09-10 生效的细致拆分门禁完成追溯审计，因此不计入“已核验组件”。
+本轮已对 8 个历史迁移组件完成当前快照的文件结构、Hook/Composable、API 单一来源和组件覆盖率核查。覆盖率达标只能证明路径被执行，不能抵消结构与权威源门禁失败。
 
-| 组件 | 历史证据 | 当前状态 | 进入已核验前必须补充 |
+### 核查结论
+
+| 组件 | Vue 结论 | React 结论 | 阻断证据 | 历史提交 |
+| --- | --- | --- | --- | --- |
+| Button | **已核验**：入口为 barrel，`Button`/`ButtonGroup`、action composable 和注入配置已分离；props 由 Core manifest 生成。 | **需整改**：292 行 `index.tsx` 同时声明公共类型、Group context、`Button` 与 `ButtonGroup`；共享 props 仍逐字段重复声明。 | React 必须拆为 barrel、组件、types、context，并改为 contract-driven props。 | `a9036557`、`25d33c1d` |
+| Calendar | **需整改**：`Calendar.tsx` 仍直接管理 model 订阅、多组 watch/provide；`CalendarHelper` 与 361 行 `PinFlagsHelper` 继续拥有日期网格、禁用日期、日程 mutation 等领域状态。 | **需整改**：725 行 `index.tsx` 同时拥有 contract surface、受控状态、schedule、month/year/timeline 渲染、pointer selection、scroll lifecycle 与 ref commands。 | Vue 重复 Core 权威；两端都需要按 model/schedule、timeline/pointer、mode rendering 和 public types 拆分。 | `8f6ba289` |
+| TimeSelect | **需整改**：89 行组件本身薄且职责集中，但 187 行 Vue runtime props 仍逐字段手写，未由 Core manifest 派生。 | **需整改**：145 行实质组件和 public types 全留在 `index.tsx`。 | 补 contract-driven Vue props；React 将实现和 types 移出 barrel。 | `f4ad1d75` |
+| CommandPalette | **需整改**：`useCommandPalette` 同时负责 Core controller、全局 hotkey、可见性、焦点调度和 async execute；Vue props 仍为手写字段表。 | **需整改**：255 行 `index.tsx` 同时拥有 public types、controlled state、controller 同步、hotkey/focus resource、keyboard、async 与渲染。 | 两端需拆 controller adapter、hotkey/focus lifecycle 和 native rendering；Vue API 改为 manifest 驱动。 | `c7c124f7` |
+| QRCode | **需整改**：generation composable 边界清楚，但 Vue runtime props 仍逐字段手写，未消费 manifest。 | **需整改**：120 行 `index.tsx` 同时声明 public API、异步 generation controller effect 与渲染。 | Vue 补 contract-driven props；React 提取 generation hook，并将 types/组件实现移出 barrel。 | `ef4537ef` |
+| TreeSelect | **需整改**：832 行 `useProps.ts` 为手写 API 表；560 行 `TreeSelect.tsx` 仍拥有 focus timer、previous-label cache、keyboard routing、大型 exposes 与渲染。 | **需整改**：657 行 `index.tsx` 同时拥有多组 uncontrolled state、session controller 创建、命令、imperative handle 和渲染。 | 两端需拆状态/session adapter、focus/keyboard、tag/display cache、public commands/types 与渲染；Vue API 改为 manifest 驱动。 | `fc0ce865` |
+| Tree | **需整改**：虽已有 selection、expand、filter、dynamic-load、drag 等 hooks，但 519 行顶层仍直接承担 focus/keyboard、受控事件 watch、provider/expose wiring；535 行 props 为手写 API 表。 | **需整改**：767 行 `index.tsx` 除 drag/load hooks 外仍集中 selection、expansion、filter、focus/navigation、commands、tree item rendering 与 public types。 | 两端继续拆 navigation/focus、controlled adapter、context/commands/types 和 rendering；Vue API 改为 manifest 驱动。 | `c3fc123a` |
+| Cascader | **需整改**：612 行 `CascaderPanels.tsx` 同时拥有 dynamic-load controller、panel composition、keyboard navigation、focus stack 与 provider wiring；789 行 props 为手写 API 表。 | **需整改**：755 行 `index.tsx` 同时拥有 public types、selection/dynamic-load controllers、多组状态、navigation、panels/items 与渲染。 | 两端需拆 selection/load、navigation/focus、panel/item renderer、context/types；Vue API 改为 manifest 驱动。 | `c5f04aa6` |
+
+### 当前最大生产文件
+
+| 组件 | Vue 最大实现信号 | React 最大实现信号 |
+| --- | --- | --- |
+| Button | `Button.tsx` 157 行 | `index.tsx` 292 行 |
+| Calendar | `MonthCalendar.tsx` 366 行；`PinFlagsHelper.ts` 361 行；`Calendar.tsx` 354 行 | `index.tsx` 725 行 |
+| TimeSelect | `useProps.ts` 187 行；`TimeSelect.tsx` 89 行 | `index.tsx` 145 行 |
+| CommandPalette | `CommandPalette.tsx` 102 行；`useCommandPalette.ts` 102 行 | `index.tsx` 255 行 |
+| QRCode | `QRCode.tsx` 63 行；`useQRCode.ts` 40 行 | `index.tsx` 120 行 |
+| TreeSelect | `useProps.ts` 832 行；`TreeSelect.tsx` 560 行 | `index.tsx` 657 行 |
+| Tree | `useProps.ts` 535 行；`Tree.tsx` 519 行；`TreeItem.tsx` 469 行；`useDraggable.ts` 319 行 | `index.tsx` 767 行 |
+| Cascader | `useProps.ts` 789 行；`CascaderPanels.tsx` 612 行；`Cascader.tsx` 415 行 | `index.tsx` 755 行 |
+
+行数仅用于定位风险；上述“需整改”判断均同时有职责混合、API 重复声明或可独立测试的 Hook/Composable 边界证据。
+
+### 组件覆盖率证据
+
+Vue 数据来自当前分支最近一次完整 Chromium coverage artifact；React 于 2026-09-10 在 `packages/horizon-react` 包作用域重新运行 Chromium coverage，63 个测试文件、374 个测试全部通过。
+
+| 组件 | Vue S / B / F / L | React S / B / F / L | 覆盖率门禁 |
 | --- | --- | --- | --- |
-| Button | `a9036557`、`25d33c1d` | 待复核 | Vue/React 文件职责、hook 边界、最大文件、覆盖率和消费方证据。 |
-| Calendar | `8f6ba289` | 待复核 | 同上，并复核日期能力与 DOM/焦点能力的层级归属。 |
-| TimeSelect | `f4ad1d75` | 待复核 | 同上，并复核 Select/Picker 消费链。 |
-| CommandPalette | `c7c124f7` | 待复核 | 同上，并复核 async/controller、keyboard 与 layer 资源清理。 |
-| QRCode | `ef4537ef` | 待复核 | 同上，并复核 controller 与 renderer 输出边界。 |
-| TreeSelect | `fc0ce865` | 待复核 | 同上，并复核大型 renderer/hook 是否仍为单体或 catch-all。 |
-| Tree | `c3fc123a` | 待复核 | 同上，并复核 drag、dynamic load、selection 与 browser resource 所有权。 |
-| Cascader | `c5f04aa6` | 待复核 | 同上，并复核 panels、filter、option 与 virtual scroll 职责边界。 |
+| Button | 98.17 / 97.26 / 100 / 97.92 | 100 / 100 / 100 / 100 | 通过 |
+| Calendar | 98.08 / 95.31 / 98.91 / 98.31 | 99.52 / 95.54 / 100 / 100 | 通过 |
+| TimeSelect | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 | 通过 |
+| CommandPalette | 98.89 / 97.22 / 97.56 / 100 | 100 / 100 / 100 / 100 | 通过 |
+| QRCode | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 | 通过 |
+| TreeSelect | 98.61 / 95.41 / 99.25 / 98.80 | 99.34 / 97.48 / 100 / 100 | 通过 |
+| Tree | 98.21 / 95.22 / 98.66 / 99.40 | 98.14 / 95.25 / 98.91 / 99.64 | 通过 |
+| Cascader | 98.40 / 95.13 / 98.26 / 98.99 | 99.19 / 95.45 / 100 / 99.04 | 通过 |
 
 ## 维护规则
 
