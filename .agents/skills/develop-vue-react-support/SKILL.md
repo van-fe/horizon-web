@@ -30,5 +30,6 @@ All architecture, Headless Hook, renderer, Theme, documentation, Demo, test, cov
 - Introduce Skyline packages/directories only when real mobile capabilities exist.
 - Keep React and Vue docs, demos, sidebars, compilation and API analysis isolated.
 - Require React runnable Demo count and user-scenario coverage to meet or exceed Vue for every migrated component.
+- Do not mark a renderer package migration complete until the shared component Skill's renderer file-structure gate passes; separate packages containing monolithic entry implementations are still incomplete.
 - Inspect branch history and changed paths before integrating another branch; do not absorb unrelated work.
 - Stage only the task, preserve `.codex/config.toml`, commit, run the relevant pre-push gates and push this branch.
